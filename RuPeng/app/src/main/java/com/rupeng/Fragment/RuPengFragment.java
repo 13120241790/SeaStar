@@ -25,7 +25,7 @@ public class RuPengFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TextView tv = new TextView(getActivity());
-        tv.setText("如鹏");
+        tv.setText("IM");
         tv.setGravity(1);
         return tv;
     }
