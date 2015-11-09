@@ -1,0 +1,34 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TextStyleMiddle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+
+    <style name="StartDisCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+
+        <item name="android:button">@drawable/rp_startdis_checkbox</item>
+
+        <item name="android:paddingLeft">2.0dip</item>
+
+        <item name="android:maxHeight">10.0dip</item>
+
+    </style>
+
+
+    <style name="PicCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+
+        <item name="android:button">@drawable/de_pic_chebox_photo</item>
+
+        <item name="android:paddingLeft">2.0dip</item>
+
+        <item name="android:maxHeight">10.0dip</item>
+
+    </style>
+</resources>

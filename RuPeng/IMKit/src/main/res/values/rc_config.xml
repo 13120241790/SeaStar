@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 设置聊天室一次拉取消息数目 -->
+    <integer name="rc_chatroom_first_pull_message_count">10</integer>
+
+    <!-- 设置在会话列表或会话页面是否显示“连接状态”的提示 -->
+    <bool name="rc_is_show_warning_notification">true</bool>
+</resources>

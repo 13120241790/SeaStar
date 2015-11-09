@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/rc_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@id/rc_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rc_text_color_primary_inverse" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="113dp"
+        android:gravity="center"
+        android:textColor="#999999"
+        android:textSize="16dp"
+        android:visibility="gone" />
+
+</FrameLayout>
