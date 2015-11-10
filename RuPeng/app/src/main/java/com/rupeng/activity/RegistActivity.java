@@ -2,16 +2,19 @@ package com.rupeng.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rupeng.R;
 import com.rupeng.bean.response.RegistResponse;
 import com.rupeng.common.ApiAction;
+import com.rupeng.widget.ClearWriteEditText;
 import com.rupeng.widget.dialog.LoadDialog;
 import com.sd.core.network.async.AsyncTaskManager;
 import com.sd.core.network.http.HttpException;
@@ -32,7 +35,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
     private static final int REGIST_CODE = 2015;
 
     private int REGIST_BACK = 1001;
-    private EditText mEmail , mPassword ,mUserName;
+    private ClearWriteEditText mEmail , mPassword ,mUserName;
 
     private Button mButton;
 
@@ -42,7 +45,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
     private String sPassword;
     private String sUserName;
 
-    private SyncHttpClient mSyncHttpClient;
+    private TextView mTextView;
 
 
     @Override
@@ -50,15 +53,18 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rp_regist_activity);
         mContext = this;
-        mSyncHttpClient = SyncHttpClient.getInstance(mContext);
         setTitle("注册");
         initView();
     }
 
     private void initView() {
-        mEmail = (EditText) findViewById(R.id.reg_email);
-        mPassword = (EditText) findViewById(R.id.reg_password);
-        mUserName = (EditText) findViewById(R.id.reg_username);
+        mTextView = (TextView) findViewById(R.id.dev);
+        mTextView.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);
+        mTextView.getPaint().setAntiAlias(true);
+        mTextView.setText("<<融云开发者协议>>");
+        mEmail = (ClearWriteEditText) findViewById(R.id.reg_email);
+        mPassword = (ClearWriteEditText) findViewById(R.id.reg_password);
+        mUserName = (ClearWriteEditText) findViewById(R.id.reg_username);
         mButton = (Button) findViewById(R.id.reg_button);
         mButton.setOnClickListener(this);
     }

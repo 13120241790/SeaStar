@@ -1,39 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="输入邮箱"
-        android:ems="10"
+    <com.rupeng.widget.ClearWriteEditText
         android:id="@+id/reg_email"
-        android:layout_gravity="center_horizontal" />
-
-    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="输入密码"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="60dp"
+        android:drawableLeft="@drawable/ic_username1"
+        android:drawablePadding="5dip"
         android:ems="10"
+        android:hint="输入邮箱"
+        android:inputType="textEmailAddress"
+        android:maxLength="30"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:singleLine="true" />
+
+    <com.rupeng.widget.ClearWriteEditText
         android:id="@+id/reg_password"
-        android:layout_gravity="center_horizontal" />
-
-    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="输入昵称"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/ic_password1"
+        android:drawablePadding="5dip"
         android:ems="10"
+        android:hint="输入密码"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:singleLine="true" />
+
+    <com.rupeng.widget.ClearWriteEditText
         android:id="@+id/reg_username"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/ic_username1"
+        android:drawablePadding="5dip"
+        android:ems="10"
+        android:hint="输入昵称"
+        android:inputType="textPersonName"
+        android:maxLength="30"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:singleLine="true" />
 
     <Button
+        android:id="@+id/reg_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rp_login_selector"
         android:text="同意并注册"
-        android:id="@+id/reg_button"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="#FFF" />
+
+
+    <TextView
+        android:id="@+id/dev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp"
+        android:textSize="14sp"
+        android:textColor="@color/group_list_gray"
+        />
 </LinearLayout>

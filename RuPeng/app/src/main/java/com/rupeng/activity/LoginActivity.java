@@ -1,6 +1,7 @@
 package com.rupeng.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -43,7 +44,10 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     private TextView mFogotPassWord , mRegister,mButtonRegist;
     // 大 logo 图片  背景图片
     private ImageView mLoginImg , mImgBackgroud;
+
     private String sUserName,sPassword;
+
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,12 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 mImgBackgroud.startAnimation(animation);
             }
         }, 200);
+
+        sp = getSharedPreferences("config",MODE_PRIVATE);
+        String old_username = sp.getString("loginemail", "");
+        String old_password = sp.getString("loginpassword", "");
+        mUserName.setText(old_username);
+        mPassWord.setText(old_password);
     }
 
     @Override
@@ -96,9 +106,20 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                     NToast.shortToast(mContext,"邮箱地址不合法");
                     return;
                 }
+                LoadDialog.show(mContext, "正在登陆...");
+                String sToken = sp.getString("token",null);
+                if (!TextUtils.isEmpty(sToken) && sUserName.equals(sp.getString("loginemail",""))) {
+                    connectServer(sToken);
+                }else{
+                    request(LOGIN_CODE);
+                }
 
-                LoadDialog.show(mContext,"正在登陆...");
-                request(LOGIN_CODE);
+
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putString("loginemail", sUserName);
+                edit.putString("loginpassword", sPassword);
+                edit.commit();
+
                 break;
             case R.id.de_login_register:
                 Intent regIntent = new Intent(this,RegistActivity.class);
@@ -124,29 +145,11 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
             case LOGIN_CODE:
                 LoginResponse res = (LoginResponse)result;
                 if (res.getCode() == 200) {
-                    NLog.e("connect");
-                    RongIM.connect(res.getResult().getToken(), new RongIMClient.ConnectCallback() {
-                        @Override
-                        public void onTokenIncorrect() {
-                            Log.e("connect","onTokenIncorrect");
-                        }
-
-                        @Override
-                        public void onSuccess(String s) {
-                            NToast.shortToast(mContext, "登录成功");
-                            LoadDialog.dismiss(mContext);
-                            Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(mIntent);
-                            LoginActivity.this.finish();
-                        }
-
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-                            Log.e("connect","ErrorCode："+errorCode.getValue());
-                        }
-                    });
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("token", res.getResult().getToken());
+                    edit.commit();
+                    connectServer(res.getResult().getToken());
                 }
-
                 break;
         }
     }
@@ -199,6 +202,30 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         else
             return false;
 
+    }
+
+
+    public void connectServer(String token){
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                Log.e("connect", "onTokenIncorrect");
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                NToast.shortToast(mContext, "登录成功");
+                LoadDialog.dismiss(mContext);
+                Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(mIntent);
+                LoginActivity.this.finish();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("connect", "ErrorCode：" + errorCode.getValue());
+            }
+        });
     }
 
 }
