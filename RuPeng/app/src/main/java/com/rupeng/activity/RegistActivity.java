@@ -1,6 +1,7 @@
 package com.rupeng.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,10 +15,13 @@ import com.rupeng.common.ApiAction;
 import com.rupeng.widget.dialog.LoadDialog;
 import com.sd.core.network.async.AsyncTaskManager;
 import com.sd.core.network.http.HttpException;
+import com.sd.core.network.http.SyncHttpClient;
 import com.sd.core.utils.NToast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import io.rong.imkit.RongIM;
 
 /**
  * Created by AMing on 15/11/10.
@@ -26,6 +30,8 @@ import java.util.regex.Pattern;
 public class RegistActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int REGIST_CODE = 2015;
+
+    private int REGIST_BACK = 1001;
     private EditText mEmail , mPassword ,mUserName;
 
     private Button mButton;
@@ -36,11 +42,15 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
     private String sPassword;
     private String sUserName;
 
+    private SyncHttpClient mSyncHttpClient;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rp_regist_activity);
         mContext = this;
+        mSyncHttpClient = SyncHttpClient.getInstance(mContext);
         setTitle("注册");
         initView();
     }
@@ -95,7 +105,12 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
                     RegistResponse res = (RegistResponse)result;
                     switch (res.getCode()) {
                         case 200:
-                            NToast.shortToast(mContext,"注册成功");
+                            NToast.shortToast(mContext, "注册成功");
+                            Intent data = new Intent();
+                            data.putExtra("email", sEmail);
+                            data.putExtra("password", sPassword);
+                            setResult(REGIST_BACK, data);
+                            RegistActivity.this.finish();
                             break;
                         case 101:
                             NToast.shortToast(mContext,"邮箱已存在");

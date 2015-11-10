@@ -187,7 +187,7 @@
 
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="3argexb6rnxae" />
+            android:value="z3v5yqkbv8v30" />
 
         <meta-data android:value="5637139067e58e7562001447" android:name="UMENG_APPKEY"></meta-data>
         <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> <!-- 渠道推广相关 例如此处豌豆荚-->
