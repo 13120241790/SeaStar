@@ -31,4 +31,8 @@
         <item name="android:maxHeight">10.0dip</item>
 
     </style>
+
+    <style name="dialogFullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

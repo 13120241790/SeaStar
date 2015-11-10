@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.bugtags.library.Bugtags;
+import com.sd.core.utils.NLog;
 import com.umeng.analytics.MobclickAgent;
 
 import io.rong.imkit.RongIM;
@@ -31,6 +32,8 @@ public class App extends Application {
         Bugtags.start(BUGTAGS_APPKEY, this, Bugtags.BTGInvocationEventBubble);
         //友盟session时间间隔
         MobclickAgent.setSessionContinueMillis(30 * 60 * 1000);
+
+        NLog.setDebug(true); //oneCore 打印参数
     }
 
 

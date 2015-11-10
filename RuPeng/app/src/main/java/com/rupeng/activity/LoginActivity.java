@@ -24,12 +24,13 @@ import io.rong.imlib.RongIMClient;
  * Company RongCloud
  */
 public class LoginActivity  extends BaseActivity implements View.OnClickListener {
+    private static final int REGISTCODE = 101;
     // 用户名 密码
     private ClearWriteEditText mUserName , mPassWord;
     // 登录
     private Button  mButtonLogin;
     // 忘记密码 注册 左侧title  又侧title
-    private TextView mFogotPassWord , mRegister;
+    private TextView mFogotPassWord , mRegister,mButtonRegist;
     // 大 logo 图片  背景图片
     private ImageView mLoginImg , mImgBackgroud;
 
@@ -68,12 +69,12 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         mRegister = (TextView) findViewById(R.id.de_login_register);
         mFogotPassWord = (TextView) findViewById(R.id.de_login_forgot);
         mImgBackgroud = (ImageView) findViewById(R.id.de_img_backgroud);
-
+        mButtonRegist = (TextView) findViewById(R.id.de_login_register);
         mButtonLogin.setOnClickListener(this);
         mRegister.setOnClickListener(this);
         mUserName.setOnClickListener(this);
         mPassWord.setOnClickListener(this);
-
+        mButtonRegist.setOnClickListener(this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -91,6 +92,10 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 Intent mIntent = new Intent(this, MainActivity.class);
                 startActivity(mIntent);
                 this.finish();
+                break;
+            case R.id.de_login_register:
+                Intent regIntent = new Intent(this,RegistActivity.class);
+                startActivityForResult(regIntent,REGISTCODE);
                 break;
         }
     }

@@ -144,6 +144,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp"
-        android:text="github.com/13120241790 @ AMing" />
+        android:text="                           注册\n\ngithub.com/13120241790 @ AMing" />
 
 </RelativeLayout>

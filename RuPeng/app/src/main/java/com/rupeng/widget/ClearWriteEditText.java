@@ -40,7 +40,7 @@ public class ClearWriteEditText extends EditText implements View.OnFocusChangeLi
     }
 
     private void init() {
-        mClearDrawable = getResources().getDrawable(R.mipmap.search_clear_pressed_write);
+        mClearDrawable = getResources().getDrawable(R.drawable.search_clear_pressed_write);
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         setClearIconVisible(false);
         this.setOnFocusChangeListener(this);

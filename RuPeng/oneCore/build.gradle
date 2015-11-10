@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 21
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile files('libs/eventbus.jar')
+    compile files('libs/fastjson-1.2.5.jar')
+    compile files('libs/ksoap2.jar')
+    compile files('libs/xpp3_min-1.1.4c.jar')
+    compile files('libs/xstream-1.4.5.jar')
+}

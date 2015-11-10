@@ -10,4 +10,17 @@
     <string name="preview">预览</string>
     <string name="msg_no_camera">没有系统相机</string>
     <string name="msg_amount_limit">已经达到最高选择数量</string>
+
+
+    <!-- dialog相关字段 -->
+    <string name="common_title_tips">温馨提示</string>
+    <string name="common_confirm">确定</string>
+    <string name="common_cancel">取消</string>
+    <string name="take_poto">拍照</string>
+    <string name="import_poto">从本地导入</string>
+    <string name="common_loading_tips">努力加载&#8230;</string>
+    <string name="common_record">按住录音</string>
+    <string name="submit_text">提交</string>
+    <string name="record_time_text">音频时间至少2s，请重试</string>
+    <string name="record_time_max_text">音频时间最长为10s</string>
 </resources>
