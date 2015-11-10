@@ -32,6 +32,7 @@ import io.rong.imlib.RongIMClient;
 /**
  * Created by AMing on 15/11/2.
  * Company RongCloud
+ * 登陆
  */
 public class LoginActivity  extends BaseActivity implements View.OnClickListener {
     private static final int REGISTCODE = 101;
