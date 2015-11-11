@@ -8,9 +8,7 @@ import com.rupeng.bean.basebean.BaseBean;
  */
 public class User extends BaseBean {
 
-
     private static final long serialVersionUID = -6111860036842114327L;
-
 
     /**
      * id : 80892
