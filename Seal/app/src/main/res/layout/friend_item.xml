@@ -39,7 +39,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="阿明"
-            android:textColor="#220000"
+            android:textColor="@color/text_tips_color"
             android:textSize="18sp" />
 
 

@@ -11,12 +11,12 @@ import android.widget.TextView;
  * Created by AMing on 15/11/2.
  * Company RongCloud
  */
-public class RuPengFragment extends Fragment {
-    public static RuPengFragment instance = null;
+public class SealFragment extends Fragment {
+    public static SealFragment instance = null;
 
-    public static RuPengFragment getInstance() {
+    public static SealFragment getInstance() {
         if (instance == null) {
-            instance = new RuPengFragment();
+            instance = new SealFragment();
         }
         return instance;
     }
@@ -25,7 +25,7 @@ public class RuPengFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         TextView tv = new TextView(getActivity());
-        tv.setText("IM");
+        tv.setText("海豹");
         tv.setGravity(1);
         return tv;
     }

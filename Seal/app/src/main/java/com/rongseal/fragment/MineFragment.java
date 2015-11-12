@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.rongseal.R;
@@ -30,6 +31,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
         return instance;
     }
 
+    private LinearLayout LSetting , LAbout , LContact , LCustomerService;
 
     private View fragmentView;
     @Override
@@ -49,6 +51,14 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
         //TODO findviewbyid
         layout_user = (LinearLayout) fragmentView.findViewById(R.id.layout_user);
         layout_user.setOnClickListener(this);
+        LSetting = (LinearLayout) fragmentView.findViewById(R.id.mine_setting);
+        LContact = (LinearLayout) fragmentView.findViewById(R.id.mine_contact);
+        LCustomerService = (LinearLayout) fragmentView.findViewById(R.id.customer_service);
+        LAbout = (LinearLayout) fragmentView.findViewById(R.id.mine_about);
+        LAbout.setOnClickListener(this);
+        LCustomerService.setOnClickListener(this);
+        LContact.setOnClickListener(this);
+        LSetting.setOnClickListener(this);
     }
 
     @Override
@@ -63,6 +73,18 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
                 //TODO 此处需要判断是否登录 如果登录 跳转 DetailActivity  如果没登录 跳转login 此处代码未完
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 startActivityForResult(intent, REFRESH_CODE);
+                break;
+            case R.id.mine_about://关于
+
+                break;
+            case R.id.mine_contact://社交
+
+                break;
+            case R.id.mine_setting://设置
+
+                break;
+            case R.id.customer_service://客服
+
                 break;
         }
     }

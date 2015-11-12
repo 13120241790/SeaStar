@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rongseal.fragment.FriendsFragment;
-import com.rongseal.fragment.RuPengFragment;
+import com.rongseal.fragment.SealFragment;
 import com.rongseal.fragment.MineFragment;
 import com.rongseal.activity.BaseActivity;
 
@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         mViewPager = (ViewPager) findViewById(R.id.rc_viewpager);
         mFriendFragment = FriendsFragment.getInstance();
-        mFragment.add(RuPengFragment.getInstance());
+        mFragment.add(SealFragment.getInstance());
         mFragment.add(mConversationList);
         if (mFriendFragment != null) {
             mFragment.add(mFriendFragment);

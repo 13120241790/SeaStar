@@ -74,11 +74,15 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
 
                 if (TextUtils.isEmpty(sEmail)|TextUtils.isEmpty(sPassword)|TextUtils.isEmpty(sUserName)) {
                     Toast.makeText(this, "注册信息(邮箱,密码,昵称)不能为空", Toast.LENGTH_SHORT).show();
+                    mEmail.setShakeAnimation();
+                    mPassword.setShakeAnimation();
+                    mUserName.setShakeAnimation();
                     return;
                 }
 
                 if (!isEmail(sEmail)) {
                     NToast.shortToast(mContext, "邮箱地址不合法");
+                    mEmail.setShakeAnimation();
                     return;
                 }
                     LoadDialog.show(mContext);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.rongseal.MainActivity;
 import com.rongseal.R;
+import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
@@ -222,6 +223,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
             public void onSuccess(String s) {
                 NToast.shortToast(mContext, "登录成功");
                 LoadDialog.dismiss(mContext);
+                RongCloudEvent.getInstance().setConnectedListener();
                 Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(mIntent);
                 LoginActivity.this.finish();
