@@ -1,4 +1,4 @@
-package com.rongseal.Fragment;
+package com.rongseal.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.rongseal.Fragment.FriendsFragment;
-import com.rongseal.Fragment.RuPengFragment;
-import com.rongseal.Fragment.MineFragment;
+import com.rongseal.fragment.FriendsFragment;
+import com.rongseal.fragment.RuPengFragment;
+import com.rongseal.fragment.MineFragment;
 import com.rongseal.activity.BaseActivity;
 
 import java.util.ArrayList;

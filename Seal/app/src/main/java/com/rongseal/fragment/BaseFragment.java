@@ -1,4 +1,4 @@
-package com.rongseal.Fragment;
+package com.rongseal.fragment;
 
 import android.content.Context;
 import android.content.Intent;
