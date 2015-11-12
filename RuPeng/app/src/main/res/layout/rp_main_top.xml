@@ -17,15 +17,15 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/rp_actionbar_icon" />
+            android:src="@drawable/seal_logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:text="融云"
+            android:text="Seal"
             android:layout_marginLeft="12dp"
-            android:textColor="#d3d3d3" />
+            android:textColor="#FFF" />
 
     </LinearLayout>
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.rupeng.widget.ClearWriteEditText
+    <com.rongseal.widget.ClearWriteEditText
         android:id="@+id/reg_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:paddingRight="10dip"
         android:singleLine="true" />
 
-    <com.rupeng.widget.ClearWriteEditText
+    <com.rongseal.widget.ClearWriteEditText
         android:id="@+id/reg_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         android:paddingRight="10dip"
         android:singleLine="true" />
 
-    <com.rupeng.widget.ClearWriteEditText
+    <com.rongseal.widget.ClearWriteEditText
         android:id="@+id/reg_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

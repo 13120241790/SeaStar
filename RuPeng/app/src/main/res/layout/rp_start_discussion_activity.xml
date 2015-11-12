@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.rupeng.widget.ClearWriteEditText
+    <com.rongseal.widget.ClearWriteEditText
         android:id="@+id/dis_filter_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:textSize="30.0dip"
             android:visibility="invisible" />
 
-        <com.rupeng.pinyin.SideBar
+        <com.rongseal.pinyin.SideBar
             android:id="@+id/dis_sidrbar"
             android:layout_width="30.0dip"
             android:layout_height="fill_parent"

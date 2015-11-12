@@ -50,7 +50,7 @@
                 android:orientation="horizontal">
 
 
-                <com.rupeng.widget.ClearWriteEditText
+                <com.rongseal.widget.ClearWriteEditText
                     android:id="@+id/app_username_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                 android:orientation="horizontal">
 
 
-                <com.rupeng.widget.ClearWriteEditText
+                <com.rongseal.widget.ClearWriteEditText
                     android:id="@+id/app_password_et"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

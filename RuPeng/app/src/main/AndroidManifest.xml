@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rupeng" >
+    package="com.rongseal">
 
 
     <uses-sdk
@@ -32,26 +32,25 @@
 
 
     <application
-        android:name=".App"
+        android:name="com.rongseal.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:name="com.rongseal.MainActivity"
+            android:label="@string/app_name"></activity>
 
-        <activity android:name=".activity.StartDiscussionActivity"></activity>
+        <activity android:name="com.rongseal.activity.StartDiscussionActivity"></activity>
         <!-- 新版相册新增AC -->
-        <activity android:name=".widget.picture.PreviewActivity"></activity>
-        <activity android:name=".widget.picture.MultiImageSelectorActivity"></activity>
-        <activity android:name=".activity.PhotoActivity"></activity>
+        <activity android:name="com.rongseal.widget.picture.PreviewActivity"></activity>
+        <activity android:name="com.rongseal.widget.picture.MultiImageSelectorActivity"></activity>
+        <activity android:name="com.rongseal.activity.PhotoActivity"></activity>
         <!--我的页面-->
-        <activity android:name=".activity.DetailActivity"></activity>
-        <activity android:name=".activity.RegistActivity"></activity>
-        
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name="com.rongseal.activity.DetailActivity"></activity>
+        <activity android:name="com.rongseal.activity.RegistActivity"></activity>
+        <!-- 指引页面 -->
+        <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,16 +58,18 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.rongseal.activity.LoginActivity"></activity>
+
         <activity
-            android:name="com.rupeng.activity.ConversationActivity"
-            android:screenOrientation="portrait" >
+            android:name="com.rongseal.activity.ConversationActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.rupeng"
+                    android:host="com.rongseal"
                     android:pathPrefix="/conversation"
                     android:scheme="rong" />
             </intent-filter>
@@ -76,16 +77,15 @@
 
         <activity
             android:name="io.rong.voipkit.activity.CallSideActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.rupeng"
+                    android:host="com.rongseal"
                     android:pathPrefix="/VoIPCall"
                     android:scheme="rong" />
             </intent-filter>
@@ -93,16 +93,15 @@
         <activity
             android:name="io.rong.voipkit.activity.CalledSideActivity"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="com.rupeng"
+                    android:host="com.rongseal"
                     android:pathPrefix="/VoIPAccept"
                     android:scheme="rong" />
             </intent-filter>
@@ -113,18 +112,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="io.rong.imkit.tools.PreviewPictureActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="io.rong.imkit.tools.RongWebviewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="io.rong.imkit.widget.provider.TakingPicturesActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
-            android:name=".activity.SubConversationListActivity"
+            android:name="com.rongseal.activity.SubConversationListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -133,7 +130,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data
-                    android:host="com.rupeng"
+                    android:host="com.rongseal"
                     android:path="/subconversationlist"
                     android:scheme="rong" />
             </intent-filter>
@@ -142,7 +139,7 @@
 
         <service
             android:name="io.rong.push.PushService"
-            android:process="io.rong.push" >
+            android:process="io.rong.push">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -151,7 +148,7 @@
         </service>
         <service
             android:name="io.rong.push.CommandService"
-            android:process="io.rong.push" >
+            android:process="io.rong.push">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -161,7 +158,7 @@
 
         <receiver
             android:name="io.rong.push.PushReceiver"
-            android:process="io.rong.push" >
+            android:process="io.rong.push">
             <intent-filter>
                 <action android:name="io.rong.imlib.action.push.heartbeat" />
             </intent-filter>
@@ -190,12 +187,11 @@
 
         <service
             android:name="io.rong.imlib.ipc.RongService"
-            android:process=":ipc" >
-        </service>
+            android:process=":ipc"></service>
         <service android:name="io.rong.imlib.ReConnectService" />
 
         <receiver android:name="io.rong.imlib.ConnectChangeReceiver" />
-        <receiver android:name="io.rong.imlib.ipc.PushMessageReceiver" >
+        <receiver android:name="io.rong.imlib.ipc.PushMessageReceiver">
             <intent-filter>
                 <action android:name="io.rong.push.message" />
             </intent-filter>
@@ -205,8 +201,13 @@
             android:name="RONG_CLOUD_APP_KEY"
             android:value="z3v5yqkbv8v30" />
 
-        <meta-data android:value="5637139067e58e7562001447" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> <!-- 渠道推广相关 例如此处豌豆荚-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5637139067e58e7562001447"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Wandoujia" />
+        <!-- 渠道推广相关 例如此处豌豆荚-->
 
     </application>
 

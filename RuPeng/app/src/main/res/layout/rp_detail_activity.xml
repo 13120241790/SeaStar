@@ -1,4 +1,4 @@
-<com.rupeng.widget.pulltorefresh.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.rongseal.widget.pulltorefresh.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshScrollView"
     android:layout_width="match_parent"
@@ -60,6 +60,6 @@
 
     </LinearLayout>
 
-</com.rupeng.widget.pulltorefresh.PullToRefreshScrollView>
+</com.rongseal.widget.pulltorefresh.PullToRefreshScrollView>
 
 
