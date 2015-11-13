@@ -8,16 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rongseal.R;
 import com.rongseal.adapter.SearchListAdapter;
+import com.rongseal.bean.response.SearchEmailResponse;
+import com.rongseal.bean.response.SearchUserNameResponse;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
 import com.sd.core.network.http.HttpException;
 import com.sd.core.utils.NToast;
+import com.squareup.picasso.Picasso;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,6 +41,11 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     private Button searchCommit;
     private String s;
 
+    //搜索单邮箱
+    RelativeLayout singeItem;
+    ImageView singeHead;
+    TextView singeId , singeUserName;
+
     private PullToRefreshListView refreshlistview;
     private SearchListAdapter listAdapter;
     @Override
@@ -46,6 +57,13 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView() {
+
+        singeItem = (RelativeLayout) findViewById(R.id.email_item);
+        singeHead = (ImageView) findViewById(R.id.email_img_head);
+        singeId = (TextView) findViewById(R.id.email_tv_userid);
+        singeUserName = (TextView) findViewById(R.id.email_tv_username);
+
+
 
         refreshlistview = (PullToRefreshListView)findViewById(R.id.refreshlistview);
         searchEdit = (ClearWriteEditText) findViewById(R.id.search_friend);
@@ -117,10 +135,35 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     public void onSuccess(int requestCode, Object result) {
         switch (requestCode) {
             case SEARCH_FRIRND:
-
+                if (result != null) {
+                    SearchUserNameResponse res = (SearchUserNameResponse)result;
+                    if (res.getCode() == 200) {
+                        listAdapter.removeAll();
+                        refreshlistview.setVisibility(View.VISIBLE);
+                        singeItem.setVisibility(View.GONE);
+                        listAdapter.addData(res.getResult());
+                        listAdapter.notifyDataSetChanged();
+                        LoadDialog.dismiss(mContext);
+                    }
+                }
                 break;
             case SEARCH_FRIRND_WITH_EMAIL:
-
+                if (result != null) {
+                    SearchEmailResponse res = (SearchEmailResponse)result;
+                    if (res.getCode() == 200) {
+                        refreshlistview.setVisibility(View.GONE);
+                        singeItem.setVisibility(View.VISIBLE);
+                        LoadDialog.dismiss(mContext);
+                        singeItem.setOnClickListener(this);
+                        singeUserName.setText(res.getResult().getUsername());
+                        singeId.setText("id:" + res.getResult().getId());
+                        Picasso.with(mContext)
+                                .load(res.getResult().getPortrait())
+                                .placeholder(R.drawable.rp_default_head)
+                                .centerCrop()
+                                .into(singeHead);
+                    }
+                }
                 break;
         }
     }
