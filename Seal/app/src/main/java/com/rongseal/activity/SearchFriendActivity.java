@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * Created by AMing on 15/11/12.
  * Company RongCloud
  */
-public class SearchFriendActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener ,PullToRefreshBase.OnRefreshListener2<ListView> {
+public class SearchFriendActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
 
     private static final int SEARCH_FRIRND = 2018;
     private static final int SEARCH_FRIRND_WITH_EMAIL = 2019;
@@ -44,10 +44,11 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     //搜索单邮箱
     RelativeLayout singeItem;
     ImageView singeHead;
-    TextView singeId , singeUserName;
+    TextView singeId, singeUserName;
 
     private PullToRefreshListView refreshlistview;
     private SearchListAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +65,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
         singeUserName = (TextView) findViewById(R.id.email_tv_username);
 
 
-
-        refreshlistview = (PullToRefreshListView)findViewById(R.id.refreshlistview);
+        refreshlistview = (PullToRefreshListView) findViewById(R.id.refreshlistview);
         searchEdit = (ClearWriteEditText) findViewById(R.id.search_friend);
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,7 +110,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
                     searchEdit.setShakeAnimation();
                     return;
                 }
-                LoadDialog.show(mContext,"正在搜索...");
+                LoadDialog.show(mContext, "正在搜索...");
                 if (isEmail(s)) {
                     request(SEARCH_FRIRND_WITH_EMAIL);
                 } else {
@@ -136,7 +136,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
         switch (requestCode) {
             case SEARCH_FRIRND:
                 if (result != null) {
-                    SearchUserNameResponse res = (SearchUserNameResponse)result;
+                    SearchUserNameResponse res = (SearchUserNameResponse) result;
                     if (res.getCode() == 200) {
                         listAdapter.removeAll();
                         refreshlistview.setVisibility(View.VISIBLE);
@@ -144,16 +144,18 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
                         listAdapter.addData(res.getResult());
                         listAdapter.notifyDataSetChanged();
                         LoadDialog.dismiss(mContext);
+                        refreshlistview.onRefreshComplete();
                     }
                 }
                 break;
             case SEARCH_FRIRND_WITH_EMAIL:
                 if (result != null) {
-                    SearchEmailResponse res = (SearchEmailResponse)result;
+                    SearchEmailResponse res = (SearchEmailResponse) result;
                     if (res.getCode() == 200) {
                         refreshlistview.setVisibility(View.GONE);
                         singeItem.setVisibility(View.VISIBLE);
                         LoadDialog.dismiss(mContext);
+                        refreshlistview.onRefreshComplete();
                         singeItem.setOnClickListener(this);
                         singeUserName.setText(res.getResult().getUsername());
                         singeId.setText("id:" + res.getResult().getId());
@@ -172,10 +174,12 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case SEARCH_FRIRND:
-
+                LoadDialog.dismiss(mContext);
+                refreshlistview.onRefreshComplete();
                 break;
             case SEARCH_FRIRND_WITH_EMAIL:
-
+                LoadDialog.dismiss(mContext);
+                refreshlistview.onRefreshComplete();
                 break;
         }
     }
@@ -210,8 +214,19 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
+        if (TextUtils.isEmpty(s)) {
+            NToast.shortToast(mContext, "关键字不能为空");
+            refreshlistview.onRefreshComplete();
+            return;
+        }
+        LoadDialog.show(mContext, "正在搜索");
+        if (isEmail(s)) {
+            request(SEARCH_FRIRND_WITH_EMAIL);
+        } else {
+            request(SEARCH_FRIRND);
+        }
     }
+
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
