@@ -6,4 +6,8 @@
 ##### -> preview:
 ![image](https://github.com/13120241790/Seal/blob/master/preview.gif)
 
+##### Experience: [download_APK](https://github.com/13120241790/Seal/blob/master/Seal.apk "悬停显示")  -> Please Click on the Raw
+
+
+
 >> Thanks @ compny rongcloud @ bob  @ huixinwu 
