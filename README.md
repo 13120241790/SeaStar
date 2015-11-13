@@ -4,6 +4,6 @@
 #### The content is IM
 
 ##### -> preview:
-![image](https://github.com/13120241790/Seal/preview.gif)
+![image](https://github.com/13120241790/Seal/blob/master/preview.gif)
 
 >> Thanks @ compny rongcloud @ bob  @ huixinwu 
