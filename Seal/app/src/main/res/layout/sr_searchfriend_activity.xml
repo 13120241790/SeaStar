@@ -1,0 +1,124 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/text_select_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="3dip"
+        android:paddingLeft="10dip" >
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/ic_search_bg"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <com.rongseal.widget.ClearWriteEditText
+                android:id="@+id/search_friend"
+                android:layout_width="match_parent"
+                android:layout_height="38dip"
+                android:background="@null"
+                android:drawableLeft="@drawable/btn_search"
+                android:drawablePadding="5dip"
+                android:hint="请输入关键字"
+                android:maxLength="30"
+                android:paddingBottom="3dip"
+                android:paddingLeft="5dip"
+                android:paddingRight="5dip"
+                android:paddingTop="3dip"
+                android:singleLine="true"
+                android:textColor="@drawable/selector_submit_txt2"
+                android:textColorHint="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/search_commit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/selector_btn_blue"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:text="@string/common_cancel"
+            android:textColor="@drawable/selector_submit_txt1"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.rongseal.widget.pulltorefresh.PullToRefreshListView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshlistview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:dividerHeight="0dip"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:scrollbars="none"
+        android:smoothScrollbar="true"
+        app:ptrAnimationStyle="flip" />
+
+</LinearLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<com.rongseal.widget.ClearWriteEditText-->
+            <!--android:id="@+id/search_friend"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="5"-->
+            <!--android:drawableLeft="@drawable/rp_search_bar_icon_normal"-->
+            <!--android:hint="请输入昵称查找或按邮箱精确查找"-->
+            <!--android:singleLine="true"-->
+            <!--android:textSize="15sp" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/search_commit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/de_pic_action_btn"-->
+            <!--android:minHeight="1dp"-->
+            <!--android:minWidth="1dp"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:paddingRight="10dp"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:text="确定"-->
+            <!--android:textColor="@color/de_pic_default_text_color"-->
+            <!--android:textSize="14sp" />-->
+
+
+    <!--</LinearLayout>-->
+<!--</LinearLayout>-->

@@ -17,7 +17,8 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"/>
 		
-		<TextView 
+		<TextView
+			android:id="@+id/show_message"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="10dip"

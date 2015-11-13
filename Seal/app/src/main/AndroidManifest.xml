@@ -48,6 +48,11 @@
         <activity android:name="com.rongseal.activity.PhotoActivity"></activity>
         <!--我的页面-->
         <activity android:name="com.rongseal.activity.DetailActivity"></activity>
+
+        <activity android:name=".activity.ContactActivity"></activity>
+
+        <activity android:name=".activity.SearchFriendActivity"></activity>
+
         <activity android:name="com.rongseal.activity.RegistActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">

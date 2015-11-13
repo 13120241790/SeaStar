@@ -23,4 +23,5 @@
     <string name="submit_text">提交</string>
     <string name="record_time_text">音频时间至少2s，请重试</string>
     <string name="record_time_max_text">音频时间最长为10s</string>
+    <string name="search_text">搜索</string>
 </resources>

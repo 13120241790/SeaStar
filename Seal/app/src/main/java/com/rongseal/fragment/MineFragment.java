@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.rongseal.R;
+import com.rongseal.activity.ContactActivity;
 import com.rongseal.activity.DetailActivity;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 
@@ -78,7 +79,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
                 break;
             case R.id.mine_contact://社交
-
+                startActivity(new Intent(getActivity(),ContactActivity.class));
                 break;
             case R.id.mine_setting://设置
 
