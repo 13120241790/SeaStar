@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.rongseal.R;
 import com.rongseal.activity.ContactActivity;
-import com.rongseal.activity.DetailActivity;
+import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 
 /**
@@ -72,7 +71,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
         switch (v.getId()) {
             case R.id.layout_user:
                 //TODO 此处需要判断是否登录 如果登录 跳转 DetailActivity  如果没登录 跳转login 此处代码未完
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                Intent intent = new Intent(getActivity(), MyDetailActivity.class);
                 startActivityForResult(intent, REFRESH_CODE);
                 break;
             case R.id.mine_about://关于

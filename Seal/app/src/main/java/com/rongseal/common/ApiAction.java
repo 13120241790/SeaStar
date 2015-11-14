@@ -3,6 +3,7 @@ package com.rongseal.common;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.rongseal.bean.response.AddFriendResponse;
 import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.bean.response.RegistResponse;
 import com.rongseal.bean.response.SearchEmailResponse;
@@ -100,6 +101,26 @@ public class ApiAction extends BaseAction {
         String result = httpManager.get(uri,params);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result,SearchEmailResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 请求加好友
+     * @param userid
+     * @param message
+     * @return
+     * @throws HttpException
+     */
+    public AddFriendResponse addFriend(String userid ,String message) throws HttpException{
+        String uri = getURL("request_friend");
+        RequestParams params =  getRequestParams();
+        params.put("id",userid);
+        params.put("message",message);
+        AddFriendResponse response = null;
+        String result = httpManager.post(uri,params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,AddFriendResponse.class);
         }
         return response;
     }

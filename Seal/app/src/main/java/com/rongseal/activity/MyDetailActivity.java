@@ -10,7 +10,7 @@ import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class DetailActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener{
+public class MyDetailActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

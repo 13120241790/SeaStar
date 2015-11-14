@@ -47,11 +47,13 @@
         <activity android:name="com.rongseal.widget.picture.MultiImageSelectorActivity"></activity>
         <activity android:name="com.rongseal.activity.PhotoActivity"></activity>
         <!--我的页面-->
-        <activity android:name="com.rongseal.activity.DetailActivity"></activity>
+        <activity android:name=".activity.MyDetailActivity"></activity>
 
         <activity android:name=".activity.ContactActivity"></activity>
 
         <activity android:name=".activity.SearchFriendActivity"></activity>
+
+        <activity android:name=".activity.UserDetailActivity"></activity>
 
         <activity android:name="com.rongseal.activity.RegistActivity"></activity>
         <!-- 指引页面 -->

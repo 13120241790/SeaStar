@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_item_bg"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/detail_head"
+            android:layout_width="80dip"
+            android:layout_height="80dip"
+            android:layout_margin="15dip"
+            android:src="@drawable/rp_default_head" />
+
+        <TextView
+            android:id="@+id/detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:textSize="22dp" />
+
+        <TextView
+            android:id="@+id/detail_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:singleLine="true"
+            android:textSize="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/search_img_head"
+            android:background="@color/text_line_color" />
+
+    </LinearLayout>
+
+
+    <com.rongseal.widget.ClearWriteEditText
+        android:id="@+id/add_friend_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:textSize="16sp"
+        android:textColor="@color/group_list_gray"
+        android:drawableLeft="@drawable/sr_add_friendmessage"
+        android:drawablePadding="5dip"
+        android:hint="我想对你说些什么..."
+        android:textColorHint="@color/text_line_color"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/add_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/de_pic_action_btn"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="添加好友"
+        android:textColor="@color/de_pic_default_text_color"
+        android:textSize="14sp" />
+
+
+</LinearLayout>

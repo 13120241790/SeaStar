@@ -1,5 +1,6 @@
 package com.rongseal.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -48,6 +49,8 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     private PullToRefreshListView refreshlistview;
     private SearchListAdapter listAdapter;
+    private SearchEmailResponse mailRes;
+    private SearchUserNameResponse userNameRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +93,8 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
         searchCommit = (Button) findViewById(R.id.search_commit);
         searchCommit.setOnClickListener(this);
-
+        singeItem.setOnClickListener(this);
         refreshlistview.setEmptyView(LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null));
-//        refreshlistview.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), true, true));
         refreshlistview.setOnItemClickListener(this);
         refreshlistview.setOnRefreshListener(this);
 
@@ -117,6 +119,13 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
                     request(SEARCH_FRIRND);
                 }
                 break;
+            case R.id.email_item:
+                Intent intent = new Intent(this,UserDetailActivity.class);
+                intent.putExtra("search_username",mailRes.getResult().getUsername());
+                intent.putExtra("search_userid",mailRes.getResult().getId());
+                intent.putExtra("search_portrait",mailRes.getResult().getPortrait());
+                startActivity(intent);
+                break;
         }
     }
 
@@ -136,12 +145,12 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
         switch (requestCode) {
             case SEARCH_FRIRND:
                 if (result != null) {
-                    SearchUserNameResponse res = (SearchUserNameResponse) result;
-                    if (res.getCode() == 200) {
+                    userNameRes = (SearchUserNameResponse) result;
+                    if (userNameRes.getCode() == 200) {
                         listAdapter.removeAll();
                         refreshlistview.setVisibility(View.VISIBLE);
                         singeItem.setVisibility(View.GONE);
-                        listAdapter.addData(res.getResult());
+                        listAdapter.addData(userNameRes.getResult());
                         listAdapter.notifyDataSetChanged();
                         LoadDialog.dismiss(mContext);
                         refreshlistview.onRefreshComplete();
@@ -150,17 +159,17 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
                 break;
             case SEARCH_FRIRND_WITH_EMAIL:
                 if (result != null) {
-                    SearchEmailResponse res = (SearchEmailResponse) result;
-                    if (res.getCode() == 200) {
+                    mailRes = (SearchEmailResponse) result;
+                    if (mailRes.getCode() == 200) {
                         refreshlistview.setVisibility(View.GONE);
                         singeItem.setVisibility(View.VISIBLE);
                         LoadDialog.dismiss(mContext);
                         refreshlistview.onRefreshComplete();
                         singeItem.setOnClickListener(this);
-                        singeUserName.setText(res.getResult().getUsername());
-                        singeId.setText("id:" + res.getResult().getId());
+                        singeUserName.setText(mailRes.getResult().getUsername());
+                        singeId.setText("id:" + mailRes.getResult().getId());
                         Picasso.with(mContext)
-                                .load(res.getResult().getPortrait())
+                                .load(mailRes.getResult().getPortrait())
                                 .placeholder(R.drawable.rp_default_head)
                                 .centerCrop()
                                 .into(singeHead);
@@ -209,7 +218,13 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //TODO 此处需要检查是自己 是自己不给开启  代码未编写
 
+        Intent intent = new Intent(this,UserDetailActivity.class);
+        intent.putExtra("search_username",userNameRes.getResult().get(position-1).getUsername());
+        intent.putExtra("search_userid",userNameRes.getResult().get(position-1).getId());
+        intent.putExtra("search_portrait",userNameRes.getResult().get(position-1).getPortrait());
+        startActivity(intent);
     }
 
     @Override
