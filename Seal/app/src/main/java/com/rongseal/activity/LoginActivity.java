@@ -227,7 +227,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 NToast.shortToast(mContext, "登录成功");
                 LoadDialog.dismiss(mContext);
                 RongCloudEvent.getInstance().setConnectedListener();
-                Log.e("test", "test2");
+                Log.e("userid", "userid"+s);
                 Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(mIntent);
                 LoginActivity.this.finish();

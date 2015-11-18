@@ -102,10 +102,10 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
                 case 1://好友
                     break;
                 case 2://请求添加
-                    LoadDialog.show(mContext);
-                    request(FEEKBACKFRIENDREQUEST);
                     break;
                 case 3://请求被添加
+                    LoadDialog.show(mContext);
+                    request(FEEKBACKFRIENDREQUEST);
                     break;
                 case 4://请求被拒绝
                     break;
