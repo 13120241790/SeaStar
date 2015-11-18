@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.rongseal.R;
 
+
 /**
  * Created by AMing on 15/11/12.
  * Company RongCloud
@@ -14,6 +15,7 @@ import com.rongseal.R;
 public class ContactActivity extends BaseActivity implements View.OnClickListener {
 
     private LinearLayout SearchFriend;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,15 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.contact_search :
-                startActivity(new Intent(mContext,SearchFriendActivity.class));
+            case R.id.contact_search:
+                startActivity(new Intent(mContext, SearchFriendActivity.class));
                 break;
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

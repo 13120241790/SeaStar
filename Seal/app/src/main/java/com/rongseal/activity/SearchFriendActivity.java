@@ -1,6 +1,7 @@
 package com.rongseal.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -47,6 +48,8 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     ImageView singeHead;
     TextView singeId, singeUserName;
 
+    SharedPreferences sp;
+
     private PullToRefreshListView refreshlistview;
     private SearchListAdapter listAdapter;
     private SearchEmailResponse mailRes;
@@ -57,6 +60,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setHeadVisibility(View.GONE);
         setContentView(R.layout.sr_searchfriend_activity);
+        sp = getSharedPreferences("config",MODE_PRIVATE);
         initView();
     }
 
@@ -104,6 +108,11 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+       String loginUser =  sp.getString("loginemail","");
+        if (loginUser.equals(s) && !TextUtils.isEmpty(loginUser)) {
+            NToast.shortToast(mContext,"自己不能添加自己");
+            return;
+        }
         switch (v.getId()) {
             case R.id.search_commit:
                 s = searchEdit.getText().toString().trim();

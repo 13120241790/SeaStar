@@ -79,7 +79,7 @@ public class BroadcastManager {
 	
 	/**
 	 * 添加
-	 * @param broadCode
+	 * @param
 	 */
 	public void addAction(String action, BroadcastReceiver receiver){
 		try {
@@ -115,6 +115,7 @@ public class BroadcastManager {
 			e.printStackTrace();
 		}
 	}
+
 	
 	/**
 	 * 销毁广播

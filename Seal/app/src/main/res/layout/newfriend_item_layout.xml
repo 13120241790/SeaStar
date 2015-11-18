@@ -5,7 +5,7 @@
     android:background="@drawable/selector_item_bg">
 
     <ImageView
-        android:id="@+id/search_img_head"
+        android:id="@+id/new_friend_img_head"
         android:layout_width="36sp"
         android:layout_height="36sp"
         android:layout_gravity="center_vertical"
@@ -14,11 +14,11 @@
 
 
     <TextView
-        android:id="@+id/tv_username"
+        android:id="@+id/nf_tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
-        android:layout_toRightOf="@id/search_img_head"
+        android:layout_toRightOf="@id/new_friend_img_head"
         android:singleLine="true"
         android:text="AMing"
         android:textColor="@color/text_tips_color"
@@ -26,11 +26,11 @@
 
 
     <TextView
-        android:id="@+id/tv_userid"
+        android:id="@+id/nf_tv_userid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/search_img_head"
-        android:layout_toRightOf="@id/search_img_head"
+        android:layout_alignBottom="@id/new_friend_img_head"
+        android:layout_toRightOf="@id/new_friend_img_head"
         android:paddingTop="5dp"
         android:singleLine="true"
         android:text="3326"
@@ -38,20 +38,24 @@
         android:textSize="14sp" />
 
 
-    <ImageView
+
+    <TextView
+        android:id="@+id/item_friend_state"
+        android:textSize="16sp"
+        android:textColor="#353535"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/rp_arrow" />
-
+        android:layout_marginRight="16dp"
+        android:text="预览"
+        android:gravity="center" />
 
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/search_img_head"
+        android:layout_below="@id/new_friend_img_head"
         android:background="@color/text_line_color" />
 
 </RelativeLayout>

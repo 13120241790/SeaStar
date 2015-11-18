@@ -1,5 +1,6 @@
 package com.rongseal.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -32,16 +33,11 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
     private String addMessage, sUserId;
 
-//    intent.putExtra("search_username",userNameRes.getResult().get(position).getUsername());
-//    intent.putExtra("search_userid",userNameRes.getResult().get(position).getId());
-//    intent.putExtra("search_portrait",userNameRes.getResult().get(position).getPortrait());
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("用户信息");
         setContentView(R.layout.sr_userdetail_activity);
-
         initView();
     }
 

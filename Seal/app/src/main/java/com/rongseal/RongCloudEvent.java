@@ -2,31 +2,40 @@ package com.rongseal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.rongseal.activity.PhotoActivity;
+import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.widget.picture.PhotoInputProvider;
+import com.sd.core.common.broadcast.BroadcastManager;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.provider.CameraInputProvider;
 import io.rong.imkit.widget.provider.InputProvider;
 import io.rong.imkit.widget.provider.LocationInputProvider;
 import io.rong.imkit.widget.provider.VoIPInputProvider;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.ContactNotificationMessage;
 import io.rong.message.ImageMessage;
 
 /**
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class RongCloudEvent implements RongIM.ConversationBehaviorListener {
+public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener {
 
+    public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     private static RongCloudEvent mRongCloudInstance;
 
     private Context mContext;
+
     /**
      * 初始化 RongCloud.
      *
@@ -51,19 +60,25 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener {
         this.mContext = mContext;
         //初始化不需要 connect 就能 监听的 Listener
         initListener();
+
     }
 
     /**
      * init 后就能设置的监听
      */
     private void initListener() {
+//        de.greenrobot.event.EventBus.getDefault().register(this);
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
+        RongIM.setConversationListBehaviorListener(this);
     }
 
     /**
      * 需要 rongcloud connect 成功后设置的 listener
      */
-    public void setConnectedListener(){
+    public void setConnectedListener() {
+        Log.e("test", "test3");
+        RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(this);
+
         //        扩展功能自定义  singleProvider 语音 voip 只支持单对单
         InputProvider.ExtendProvider[] singleProvider = {
                 new PhotoInputProvider(RongContext.getInstance()),//图片
@@ -96,6 +111,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener {
 
     /**
      * 点击头像的监听
+     *
      * @param context
      * @param conversationType
      * @param userInfo
@@ -108,6 +124,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener {
 
     /**
      * 会话界面长按头像的监听
+     *
      * @param context
      * @param conversationType
      * @param userInfo
@@ -120,6 +137,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener {
 
     /**
      * 会话界面点击消息的监听
+     *
      * @param context
      * @param view
      * @param message
@@ -145,13 +163,40 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener {
 
     /**
      * 会话界面长按消息的监听
+     *
      * @param context
      * @param view
      * @param message
-     * @return  false 走融云默认监听
+     * @return false 走融云默认监听
      */
     @Override
     public boolean onMessageLongClick(Context context, View view, Message message) {
+        return false;
+    }
+
+    @Override
+    public boolean onReceived(Message message, int i) {
+        MessageContent messageContent = message.getContent();
+        if (messageContent instanceof ContactNotificationMessage) {
+            ContactNotificationMessage contactContentMessage = (ContactNotificationMessage) messageContent;
+            BroadcastManager.getInstance(mContext).sendBroadcast(FRIEND_MESSAGE, contactContentMessage);
+            Log.e("BroadcastManager", "BroadcastManager");
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+        return false;
+    }
+
+    @Override
+    public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+        MessageContent messageContent = uiConversation.getMessageContent();
+        if (messageContent instanceof ContactNotificationMessage) {
+            context.startActivity(new Intent(context, ValidationMessageActivity.class));
+            return true;
+        }
         return false;
     }
 }

@@ -55,6 +55,8 @@
 
         <activity android:name=".activity.UserDetailActivity"></activity>
 
+        <activity android:name=".activity.ValidationMessageActivity"></activity>
+
         <activity android:name="com.rongseal.activity.RegistActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">

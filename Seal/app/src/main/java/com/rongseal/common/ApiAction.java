@@ -4,7 +4,9 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.rongseal.bean.response.AddFriendResponse;
+import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.LoginResponse;
+import com.rongseal.bean.response.NewFriendsListResponse;
 import com.rongseal.bean.response.RegistResponse;
 import com.rongseal.bean.response.SearchEmailResponse;
 import com.rongseal.bean.response.SearchUserNameResponse;
@@ -118,9 +120,44 @@ public class ApiAction extends BaseAction {
         params.put("id",userid);
         params.put("message",message);
         AddFriendResponse response = null;
-        String result = httpManager.post(uri,params);
+        String result = httpManager.post(uri, params);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result,AddFriendResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 获取新朋友的列表
+     * @return
+     * @throws HttpException
+     */
+    public NewFriendsListResponse getNewFriendsList() throws HttpException{
+        String uri = getURL("get_friend");
+        NewFriendsListResponse response = null;
+        String result = httpManager.get(uri);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,NewFriendsListResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 处理好友请求
+     * @param userid
+     * @param isaccess 1为同意 不点击为 默认不处理
+     * @return
+     * @throws HttpException
+     */
+    public FeedBackFriendRequestResponse FeedBackFriendRequest(String userid , String isaccess) throws HttpException{
+        String uri = getURL("process_request_friend");
+        RequestParams params = getRequestParams();
+        params.put("id",userid);
+        params.put("is_access",isaccess);
+        FeedBackFriendRequestResponse response = null;
+        String result = httpManager.post(uri,params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,FeedBackFriendRequestResponse.class);
         }
         return response;
     }

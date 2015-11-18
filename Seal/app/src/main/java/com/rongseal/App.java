@@ -3,11 +3,14 @@ package com.rongseal;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.bugtags.library.Bugtags;
+import com.rongseal.message.ContactNotificationMessageProvider;
 import com.sd.core.utils.NLog;
 import com.umeng.analytics.MobclickAgent;
 
+import de.greenrobot1.event.EventBus;
 import io.rong.imkit.RongIM;
 
 /**
@@ -25,6 +28,7 @@ public class App extends Application {
         RongIM.init(this);
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             RongCloudEvent.init(this);
+            RongIM.registerMessageTemplate(new ContactNotificationMessageProvider());
         }
         // BugTags 初始化
         Bugtags.start(BUGTAGS_APPKEY, this, Bugtags.BTGInvocationEventBubble);
@@ -37,6 +41,7 @@ public class App extends Application {
 
     /**
      * 获取当前进程 name
+     *
      * @param context
      * @return
      */

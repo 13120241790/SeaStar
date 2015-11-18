@@ -156,6 +156,9 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                     edit.putString("token", res.getResult().getToken());
                     edit.commit();
                     connectServer(res.getResult().getToken());
+                }else if (res.getCode() == 104) {
+                    LoadDialog.dismiss(mContext);
+                    NToast.shortToast(mContext,"邮箱或者密码错误");
                 }
                 break;
         }
@@ -224,6 +227,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 NToast.shortToast(mContext, "登录成功");
                 LoadDialog.dismiss(mContext);
                 RongCloudEvent.getInstance().setConnectedListener();
+                Log.e("test", "test2");
                 Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(mIntent);
                 LoginActivity.this.finish();
