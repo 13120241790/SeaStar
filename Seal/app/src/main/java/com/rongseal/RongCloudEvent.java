@@ -36,6 +36,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
+    public static final String REFRESHUI = "refreshUI";
     private static RongCloudEvent mRongCloudInstance;
 
     private Context mContext;
@@ -183,15 +184,20 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         MessageContent messageContent = message.getContent();
         if (messageContent instanceof ContactNotificationMessage) {
             BroadcastManager.getInstance(mContext).sendBroadcast(FRIEND_MESSAGE);
-        } else if (messageContent instanceof AgreedFriendRequestMessage) {
-            AgreedFriendRequestMessage afrm = (AgreedFriendRequestMessage) messageContent;
-            UserInfo userInfo = afrm.getUserInfo();
-            if (userInfo != null) {
-                DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(userInfo.getUserId(), userInfo.getName(), userInfo.getPortraitUri().toString()));
+        } else {
+            if (messageContent instanceof AgreedFriendRequestMessage) {
+                AgreedFriendRequestMessage afrm = (AgreedFriendRequestMessage) messageContent;
+                UserInfo userInfo = afrm.getUserInfo();
+                if (userInfo != null) {
+                    DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(userInfo.getUserId(), userInfo.getName(), userInfo.getPortraitUri().toString()));
+                    BroadcastManager.getInstance(mContext).sendBroadcast(RongCloudEvent.REFRESHUI);
+                }
             }
         }
         return false;
     }
+
+
 
     @Override
     public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
@@ -208,4 +214,5 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         }
         return false;
     }
+
 }

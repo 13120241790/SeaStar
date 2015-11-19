@@ -26,7 +26,7 @@
             android:textSize="16dp"
             android:layout_gravity="center"
             android:textColor="@android:color/darker_gray"
-            android:visibility="gone"
+            android:visibility="visible"
             />
 
         <ListView

@@ -1,5 +1,7 @@
 package com.rongseal.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +15,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rongseal.MainActivity;
 import com.rongseal.R;
+import com.rongseal.RongCloudEvent;
 import com.rongseal.activity.StartDiscussionActivity;
+import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.adapter.FriendAdapter;
 import com.rongseal.bean.Friend;
 import com.rongseal.db.com.rongseal.database.DBManager;
@@ -23,6 +28,7 @@ import com.rongseal.pinyin.CharacterParser;
 import com.rongseal.pinyin.PinyinComparator;
 import com.rongseal.pinyin.SideBar;
 import com.rongseal.widget.ClearWriteEditText;
+import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.utils.NLog;
 
 import java.io.Serializable;
@@ -31,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 
 /**
@@ -38,7 +45,7 @@ import io.rong.imkit.RongIM;
  * Company RongCloud
  */
 public class FriendsFragment extends Fragment implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
-
+    //不带字母的数据集合
     private List<Friend> mSourceDateList = new ArrayList<>();
 
     public static FriendsFragment instance = null;
@@ -79,6 +86,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
+    //带字母的集合
     private List<Friend> SourceDateList;
 
     /**
@@ -90,26 +98,49 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.rp_friend_fragment, null);
+        refreshUIListener();
+
         initView();
         return mView;
+    }
+
+    private void refreshUIListener() {
+        BroadcastManager.getInstance(getActivity()).addAction(RongCloudEvent.REFRESHUI, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    friendDao = DBManager.getInstance(getActivity()).getDaoSession().getFriendDao();
+                    QueryBuilder<com.rongseal.db.Friend> qb = friendDao.queryBuilder();
+                    if (qb.list().size() > 0 && qb.list() != null) {
+                        mSourceDateList.clear();
+                        SourceDateList.clear();
+                        for (int i = 0; i < qb.list().size(); i++) {
+                            com.rongseal.db.Friend bean = qb.list().get(i);
+                            mSourceDateList.add(new Friend(bean.getUserId(), bean.getName(), bean.getPortraitUri()));
+                        }
+                        SourceDateList = filledData(mSourceDateList);
+                        Collections.sort(SourceDateList, pinyinComparator);
+                        adapter.updateListView(SourceDateList);
+                        if (SourceDateList.size() > 0) {
+                            show_no_friends.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void initView() {
         //实例化汉字转拼音类
         characterParser = CharacterParser.getInstance();
         pinyinComparator = PinyinComparator.getInstance();
-
-        //自动搜索
         mAboutSerrch = (ClearWriteEditText) mView.findViewById(R.id.filter_edit);
-        //好友列表
         mListView = (ListView) mView.findViewById(R.id.friendlistview);
-        //右侧好友指示 bar
         mSidBar = (SideBar) mView.findViewById(R.id.sidrbar);
-        //中间提示的字母
         dialog = (TextView) mView.findViewById(R.id.dialog);
         show_no_friends = (TextView) mView.findViewById(R.id.show_no_friends);
         mSidBar.setTextView(dialog);
-
         //设置右侧触摸监听
         mSidBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
 
@@ -138,9 +169,8 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         }
 
         SourceDateList = filledData(mSourceDateList); //过滤数据对象为友字母字段
-        if (SourceDateList.size() == 0) {
-            //背景提示没有好友
-            show_no_friends.setVisibility(View.VISIBLE);
+        if (SourceDateList.size() > 0) {
+            show_no_friends.setVisibility(View.GONE);
         }
         // 根据a-z进行排序源数据
         Collections.sort(SourceDateList, pinyinComparator);
@@ -148,7 +178,6 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         mListView.setAdapter(adapter);
         mListView.setOnItemLongClickListener(this);
         mListView.setOnItemClickListener(this);
-
         //根据输入框输入值的改变来过滤搜索  顶部实时搜索
         mAboutSerrch.addTextChangedListener(new TextWatcher() {
 
@@ -254,5 +283,11 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         if (RongIM.getInstance() != null) {
             RongIM.getInstance().startPrivateChat(getActivity(), mSourceDateList.get(position).getUserId(), mSourceDateList.get(position).getName());
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        BroadcastManager.getInstance(getActivity()).destroy(RongCloudEvent.REFRESHUI);
     }
 }

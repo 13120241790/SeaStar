@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.rongseal.MainActivity;
 import com.rongseal.R;
+import com.rongseal.RongCloudEvent;
 import com.rongseal.adapter.NewFriendsAdapter;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
@@ -18,10 +20,12 @@ import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
+import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
 import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -45,6 +49,7 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
     private FeedBackFriendRequestResponse feekRes;
 
     private SharedPreferences sp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,11 +115,14 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
                         NewFriendsListResponse.ResultEntity bean = res.getResult().get(index);
                         DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(bean.getId(), bean.getUsername(), bean.getPortrait()));
                         sendAgreeMessage(res.getResult().get(index).getId());
+                        BroadcastManager.getInstance(mContext).sendBroadcast(RongCloudEvent.REFRESHUI);
+                        request(GETNEWFRIENDS);//刷新按钮UI
                     }
                 }
                 break;
         }
     }
+
 
     private int index;
     NewFriendsAdapter.OnItemButtonClick mOnItemButtonClick = new NewFriendsAdapter.OnItemButtonClick() {

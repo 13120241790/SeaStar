@@ -1,14 +1,19 @@
 package com.rongseal.adapter;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rongseal.R;
+import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.NewFriendsListResponse;
+import com.sd.core.common.broadcast.BroadcastManager;
 
 /**
  * Created by AMing on 15/11/17.
