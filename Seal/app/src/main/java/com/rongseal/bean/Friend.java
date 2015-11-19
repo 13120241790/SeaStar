@@ -20,9 +20,10 @@ public class Friend extends BaseBean{
     String token; // 融云 token
 
     //这个构造临时模拟数据使用
-    public Friend(String name, String userId) {
+    public Friend(String userId, String name ,String uri) {
         this.name = name;
         this.userId = userId;
+        this.uri = uri;
     }
 
     public Friend() {

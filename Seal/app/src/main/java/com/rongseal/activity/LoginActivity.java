@@ -17,11 +17,15 @@ import com.rongseal.MainActivity;
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.LoginResponse;
+import com.rongseal.bean.response.NewFriendsListResponse;
+import com.rongseal.db.Friend;
+import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.network.http.HttpException;
 import com.sd.core.utils.NToast;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,19 +37,20 @@ import io.rong.imlib.RongIMClient;
  * Company RongCloud
  * 登陆
  */
-public class LoginActivity  extends BaseActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private static final int REGISTCODE = 101;
     private static final int LOGIN_CODE = 2016;
+    private static final int SYNCFRIEND = 199;
     // 用户名 密码
-    private ClearWriteEditText mUserName , mPassWord;
+    private ClearWriteEditText mUserName, mPassWord;
     // 登录
-    private Button  mButtonLogin;
+    private Button mButtonLogin;
     // 忘记密码 注册 左侧title  又侧title
-    private TextView mFogotPassWord , mRegister,mButtonRegist;
+    private TextView mRegister, mButtonRegist;
     // 大 logo 图片  背景图片
-    private ImageView mLoginImg , mImgBackgroud;
+    private ImageView mImgBackgroud;
 
-    private String sUserName,sPassword;
+    private String sUserName, sPassword;
 
     private SharedPreferences sp;
 
@@ -58,12 +63,10 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        mLoginImg = (ImageView) findViewById(R.id.de_login_logo);
         mUserName = (ClearWriteEditText) findViewById(R.id.app_username_et);
         mPassWord = (ClearWriteEditText) findViewById(R.id.app_password_et);
         mButtonLogin = (Button) findViewById(R.id.app_sign_in_bt);
         mRegister = (TextView) findViewById(R.id.de_login_register);
-        mFogotPassWord = (TextView) findViewById(R.id.de_login_forgot);
         mImgBackgroud = (ImageView) findViewById(R.id.de_img_backgroud);
         mButtonRegist = (TextView) findViewById(R.id.de_login_register);
         mButtonLogin.setOnClickListener(this);
@@ -79,13 +82,13 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
             }
         }, 200);
 
-        sp = getSharedPreferences("config",MODE_PRIVATE);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         String old_username = sp.getString("loginemail", "");
         String old_password = sp.getString("loginpassword", "");
 
 
         SharedPreferences.Editor edit = sp.edit();
-        edit.putBoolean("fristlogin",false);
+        edit.putBoolean("fristlogin", false);
         edit.commit();
 
         mUserName.setText(old_username);
@@ -96,8 +99,8 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.app_sign_in_bt:
-               sUserName =  mUserName.getText().toString().trim();
-               sPassword =  mPassWord.getText().toString().trim();
+                sUserName = mUserName.getText().toString().trim();
+                sPassword = mPassWord.getText().toString().trim();
                 if (TextUtils.isEmpty(sUserName)) {
                     NToast.shortToast(mContext, "用户名不能为空");
                     mUserName.setShakeAnimation();
@@ -109,14 +112,14 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                     return;
                 }
                 if (!isEmail(sUserName)) {
-                    NToast.shortToast(mContext,"邮箱地址不合法");
+                    NToast.shortToast(mContext, "邮箱地址不合法");
                     return;
                 }
                 LoadDialog.show(mContext, "正在登陆...");
-                String sToken = sp.getString("token",null);
-                if (!TextUtils.isEmpty(sToken) && sUserName.equals(sp.getString("loginemail",""))) {
+                String sToken = sp.getString("token", null);
+                if (!TextUtils.isEmpty(sToken) && sUserName.equals(sp.getString("loginemail", ""))) {
                     connectServer(sToken);
-                }else{
+                } else {
                     request(LOGIN_CODE);
                 }
 
@@ -124,13 +127,13 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 SharedPreferences.Editor edit = sp.edit();
                 edit.putString("loginemail", sUserName);
                 edit.putString("loginpassword", sPassword);
-                edit.putBoolean("fristlogin",true);
+                edit.putBoolean("fristlogin", true);
                 edit.commit();
 
                 break;
             case R.id.de_login_register:
-                Intent regIntent = new Intent(this,RegistActivity.class);
-                startActivityForResult(regIntent,REGISTCODE);
+                Intent regIntent = new Intent(this, RegistActivity.class);
+                startActivityForResult(regIntent, REGISTCODE);
                 break;
         }
     }
@@ -138,9 +141,11 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
 
     @Override
     public Object doInBackground(int requestCode) throws HttpException {
-        switch (requestCode){
+        switch (requestCode) {
             case LOGIN_CODE:
-              return action.login(sUserName,sPassword);
+                return action.login(sUserName, sPassword);
+            case SYNCFRIEND:
+                return action.getNewFriendsList();
         }
         return super.doInBackground(requestCode);
     }
@@ -150,23 +155,47 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     public void onSuccess(int requestCode, Object result) {
         switch (requestCode) {
             case LOGIN_CODE:
-                LoginResponse res = (LoginResponse)result;
+                LoginResponse res = (LoginResponse) result;
                 if (res.getCode() == 200) {
                     SharedPreferences.Editor edit = sp.edit();
                     edit.putString("token", res.getResult().getToken());
-                    edit.putString("portrait",res.getResult().getPortrait());
-                    edit.putString("userid",res.getResult().getId());
-                    edit.putString("username",res.getResult().getUsername());
+                    edit.putString("portrait", res.getResult().getPortrait());
+                    edit.putString("userid", res.getResult().getId());
+                    edit.putString("username", res.getResult().getUsername());
                     edit.commit();
                     connectServer(res.getResult().getToken());
-                }else if (res.getCode() == 104) {
+                } else if (res.getCode() == 104) {
                     LoadDialog.dismiss(mContext);
-                    NToast.shortToast(mContext,"邮箱或者密码错误");
+                    NToast.shortToast(mContext, "邮箱或者密码错误");
+                }
+                break;
+            case SYNCFRIEND:
+                NewFriendsListResponse syncRes = (NewFriendsListResponse) result;
+                if (syncRes.getCode() == 200) {
+                    List<NewFriendsListResponse.ResultEntity> beanList = syncRes.getResult();
+                    if (beanList != null) {
+                        DBManager.getInstance(mContext).getDaoSession().getFriendDao().deleteAll();
+                        for (int i = 0; i < beanList.size(); i++) {
+                            if (beanList.get(i).getStatus().equals("1")) {
+                                DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(
+                                        beanList.get(i).getId(),
+                                        beanList.get(i).getUsername(),
+                                        beanList.get(i).getPortrait()
+                                ));
+                            }
+                        }
+                        NToast.shortToast(mContext, "登录成功");
+                        LoadDialog.dismiss(mContext);
+                        RongCloudEvent.getInstance().setConnectedListener();
+
+                        Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(mIntent);
+                        LoginActivity.this.finish();
+                    }
                 }
                 break;
         }
     }
-
 
 
     @Override
@@ -174,6 +203,10 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
         switch (requestCode) {
             case LOGIN_CODE:
                 NToast.shortToast(mContext, "登录失败");
+                LoadDialog.dismiss(mContext);
+                break;
+            case SYNCFRIEND:
+                NToast.shortToast(mContext, "同步好友数据失败");
                 LoadDialog.dismiss(mContext);
                 break;
         }
@@ -218,7 +251,7 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
     }
 
 
-    public void connectServer(String token){
+    public void connectServer(String token) {
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
@@ -227,13 +260,8 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
 
             @Override
             public void onSuccess(String s) {
-                NToast.shortToast(mContext, "登录成功");
-                LoadDialog.dismiss(mContext);
-                RongCloudEvent.getInstance().setConnectedListener();
-                Log.e("userid", "userid"+s);
-                Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(mIntent);
-                LoginActivity.this.finish();
+                request(SYNCFRIEND);
+                Log.e("userid", "userid" + s);
             }
 
             @Override
