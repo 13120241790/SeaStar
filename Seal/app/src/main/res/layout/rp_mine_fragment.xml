@@ -169,6 +169,54 @@
                 android:background="@color/bg_color" />
 
             <LinearLayout
+                android:id="@+id/validation"
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:background="@drawable/selector_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/sr_validation" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="验证消息"
+                    android:textColor="@color/text_tips_color"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/reddot_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/reddot"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rp_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+            <LinearLayout
                 android:id="@+id/customer_service"
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
@@ -291,53 +339,7 @@
                 android:layout_height="10dip"
                 android:background="@color/bg_color" />
 
-            <LinearLayout
-                android:id="@+id/validation"
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@drawable/selector_item_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
-                    android:background="@drawable/sr_validation" />
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="验证消息"
-                    android:textColor="@color/text_tips_color"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/reddot_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/reddot"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rp_arrow" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/text_line_color" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dip"
-                android:background="@color/bg_color" />
 
         </LinearLayout>
     </LinearLayout>

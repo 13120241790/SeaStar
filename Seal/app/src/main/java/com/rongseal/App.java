@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.bugtags.library.Bugtags;
+import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.message.ContactNotificationMessageProvider;
 import com.sd.core.utils.NLog;
 import com.umeng.analytics.MobclickAgent;
@@ -28,6 +29,7 @@ public class App extends Application {
         RongIM.init(this);
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             RongCloudEvent.init(this);
+            RongIM.registerMessageType(AgreedFriendRequestMessage.class);
             RongIM.registerMessageTemplate(new ContactNotificationMessageProvider());
         }
         // BugTags 初始化

@@ -1,6 +1,10 @@
 package com.rongseal.activity;
 
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -8,11 +12,21 @@ import com.rongseal.R;
 import com.rongseal.adapter.NewFriendsAdapter;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
+import com.rongseal.db.Friend;
+import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
 import com.sd.core.network.http.HttpException;
+import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
+import io.rong.message.InformationNotificationMessage;
 
 /**
  * Created by AMing on 15/11/14.
@@ -30,11 +44,14 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
     private NewFriendsListResponse res;
     private FeedBackFriendRequestResponse feekRes;
 
+    private SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("验证消息");
         setContentView(R.layout.sr_validation_activity);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         LoadDialog.show(mContext);
         request(GETNEWFRIENDS);
         initView();
@@ -69,6 +86,9 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
                     if (res.getCode() == 200) {
                         mNewFriendsAdapter.removeAll();
                         mNewFriendsAdapter.addData(res.getResult());
+                        if (res.getResult().size() != 0) {
+                            mTextNot.setVisibility(View.GONE);
+                        }
                         mNewFriendsAdapter.notifyDataSetChanged();
                         mNewFriendsAdapter.setOnItemButtonClick(mOnItemButtonClick);
                         LoadDialog.dismiss(mContext);
@@ -83,10 +103,13 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
                         NToast.shortToast(mContext, "未知错误...");
                         LoadDialog.dismiss(mContext);
                         refreshlistview.onRefreshComplete();
-                    }else if(feekRes.getCode() == 200){
+                    } else if (feekRes.getCode() == 200) {
                         NToast.shortToast(mContext, "已同意好友关系...");
                         LoadDialog.dismiss(mContext);
                         refreshlistview.onRefreshComplete();
+                        NewFriendsListResponse.ResultEntity bean = res.getResult().get(index);
+                        DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(bean.getId(), bean.getUsername(), bean.getPortrait()));
+                        sendAgreeMessage(res.getResult().get(index).getId());
                     }
                 }
                 break;
@@ -137,5 +160,35 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
     public void onRefresh(PullToRefreshBase refreshView) {
         request(GETNEWFRIENDS);
         LoadDialog.show(mContext);
+    }
+
+    /**
+     * 当收到好友请求 点击同意添加按钮后 发送消息通知对方我已同意
+     *
+     * @param id
+     */
+    private void sendAgreeMessage(String id) {
+        final AgreedFriendRequestMessage message = new AgreedFriendRequestMessage(id, "agree");
+        //获取当前用户登录用户的相关信息
+        String sUserName = sp.getString("username", "");
+        String sUserId = sp.getString("userid", "");
+        String sPortrait = sp.getString("portrait", "");
+        if (!TextUtils.isEmpty(sUserId)) {
+            new RuntimeException("sharedPreferences save userid! is empty");
+        }
+        UserInfo userInfo = new UserInfo(sUserId, sUserName, Uri.parse(sPortrait));
+        message.setUserInfo(userInfo);
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, id, message, null, null, new RongIMClient.SendMessageCallback() {
+                @Override
+                public void onError(Integer messageId, RongIMClient.ErrorCode e) {
+                }
+
+                @Override
+                public void onSuccess(Integer integer) {
+
+                }
+            });
+        }
     }
 }

@@ -154,6 +154,9 @@ public class LoginActivity  extends BaseActivity implements View.OnClickListener
                 if (res.getCode() == 200) {
                     SharedPreferences.Editor edit = sp.edit();
                     edit.putString("token", res.getResult().getToken());
+                    edit.putString("portrait",res.getResult().getPortrait());
+                    edit.putString("userid",res.getResult().getId());
+                    edit.putString("username",res.getResult().getUsername());
                     edit.commit();
                     connectServer(res.getResult().getToken());
                 }else if (res.getCode() == 104) {

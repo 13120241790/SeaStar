@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.rongseal.activity.PhotoActivity;
 import com.rongseal.activity.ValidationMessageActivity;
+import com.rongseal.db.Friend;
+import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
 
@@ -181,6 +184,12 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
             ContactNotificationMessage contactContentMessage = (ContactNotificationMessage) messageContent;
             BroadcastManager.getInstance(mContext).sendBroadcast(FRIEND_MESSAGE, contactContentMessage);
             Log.e("BroadcastManager", "BroadcastManager");
+        }else if(messageContent instanceof AgreedFriendRequestMessage){
+            AgreedFriendRequestMessage afrm = (AgreedFriendRequestMessage)messageContent;
+            UserInfo userInfo = afrm.getUserInfo();
+            if (userInfo != null) {
+                DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(userInfo.getUserId(),userInfo.getName(),userInfo.getPortraitUri().toString()));
+            }
         }
         return false;
     }
