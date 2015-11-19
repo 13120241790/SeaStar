@@ -39,46 +39,7 @@ import io.rong.imkit.RongIM;
  */
 public class FriendsFragment extends Fragment implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
-    /**
-     * ----------------------------------模拟好友数据-------------------------------------
-     */
-    static List<Friend> mSourceDateList = new ArrayList<>();
-//
-//    static{
-//        mSourceDateList.add(new Friend("刘德华","0"));
-//        mSourceDateList.add(new Friend("周杰伦","1"));
-//        mSourceDateList.add(new Friend("王力宏","2"));
-//        mSourceDateList.add(new Friend("赵云","3"));
-//        mSourceDateList.add(new Friend("我是你想不到的无关痛痒","4"));
-//        mSourceDateList.add(new Friend("Coder","5"));
-//        mSourceDateList.add(new Friend("虚竹","6"));
-//        mSourceDateList.add(new Friend("江南","7"));
-//        mSourceDateList.add(new Friend("诸葛亮","8"));
-//        mSourceDateList.add(new Friend("刘备-玄德","9"));
-//        mSourceDateList.add(new Friend("关羽-云长","10"));
-//        mSourceDateList.add(new Friend("司马懿-仲达","11"));
-//        mSourceDateList.add(new Friend("周瑜-公瑾","12"));
-//        mSourceDateList.add(new Friend("asdgsdhf","13"));
-//        mSourceDateList.add(new Friend("!%%^$^&","14"));
-//        mSourceDateList.add(new Friend("曹操-孟德","15"));
-//        mSourceDateList.add(new Friend("对酒当歌","16"));
-//        mSourceDateList.add(new Friend("人生几何","17"));
-//        mSourceDateList.add(new Friend("十步杀一人","18"));
-//        mSourceDateList.add(new Friend("千里不留行","19"));
-//        mSourceDateList.add(new Friend("事了拂衣去","20"));
-//        mSourceDateList.add(new Friend("深藏功与名","21"));
-//        mSourceDateList.add(new Friend("先天下之忧而忧","22"));
-//        mSourceDateList.add(new Friend("后天下之乐而乐","23"));
-//        mSourceDateList.add(new Friend("HELLO ANDROID","24"));
-//        mSourceDateList.add(new Friend("Cordova","25"));
-//
-//
-//
-//    }
-
-    /**
-     * ----------------------------------模拟好友数据-------------------------------------
-     */
+    private List<Friend> mSourceDateList = new ArrayList<>();
 
     public static FriendsFragment instance = null;
     private FriendDao friendDao;
@@ -274,11 +235,10 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        //TODO 发起多人聊天选择页面  此处传递模拟数据
         Intent mIntent = new Intent(getActivity(), StartDiscussionActivity.class);
-        mIntent.putExtra("FRIENDDATA", (Serializable) SourceDateList);
+        mIntent.putExtra("FRIENDDATA", (Serializable) mSourceDateList);
         getActivity().startActivity(mIntent);
-        return false;
+        return true;
     }
 
     /**
@@ -292,7 +252,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (RongIM.getInstance() != null) {
-            RongIM.getInstance().startPrivateChat(getActivity(), SourceDateList.get(position).getUserId(), SourceDateList.get(position).getName());
+            RongIM.getInstance().startPrivateChat(getActivity(), mSourceDateList.get(position).getUserId(), mSourceDateList.get(position).getName());
         }
     }
 }

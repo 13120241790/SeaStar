@@ -24,6 +24,7 @@ import com.rongseal.pinyin.CharacterParser;
 import com.rongseal.pinyin.PinyinComparator;
 import com.rongseal.pinyin.SideBar;
 import com.rongseal.widget.ClearWriteEditText;
+import com.sd.core.utils.NToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,17 +42,29 @@ import io.rong.imlib.RongIMClient;
  */
 public class StartDiscussionActivity extends BaseActivity implements View.OnClickListener {
 
-    /** 确定开启讨论组聊天 */
+    /**
+     * 确定开启讨论组聊天
+     */
     private Button mRightBtn, mLeftBtn;
-    /** 自动搜索的 EditText */
+    /**
+     * 自动搜索的 EditText
+     */
     private ClearWriteEditText mAboutSerrch;
-    /**好友列表的 ListView*/
+    /**
+     * 好友列表的 ListView
+     */
     private ListView mListView;
-    /**发起讨论组的 adapter*/
+    /**
+     * 发起讨论组的 adapter
+     */
     private StartDiscussionAdapter adapter;
-    /** 右侧好友指示 Bar */
+    /**
+     * 右侧好友指示 Bar
+     */
     private SideBar mSidBar;
-    /** 中部展示的字母提示 */
+    /**
+     * 中部展示的字母提示
+     */
     public TextView dialog;
 
     private TextView show_no_friends;
@@ -65,13 +78,18 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    /** 数据源 由好友的 Intent 传来 */
+    /**
+     * 数据源 由好友的 Intent 传来
+     */
     private List<Friend> SourceDateList;
+
+    private List<Friend> mSourceDateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SourceDateList = (List<Friend>) getIntent().getSerializableExtra("FRIENDDATA");
+        mSourceDateList = SourceDateList;
         setContentView(R.layout.rp_start_discussion_activity);
         initViews();
     }
@@ -108,7 +126,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             public void onTouchingLetterChanged(String s) {
                 //该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
-                if(position != -1){
+                if (position != -1) {
                     mListView.setSelection(position);
                 }
 
@@ -120,8 +138,8 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             //背景提示没有好友
             show_no_friends.setVisibility(View.VISIBLE);
         }
-        if(SourceDateList != null)
-        SourceDateList = filledData(SourceDateList);
+        if (SourceDateList != null)
+            SourceDateList = filledData(SourceDateList);
 
         // 根据a-z进行排序源数据
         Collections.sort(SourceDateList, pinyinComparator);
@@ -151,18 +169,19 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
     /**
      * 根据输入框中的值来过滤数据并更新ListView
+     *
      * @param filterStr
      */
-    private void filterData(String filterStr){
+    private void filterData(String filterStr) {
         List<Friend> filterDateList = new ArrayList<Friend>();
 
-        if(TextUtils.isEmpty(filterStr)){
+        if (TextUtils.isEmpty(filterStr)) {
             filterDateList = SourceDateList;
-        }else{
+        } else {
             filterDateList.clear();
-            for(Friend friendModel : SourceDateList){
+            for (Friend friendModel : SourceDateList) {
                 String name = friendModel.getName();
-                if(name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
+                if (name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())) {
                     filterDateList.add(friendModel);
                 }
             }
@@ -176,13 +195,14 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
     /**
      * 为ListView填充数据
+     *
      * @param
      * @return
      */
-    private List<Friend> filledData(List<Friend> lsit){
+    private List<Friend> filledData(List<Friend> lsit) {
         List<Friend> mFriendList = new ArrayList<Friend>();
 
-        for(int i=0; i<lsit.size(); i++){
+        for (int i = 0; i < lsit.size(); i++) {
             Friend friendModel = new Friend();
             friendModel.setName(lsit.get(i).getName());
             //汉字转换成拼音
@@ -190,9 +210,9 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             String sortString = pinyin.substring(0, 1).toUpperCase();
 
             // 正则表达式，判断首字母是否是英文字母
-            if(sortString.matches("[A-Z]")){
+            if (sortString.matches("[A-Z]")) {
                 friendModel.setLetters(sortString.toUpperCase());
-            }else{
+            } else {
                 friendModel.setLetters("#");
             }
 
@@ -206,30 +226,19 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-//                Toast.makeText(StartDiscussionActivity.this,"发起讨论组聊天",Toast.LENGTH_SHORT).show();
-                if (mCBFlag != null && adapterList != null && adapterList.size() >0 ) {
-//                    List<Friend> startDisList = new ArrayList<>();
-//                    for (int i = 0 ; i < adapterList.size() ; i++ ) {
-//                        if (mCBFlag.get(i)) {
-//                            startDisList.add(adapterList.get(i));
-//                        }
-//                    }
-                    List<String> idList = new ArrayList<>();
-//                    List<String> nameList = new ArrayList<>();
-                    //TODO 此处数据没有 userid 应该从 好友Fragment 开启讨论组选择页面 查询源头数据的 userid 什么时候丢失
-//                    for (Friend fd : startDisList) {
-//                        Log.e("讨论组数据",startDisList.size()+fd.getUserId());
-//                        idList.add(fd.getUserId());
-//                    }
-                    // 模拟数据有 userid
-                    idList.add("10010");
-                    idList.add("1");
-                    idList.add("2");
-                    if (RongIM.getInstance() != null && idList.size() > 0) {
-                        RongIM.getInstance().getRongIMClient().createDiscussion("讨论组聊天", idList, new RongIMClient.CreateDiscussionCallback() {
+                if (mCBFlag != null && mSourceDateList != null && mSourceDateList.size() > 0) {
+                    List<String> startDisList = new ArrayList<>();
+                    for (int i = 0; i < mSourceDateList.size(); i++) {
+                        if (mCBFlag.get(i)) {
+                            startDisList.add(mSourceDateList.get(i).getUserId());
+                        }
+                    }
+                    if (RongIM.getInstance() != null && startDisList.size() > 0) {
+                        RongIM.getInstance().getRongIMClient().createDiscussion("讨论组聊天", startDisList, new RongIMClient.CreateDiscussionCallback() {
                             @Override
                             public void onSuccess(String s) {
-                                RongIM.getInstance().startDiscussionChat(StartDiscussionActivity.this,s,"我的讨论组");
+                                NToast.shortToast(mContext, "开启讨论组聊天");
+                                RongIM.getInstance().startDiscussionChat(StartDiscussionActivity.this, s, "我的讨论组");
                             }
 
                             @Override
@@ -238,23 +247,23 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                             }
                         });
                     }
-                }else {
-                    Toast.makeText(StartDiscussionActivity.this,"无数据",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(StartDiscussionActivity.this, "无数据", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
     }
 
     //用于存储CheckBox选中状态
-    public Map<Integer,Boolean> mCBFlag = null;
+    public Map<Integer, Boolean> mCBFlag = null;
 
     public List<Friend> adapterList;
 
-    class StartDiscussionAdapter extends BaseAdapter implements SectionIndexer{
+    class StartDiscussionAdapter extends BaseAdapter implements SectionIndexer {
 
         private Context context;
 
-        public StartDiscussionAdapter(Context context , List<Friend> list) {
+        public StartDiscussionAdapter(Context context, List<Friend> list) {
             this.context = context;
             adapterList = list;
             mCBFlag = new HashMap<Integer, Boolean>();
@@ -262,14 +271,16 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
         }
 
-        void init(){
-            for(int i = 0 ; i < adapterList.size() ; i++){
-                mCBFlag.put(i,false);
+        void init() {
+            for (int i = 0; i < adapterList.size(); i++) {
+                mCBFlag.put(i, false);
             }
         }
 
-        /** 传入新的数据 刷新UI的方法 */
-        public void updateListView(List<Friend> list){
+        /**
+         * 传入新的数据 刷新UI的方法
+         */
+        public void updateListView(List<Friend> list) {
             adapterList = list;
             notifyDataSetChanged();
         }
@@ -294,7 +305,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
             ViewHolder viewHolder = null;
             final Friend mContent = adapterList.get(position);
-            if (convertView== null) {
+            if (convertView == null) {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(context).inflate(R.layout.start_discussion_item, null);
                 viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.dis_friendname);
@@ -303,7 +314,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                 viewHolder.isSelect = (CheckBox) convertView.findViewById(R.id.dis_select);
 
                 convertView.setTag(viewHolder);
-            }else {
+            } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
@@ -313,7 +324,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             if (position == getPositionForSection(section)) {
                 viewHolder.tvLetter.setVisibility(View.VISIBLE);
                 viewHolder.tvLetter.setText(mContent.getLetters());
-            }else {
+            } else {
                 viewHolder.tvLetter.setVisibility(View.GONE);
             }
 
@@ -321,9 +332,9 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        mCBFlag.put(position,true);
-                    }else{
-                        mCBFlag.put(position,false);
+                        mCBFlag.put(position, true);
+                    } else {
+                        mCBFlag.put(position, false);
                     }
                 }
             });
@@ -339,8 +350,6 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             viewHolder.isSelect.setChecked(mCBFlag.get(position));
             return convertView;
         }
-
-
 
 
         @Override
@@ -373,16 +382,26 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
         }
 
 
-        final class ViewHolder{
-            /** 首字母 */
+        final class ViewHolder {
+            /**
+             * 首字母
+             */
             TextView tvLetter;
-            /** 昵称 */
+            /**
+             * 昵称
+             */
             TextView tvTitle;
-            /** 头像 */
+            /**
+             * 头像
+             */
             ImageView mImageView;
-            /** userid */
+            /**
+             * userid
+             */
             TextView tvUserId;
-            /** 是否被选中的checkbox */
+            /**
+             * 是否被选中的checkbox
+             */
             CheckBox isSelect;
         }
 
@@ -393,7 +412,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
          * @return
          */
         private String getAlpha(String str) {
-            String  sortStr = str.trim().substring(0, 1).toUpperCase();
+            String sortStr = str.trim().substring(0, 1).toUpperCase();
             // 正则表达式，判断首字母是否是英文字母
             if (sortStr.matches("[A-Z]")) {
                 return sortStr;
