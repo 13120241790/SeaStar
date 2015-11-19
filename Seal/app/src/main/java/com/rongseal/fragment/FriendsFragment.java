@@ -31,12 +31,13 @@ import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import io.rong.imkit.RongIM;
 
 /**
  * Created by AMing on 15/11/2.
  * Company RongCloud
  */
-public class FriendsFragment extends Fragment implements AdapterView.OnItemLongClickListener {
+public class FriendsFragment extends Fragment implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
 
     /**
      * ----------------------------------模拟好友数据-------------------------------------
@@ -185,7 +186,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         adapter = new FriendAdapter(getActivity(), SourceDateList);
         mListView.setAdapter(adapter);
         mListView.setOnItemLongClickListener(this);
-
+        mListView.setOnItemClickListener(this);
 
         //根据输入框输入值的改变来过滤搜索  顶部实时搜索
         mAboutSerrch.addTextChangedListener(new TextWatcher() {
@@ -278,5 +279,20 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         mIntent.putExtra("FRIENDDATA", (Serializable) SourceDateList);
         getActivity().startActivity(mIntent);
         return false;
+    }
+
+    /**
+     * 开启多人好友聊天
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().startPrivateChat(getActivity(), SourceDateList.get(position).getUserId(), SourceDateList.get(position).getName());
+        }
     }
 }

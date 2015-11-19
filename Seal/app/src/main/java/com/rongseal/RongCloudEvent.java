@@ -35,6 +35,7 @@ import io.rong.message.ImageMessage;
 public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener {
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
+    public static final java.lang.String GONEREDDOT = "GONEREDDOT";
     private static RongCloudEvent mRongCloudInstance;
 
     private Context mContext;
@@ -181,14 +182,12 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
     public boolean onReceived(Message message, int i) {
         MessageContent messageContent = message.getContent();
         if (messageContent instanceof ContactNotificationMessage) {
-            ContactNotificationMessage contactContentMessage = (ContactNotificationMessage) messageContent;
-            BroadcastManager.getInstance(mContext).sendBroadcast(FRIEND_MESSAGE, contactContentMessage);
-            Log.e("BroadcastManager", "BroadcastManager");
-        }else if(messageContent instanceof AgreedFriendRequestMessage){
-            AgreedFriendRequestMessage afrm = (AgreedFriendRequestMessage)messageContent;
+            BroadcastManager.getInstance(mContext).sendBroadcast(FRIEND_MESSAGE);
+        } else if (messageContent instanceof AgreedFriendRequestMessage) {
+            AgreedFriendRequestMessage afrm = (AgreedFriendRequestMessage) messageContent;
             UserInfo userInfo = afrm.getUserInfo();
             if (userInfo != null) {
-                DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(userInfo.getUserId(),userInfo.getName(),userInfo.getPortraitUri().toString()));
+                DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(userInfo.getUserId(), userInfo.getName(), userInfo.getPortraitUri().toString()));
             }
         }
         return false;
@@ -204,6 +203,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         MessageContent messageContent = uiConversation.getMessageContent();
         if (messageContent instanceof ContactNotificationMessage) {
             context.startActivity(new Intent(context, ValidationMessageActivity.class));
+            BroadcastManager.getInstance(context).sendBroadcast(GONEREDDOT);
             return true;
         }
         return false;

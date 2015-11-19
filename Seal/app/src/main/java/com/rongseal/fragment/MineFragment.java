@@ -37,7 +37,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
     public static final int REFRESH_CODE = 354;
 
-    private LinearLayout layout_user,Validation;
+    private LinearLayout layout_user, Validation;
 
     public static MineFragment instance = null;
 
@@ -50,21 +50,14 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
         return instance;
     }
 
-    private LinearLayout LSetting , LAbout , LContact , LCustomerService;
+    private LinearLayout LSetting, LAbout, LContact, LCustomerService;
 
     private View fragmentView;
+
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        fragmentView = inflater.inflate(R.layout.rp_mine_fragment,null);
-        BroadcastManager.getInstance(getActivity()).addAction(RongCloudEvent.FRIEND_MESSAGE, new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String command = intent.getAction();
-                if (!TextUtils.isEmpty(command)) {
-                    redIcon.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        fragmentView = inflater.inflate(R.layout.rp_mine_fragment, null);
+        listenerBroadcast();
         return fragmentView;
     }
 
@@ -75,9 +68,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
         initViews();
     }
 
-    public void initViews(){
-        //TODO findviewbyid
-
+    public void initViews() {
         redIcon = (ImageView) fragmentView.findViewById(R.id.reddot_icon);
         Validation = (LinearLayout) fragmentView.findViewById(R.id.validation);
         layout_user = (LinearLayout) fragmentView.findViewById(R.id.layout_user);
@@ -110,7 +101,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
                 break;
             case R.id.mine_contact://社交
-                startActivity(new Intent(getActivity(),ContactActivity.class));
+                startActivity(new Intent(getActivity(), ContactActivity.class));
                 break;
             case R.id.mine_setting://设置
 
@@ -126,9 +117,33 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
     }
 
 
+    private void listenerBroadcast() {
+        BroadcastManager.getInstance(getActivity()).addAction(RongCloudEvent.FRIEND_MESSAGE, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    redIcon.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        BroadcastManager.getInstance(getActivity()).addAction(RongCloudEvent.GONEREDDOT, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    redIcon.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         BroadcastManager.getInstance(getActivity()).destroy(RongCloudEvent.FRIEND_MESSAGE);
+        BroadcastManager.getInstance(getActivity()).destroy(RongCloudEvent.GONEREDDOT);
     }
 }
