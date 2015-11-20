@@ -195,7 +195,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     ));
                                 }
                             }
-                            DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend("10000","好友验证消息","http://pic39.nipic.com/20140308/6608733_201355110000_2.jpg"));
                         }
                     }
                 }

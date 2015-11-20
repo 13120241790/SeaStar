@@ -41,6 +41,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
     public static final String REFRESHUI = "refreshUI";
+    private static final Uri FRIENDURL = Uri.parse("http://pic39.nipic.com/20140308/6608733_201355110000_2.jpg");
     private static RongCloudEvent mRongCloudInstance;
 
     private Context mContext;
@@ -228,6 +229,9 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
             return new UserInfo(bean.getUserId(),bean.getName(), Uri.parse(bean.getPortraitUri()));
         }else{
             //TODO http 请求网络
+        }
+        if (s.equals("10000")) {
+            return new UserInfo("10000","好友验证消息",FRIENDURL);
         }
         return null;
     }
