@@ -170,11 +170,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     edit.putString("userid", res.getResult().getId());
                     edit.putString("username", res.getResult().getUsername());
                     edit.commit();
-                    DBManager.getInstance(mContext).getDaoSession().getUserDao().insertOrReplace(new User(
-                            res.getResult().getId(), res.getResult().getUsername(), res.getResult().getPortrait(),
-                            res.getResult().getToken(), true
-
-                    ));
                     connectServer(res.getResult().getToken());
                 } else if (res.getCode() == 104) {
                     LoadDialog.dismiss(mContext);

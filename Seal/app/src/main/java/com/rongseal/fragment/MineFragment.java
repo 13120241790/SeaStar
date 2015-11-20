@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
@@ -41,7 +42,11 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
     public static MineFragment instance = null;
 
-    private ImageView redIcon;
+    private ImageView redIcon , mineHead;
+
+    private TextView mineUserName , mineEmail , mineUserId;
+
+    private SharedPreferences sp;
 
     public static MineFragment getInstance() {
         if (instance == null) {
@@ -57,6 +62,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.rp_mine_fragment, null);
+        sp = getActivity().getSharedPreferences("config",Context.MODE_PRIVATE);
         listenerBroadcast();
         return fragmentView;
     }
@@ -69,6 +75,15 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
     }
 
     public void initViews() {
+        mineHead = (ImageView) fragmentView.findViewById(R.id.mine_userimg);
+        mineUserName = (TextView) fragmentView.findViewById(R.id.mine_username);
+        mineEmail = (TextView) fragmentView.findViewById(R.id.mine_email);
+        mineUserId = (TextView) fragmentView.findViewById(R.id.mine_userid);
+        mineUserName.setText(sp.getString("username",""));
+        mineEmail.setText(sp.getString("loginemail",""));
+        mineUserId.setText("id:"+sp.getString("userid",""));
+//        sp.getString("portrait","");
+
         redIcon = (ImageView) fragmentView.findViewById(R.id.reddot_icon);
         Validation = (LinearLayout) fragmentView.findViewById(R.id.validation);
         layout_user = (LinearLayout) fragmentView.findViewById(R.id.layout_user);
