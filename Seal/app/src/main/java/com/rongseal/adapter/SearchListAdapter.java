@@ -1,11 +1,14 @@
 package com.rongseal.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.bean.response.SearchUserNameResponse;
 
@@ -18,7 +21,6 @@ public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.Result
 
     private ViewHolder holder;
 
-    private Context mContext;
 
     public SearchListAdapter(Context context) {
         super(context);
@@ -42,13 +44,10 @@ public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.Result
 
         holder.mUserName.setText(bean.getUsername());
         holder.mUserId.setText("id:"+bean.getId());
-
-//        if (holder.mHead != null) {
-//            Picasso.with(convertView.getContext())
-//                    .load(bean.getPortrait())
-//                    .placeholder(R.drawable.rp_default_head)
-//                    .into(holder.mHead);
-//        }
+        String url = bean.getPortrait();
+        if(!TextUtils.isEmpty(url)){
+            ImageLoader.getInstance().displayImage(url, holder.mHead, App.getOptions());
+        }
         return convertView;
     }
 

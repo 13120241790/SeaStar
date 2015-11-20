@@ -5,9 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.activity.ContactActivity;
@@ -22,13 +22,7 @@ import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.sd.core.common.broadcast.BroadcastManager;
-import com.sd.core.common.parse.JsonMananger;
-import com.sd.core.network.http.HttpException;
 
-import java.util.IllegalFormatCodePointException;
-
-import de.greenrobot.event.EventBus;
-import io.rong.message.ContactNotificationMessage;
 
 /**
  * Created by AMing on 15/11/2.
@@ -42,9 +36,9 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
     public static MineFragment instance = null;
 
-    private ImageView redIcon , mineHead;
+    private ImageView redIcon, mineHead;
 
-    private TextView mineUserName , mineEmail , mineUserId;
+    private TextView mineUserName, mineEmail, mineUserId;
 
     private SharedPreferences sp;
 
@@ -62,7 +56,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
     @Override
     public View onCreateFragmentView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragmentView = inflater.inflate(R.layout.rp_mine_fragment, null);
-        sp = getActivity().getSharedPreferences("config",Context.MODE_PRIVATE);
+        sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
         listenerBroadcast();
         return fragmentView;
     }
@@ -79,10 +73,13 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
         mineUserName = (TextView) fragmentView.findViewById(R.id.mine_username);
         mineEmail = (TextView) fragmentView.findViewById(R.id.mine_email);
         mineUserId = (TextView) fragmentView.findViewById(R.id.mine_userid);
-        mineUserName.setText(sp.getString("username",""));
-        mineEmail.setText(sp.getString("loginemail",""));
-        mineUserId.setText("id:"+sp.getString("userid",""));
-//        sp.getString("portrait","");
+        mineUserName.setText(sp.getString("username", ""));
+        mineEmail.setText(sp.getString("loginemail", ""));
+        mineUserId.setText("id:" + sp.getString("userid", ""));
+        String url = sp.getString("portrait", "");
+        if (!TextUtils.isEmpty(url)) {
+            ImageLoader.getInstance().displayImage(url, mineHead, App.getOptions());
+        }
 
         redIcon = (ImageView) fragmentView.findViewById(R.id.reddot_icon);
         Validation = (LinearLayout) fragmentView.findViewById(R.id.validation);
@@ -108,7 +105,6 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_user:
-                //TODO 此处需要判断是否登录 如果登录 跳转 DetailActivity  如果没登录 跳转login 此处代码未完
                 Intent intent = new Intent(getActivity(), MyDetailActivity.class);
                 startActivityForResult(intent, REFRESH_CODE);
                 break;

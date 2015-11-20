@@ -2,6 +2,7 @@ package com.rongseal.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -20,11 +21,9 @@ import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
-import com.rongseal.db.com.rongseal.database.User;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.network.http.HttpException;
-import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
 import java.util.List;
@@ -33,6 +32,7 @@ import java.util.regex.Pattern;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by AMing on 15/11/2.
@@ -272,6 +272,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onSuccess(String s) {
+                if (RongIM.getInstance() != null) {
+                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,sp.getString("username",""), Uri.parse(sp.getString("portrait",""))));
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                }
+
                 request(SYNCFRIEND);
                 Log.e("userid", "userid" + s);
             }

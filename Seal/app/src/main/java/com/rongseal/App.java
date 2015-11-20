@@ -6,6 +6,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.bugtags.library.Bugtags;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.message.ContactNotificationMessageProvider;
 import com.sd.core.utils.NLog;
@@ -21,6 +26,8 @@ import io.rong.imkit.RongIM;
 public class App extends Application {
 
     private static final String BUGTAGS_APPKEY = "9b333294d099c492a26d8fe33171bd1e";
+
+    private static DisplayImageOptions options;
 
     @Override
     public void onCreate() {
@@ -38,6 +45,29 @@ public class App extends Application {
         MobclickAgent.setSessionContinueMillis(30 * 60 * 1000);
 
         NLog.setDebug(true); //oneCore 打印参数
+
+
+        options = new DisplayImageOptions.Builder()
+                .showImageForEmptyUri(R.drawable.rp_default_head)
+                .showImageOnFail(R.drawable.rp_default_head)
+                .showImageOnLoading(R.drawable.rp_default_head)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+
+        //初始化图片下载组件
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheSize(50 * 1024 * 1024)
+                .diskCacheFileCount(200)
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .defaultDisplayImageOptions(options)
+                .build();
+
+        //Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);
     }
 
 
@@ -58,5 +88,13 @@ public class App extends Application {
             }
         }
         return null;
+    }
+
+    public static DisplayImageOptions getOptions() {
+        return options;
+    }
+
+    public static void setOptions(DisplayImageOptions options) {
+        App.options = options;
     }
 }

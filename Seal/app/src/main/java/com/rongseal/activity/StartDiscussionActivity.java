@@ -18,6 +18,8 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.bean.Friend;
 import com.rongseal.pinyin.CharacterParser;
@@ -25,7 +27,6 @@ import com.rongseal.pinyin.PinyinComparator;
 import com.rongseal.pinyin.SideBar;
 import com.rongseal.widget.ClearWriteEditText;
 import com.sd.core.utils.NToast;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -340,14 +341,10 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             });
 
             viewHolder.tvTitle.setText(adapterList.get(position).getName());
-            //TODO 此处头像代码未设置
-            Picasso.with(context)
-                    .load(adapterList.get(position).getUri())
-                    .placeholder(R.drawable.rc_default_portrait)
-                    .centerCrop()
-                    .into(viewHolder.mImageView);
-
-            viewHolder.isSelect.setChecked(mCBFlag.get(position));
+            String url = adapterList.get(position).getUri();
+            if(!TextUtils.isEmpty(url)){
+                ImageLoader.getInstance().displayImage(url, viewHolder.mImageView, App.getOptions());
+            }
             return convertView;
         }
 

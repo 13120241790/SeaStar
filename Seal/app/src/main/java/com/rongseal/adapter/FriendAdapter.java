@@ -1,6 +1,7 @@
 package com.rongseal.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,10 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.bean.Friend;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -78,12 +80,10 @@ public class FriendAdapter extends BaseAdapter implements SectionIndexer {
             viewHolder.tvLetter.setVisibility(View.GONE);
         }
         viewHolder.tvTitle.setText(this.list.get(position).getName());
-        //TODO 此处头像代码未设置
-        Picasso.with(context)
-                .load(this.list.get(position).getUri())
-                .placeholder(R.drawable.rc_default_portrait)
-                .centerCrop()
-                .into(viewHolder.mImageView);
+        String url = this.list.get(position).getUri();
+        if(!TextUtils.isEmpty(url)){
+            ImageLoader.getInstance().displayImage(url, viewHolder.mImageView, App.getOptions());
+        }
         return convertView;
     }
 

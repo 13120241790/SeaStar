@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.NewFriendsListResponse;
@@ -51,7 +53,9 @@ public class NewFriendsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         final NewFriendsListResponse.ResultEntity bean = (NewFriendsListResponse.ResultEntity) dataSet.get(position);
-//        holder.mHead
+        if(!TextUtils.isEmpty(bean.getPortrait())){
+            ImageLoader.getInstance().displayImage(bean.getPortrait(), holder.mHead, App.getOptions());
+        }
         holder.mName.setText(bean.getUsername());
         holder.mId.setText(bean.getId());
         holder.mState.setOnClickListener(new View.OnClickListener() {

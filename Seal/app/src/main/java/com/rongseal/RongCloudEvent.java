@@ -2,6 +2,7 @@ package com.rongseal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -9,10 +10,13 @@ import com.rongseal.activity.PhotoActivity;
 import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
+import com.rongseal.db.com.rongseal.database.FriendDao;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
 
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.WhereCondition;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
@@ -32,7 +36,7 @@ import io.rong.message.ImageMessage;
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener {
+public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider {
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
@@ -75,6 +79,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
 //        de.greenrobot.event.EventBus.getDefault().register(this);
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
         RongIM.setConversationListBehaviorListener(this);
+        RongIM.setUserInfoProvider(this,true);
     }
 
     /**
@@ -215,4 +220,15 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         return false;
     }
 
+    @Override
+    public UserInfo getUserInfo(String s) {
+        FriendDao friendDao =  DBManager.getInstance(mContext).getDaoSession().getFriendDao();
+        Friend  bean = friendDao.queryBuilder().where(FriendDao.Properties.UserId.eq(s)).unique();
+        if (bean != null) {
+            return new UserInfo(bean.getUserId(),bean.getName(), Uri.parse(bean.getPortraitUri()));
+        }else{
+            //TODO http 请求网络
+        }
+        return null;
+    }
 }

@@ -1,11 +1,16 @@
 package com.rongseal.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.rongseal.R;
+
+import java.util.Locale;
+
+import io.rong.imlib.model.Conversation;
 
 /**
  * Created by AMing on 15/11/2.
@@ -19,6 +24,15 @@ public class ConversationActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rp_conversation_activity);
+        String id = getIntent().getData().getQueryParameter("targetId"); //获取id
+        String name = getIntent().getData().getQueryParameter("title"); //获取昵称
+        if (!TextUtils.isEmpty(name)) {
+            setTitle(name);
+        }else {
+            setTitle(id);
+        }
+        //获取会话类型
+//        Conversation.ConversationType.valueOf(getIntent().getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
         initView();
     }
 
