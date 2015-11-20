@@ -18,11 +18,13 @@ import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
-import com.rongseal.db.Friend;
 import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.db.com.rongseal.database.Friend;
+import com.rongseal.db.com.rongseal.database.User;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.network.http.HttpException;
+import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
 import java.util.List;
@@ -50,9 +52,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     // 大 logo 图片  背景图片
     private ImageView mImgBackgroud;
 
-    private String sUserName, sPassword;
+    private String sUserName, sPassword, oldUserName, oldPassWord;
 
     private SharedPreferences sp;
+
+    boolean isCache = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,16 +87,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }, 200);
 
         sp = getSharedPreferences("config", MODE_PRIVATE);
-        String old_username = sp.getString("loginemail", "");
-        String old_password = sp.getString("loginpassword", "");
+        oldUserName = sp.getString("loginemail", "");
+        oldPassWord = sp.getString("loginpassword", "");
 
 
         SharedPreferences.Editor edit = sp.edit();
         edit.putBoolean("fristlogin", false);
         edit.commit();
 
-        mUserName.setText(old_username);
-        mPassWord.setText(old_password);
+        mUserName.setText(oldUserName);
+        mPassWord.setText(oldPassWord);
     }
 
     @Override
@@ -101,6 +105,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.app_sign_in_bt:
                 sUserName = mUserName.getText().toString().trim();
                 sPassword = mPassWord.getText().toString().trim();
+                SharedPreferences.Editor edit = sp.edit();
                 if (TextUtils.isEmpty(sUserName)) {
                     NToast.shortToast(mContext, "用户名不能为空");
                     mUserName.setShakeAnimation();
@@ -116,15 +121,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     return;
                 }
                 LoadDialog.show(mContext, "正在登陆...");
-                String sToken = sp.getString("token", null);
-                if (!TextUtils.isEmpty(sToken) && sUserName.equals(sp.getString("loginemail", ""))) {
+                String sToken = sp.getString("token", "");
+                if (!TextUtils.isEmpty(sToken) && sUserName.equals(oldUserName)) {
+                    edit.remove("loginemail");
+                    edit.remove("loginpassword");
+                    isCache = true;
                     connectServer(sToken);
                 } else {
                     request(LOGIN_CODE);
                 }
 
 
-                SharedPreferences.Editor edit = sp.edit();
                 edit.putString("loginemail", sUserName);
                 edit.putString("loginpassword", sPassword);
                 edit.putBoolean("fristlogin", true);
@@ -163,36 +170,46 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     edit.putString("userid", res.getResult().getId());
                     edit.putString("username", res.getResult().getUsername());
                     edit.commit();
+                    DBManager.getInstance(mContext).getDaoSession().getUserDao().insertOrReplace(new User(
+                            res.getResult().getId(), res.getResult().getUsername(), res.getResult().getPortrait(),
+                            res.getResult().getToken(), true
+
+                    ));
                     connectServer(res.getResult().getToken());
                 } else if (res.getCode() == 104) {
+                    LoadDialog.dismiss(mContext);
+                    NToast.shortToast(mContext, "邮箱或者密码错误");
+                } else if (res.getCode() == 103) {
                     LoadDialog.dismiss(mContext);
                     NToast.shortToast(mContext, "邮箱或者密码错误");
                 }
                 break;
             case SYNCFRIEND:
-                NewFriendsListResponse syncRes = (NewFriendsListResponse) result;
-                if (syncRes.getCode() == 200) {
-                    List<NewFriendsListResponse.ResultEntity> beanList = syncRes.getResult();
-                    if (beanList != null) {
-                        DBManager.getInstance(mContext).getDaoSession().getFriendDao().deleteAll();
-                        for (int i = 0; i < beanList.size(); i++) {
-                            if (beanList.get(i).getStatus().equals("1")) {
-                                DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(
-                                        beanList.get(i).getId(),
-                                        beanList.get(i).getUsername(),
-                                        beanList.get(i).getPortrait()
-                                ));
+                if (!isCache) {
+                    NewFriendsListResponse syncRes = (NewFriendsListResponse) result;
+                    if (syncRes.getCode() == 200) {
+                        List<NewFriendsListResponse.ResultEntity> beanList = syncRes.getResult();
+                        if (beanList != null) {
+                            DBManager.getInstance(mContext).getDaoSession().getFriendDao().deleteAll();
+                            for (int i = 0; i < beanList.size(); i++) {
+                                if (beanList.get(i).getStatus().equals("1")) {
+                                    DBManager.getInstance(mContext).getDaoSession().getFriendDao().insertOrReplace(new Friend(
+                                            beanList.get(i).getId(),
+                                            beanList.get(i).getUsername(),
+                                            beanList.get(i).getPortrait()
+                                    ));
+                                }
                             }
                         }
-                        NToast.shortToast(mContext, "登录成功");
-                        LoadDialog.dismiss(mContext);
-                        RongCloudEvent.getInstance().setConnectedListener();
-
-                        Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(mIntent);
-                        LoginActivity.this.finish();
                     }
                 }
+                NToast.shortToast(mContext, "登录成功");
+                LoadDialog.dismiss(mContext);
+                RongCloudEvent.getInstance().setConnectedListener();
+
+                Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(mIntent);
+                LoginActivity.this.finish();
                 break;
         }
     }

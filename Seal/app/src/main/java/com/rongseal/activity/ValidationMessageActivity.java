@@ -4,33 +4,28 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.rongseal.MainActivity;
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.adapter.NewFriendsAdapter;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
-import com.rongseal.db.Friend;
 import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
 import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
-import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
-import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.InformationNotificationMessage;
 
 /**
  * Created by AMing on 15/11/14.

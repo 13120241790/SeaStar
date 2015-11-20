@@ -15,11 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.rongseal.MainActivity;
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.activity.StartDiscussionActivity;
-import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.adapter.FriendAdapter;
 import com.rongseal.bean.Friend;
 import com.rongseal.db.com.rongseal.database.DBManager;
@@ -37,7 +35,6 @@ import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
-import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 
 /**
@@ -111,12 +108,12 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
                 String command = intent.getAction();
                 if (!TextUtils.isEmpty(command)) {
                     friendDao = DBManager.getInstance(getActivity()).getDaoSession().getFriendDao();
-                    QueryBuilder<com.rongseal.db.Friend> qb = friendDao.queryBuilder();
+                    QueryBuilder<com.rongseal.db.com.rongseal.database.Friend> qb = friendDao.queryBuilder();
                     if (qb.list().size() > 0 && qb.list() != null) {
                         mSourceDateList.clear();
                         SourceDateList.clear();
                         for (int i = 0; i < qb.list().size(); i++) {
-                            com.rongseal.db.Friend bean = qb.list().get(i);
+                            com.rongseal.db.com.rongseal.database.Friend bean = qb.list().get(i);
                             mSourceDateList.add(new Friend(bean.getUserId(), bean.getName(), bean.getPortraitUri()));
                         }
                         SourceDateList = filledData(mSourceDateList);
@@ -157,10 +154,10 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
 
         //-------------- 获取好友列表数据 ---------------
         friendDao = DBManager.getInstance(getActivity()).getDaoSession().getFriendDao();
-        QueryBuilder<com.rongseal.db.Friend> qb = friendDao.queryBuilder();
+        QueryBuilder<com.rongseal.db.com.rongseal.database.Friend> qb = friendDao.queryBuilder();
         if (qb.list().size() > 0 && qb.list() != null) {
             for (int i = 0; i < qb.list().size(); i++) {
-                com.rongseal.db.Friend bean = qb.list().get(i);
+                com.rongseal.db.com.rongseal.database.Friend bean = qb.list().get(i);
                 mSourceDateList.add(new Friend(bean.getUserId(), bean.getName(), bean.getPortraitUri()));
             }
         } else {

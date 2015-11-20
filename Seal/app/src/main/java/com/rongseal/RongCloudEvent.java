@@ -7,8 +7,8 @@ import android.view.View;
 
 import com.rongseal.activity.PhotoActivity;
 import com.rongseal.activity.ValidationMessageActivity;
-import com.rongseal.db.Friend;
 import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
