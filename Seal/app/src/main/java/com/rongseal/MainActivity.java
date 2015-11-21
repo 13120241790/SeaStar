@@ -14,6 +14,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.rongseal.activity.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
@@ -44,19 +46,23 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private List<Fragment> mFragment = new ArrayList<>();
 
-    private TextView mRuPengView, mConversationListView, mContactView, mSettingView;
+    private TextView mRuPengView, mConversationListView, mContactView, mSettingView , mUnreadText;
 
-    private LinearLayout LRuPeng, LConversationList, LContact, LSetting;
+    private LinearLayout LRuPeng, LContact, LSetting;
 
-    private ImageView mImageView;
+    private FrameLayout LConversationList;
+
+    private ImageView mImageView , mUnreadImg;
     //屏幕的1/4 , 记录当前页码数
     private int mScreen1_4, mCurrentPageIndex;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setHeadVisibility(View.GONE);
         setContentView(R.layout.rp_main_activity);
+        EventBus.getDefault().register(this);
         mConversationList = initConversationList();
         initTabLine();
         initView(mConversationList);
@@ -69,9 +75,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mContactView = (TextView) this.findViewById(R.id.tv_friend);
         mSettingView = (TextView) this.findViewById(R.id.tv_setting);
         LRuPeng = (LinearLayout) findViewById(R.id.ll_rupeng);
-        LConversationList = (LinearLayout) findViewById(R.id.ll_chat);
+        LConversationList = (FrameLayout) findViewById(R.id.ll_chat);
         LContact = (LinearLayout) findViewById(R.id.ll_friend);
         LSetting = (LinearLayout) findViewById(R.id.ll_setting);
+        mUnreadText = (TextView) findViewById(R.id.main_unread_count);
+        mUnreadImg = (ImageView) findViewById(R.id.main_unread_cion);
+
         LRuPeng.setOnClickListener(this);
         LConversationList.setOnClickListener(this);
         LContact.setOnClickListener(this);
@@ -262,6 +271,19 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         return false;
     }
 
+    public void onEventMainThread(Integer i) {
+        if (i == 0) {
+            mUnreadImg.setVisibility(View.GONE);
+            mUnreadText.setVisibility(View.GONE);
+        }else {
+            mUnreadImg.setVisibility(View.VISIBLE);
+            mUnreadText.setText(i);
+        }
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

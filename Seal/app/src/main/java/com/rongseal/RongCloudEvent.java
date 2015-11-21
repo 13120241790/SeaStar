@@ -17,6 +17,7 @@ import com.sd.core.common.broadcast.BroadcastManager;
 
 import de.greenrobot.dao.query.Query;
 import de.greenrobot.dao.query.WhereCondition;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
@@ -87,7 +88,6 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
      * 需要 rongcloud connect 成功后设置的 listener
      */
     public void setConnectedListener() {
-        Log.e("test", "test3");
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(this);
 
         //        扩展功能自定义  singleProvider 语音 voip 只支持单对单
@@ -200,6 +200,17 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
                 }
             }
         }
+        RongIM.getInstance().getRongIMClient().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                EventBus.getDefault().post(integer);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
         return false;
     }
 
