@@ -10,6 +10,7 @@ import com.rongseal.bean.response.NewFriendsListResponse;
 import com.rongseal.bean.response.RegistResponse;
 import com.rongseal.bean.response.SearchEmailResponse;
 import com.rongseal.bean.response.SearchUserNameResponse;
+import com.rongseal.bean.response.UpdateUserNameResponse;
 import com.sd.core.network.http.HttpException;
 import com.sd.core.network.http.RequestParams;
 
@@ -155,10 +156,18 @@ public class ApiAction extends BaseAction {
         params.put("id",userid);
         params.put("is_access",isaccess);
         FeedBackFriendRequestResponse response = null;
-        String result = httpManager.post(uri,params);
+        String result = httpManager.post(uri, params);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result,FeedBackFriendRequestResponse.class);
         }
         return response;
+    }
+
+
+    public UpdateUserNameResponse UpdateUserName(String newName){
+        String url = getURL("");
+        RequestParams params = getRequestParams();
+        params.put("username",newName);
+        return null;
     }
 }

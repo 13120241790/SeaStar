@@ -48,11 +48,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private TextView mRuPengView, mConversationListView, mContactView, mSettingView , mUnreadText;
 
-    private LinearLayout LRuPeng, LContact, LSetting;
+    private LinearLayout LRuPeng, LContact, LSetting,LConversationList;
 
-    private FrameLayout LConversationList;
-
-    private ImageView mImageView , mUnreadImg;
+    private ImageView mImageView , mUnreadImg , mSealIcon , mMessageIcon ,mFriends ,mMy;
     //屏幕的1/4 , 记录当前页码数
     private int mScreen1_4, mCurrentPageIndex;
 
@@ -62,7 +60,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onCreate(savedInstanceState);
         super.setHeadVisibility(View.GONE);
         setContentView(R.layout.rp_main_activity);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         mConversationList = initConversationList();
         initTabLine();
         initView(mConversationList);
@@ -75,12 +73,15 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mContactView = (TextView) this.findViewById(R.id.tv_friend);
         mSettingView = (TextView) this.findViewById(R.id.tv_setting);
         LRuPeng = (LinearLayout) findViewById(R.id.ll_rupeng);
-        LConversationList = (FrameLayout) findViewById(R.id.ll_chat);
+        LConversationList = (LinearLayout) findViewById(R.id.ll_chat);
         LContact = (LinearLayout) findViewById(R.id.ll_friend);
         LSetting = (LinearLayout) findViewById(R.id.ll_setting);
-        mUnreadText = (TextView) findViewById(R.id.main_unread_count);
-        mUnreadImg = (ImageView) findViewById(R.id.main_unread_cion);
-
+//        mUnreadText = (TextView) findViewById(R.id.main_unread_count);
+//        mUnreadImg = (ImageView) findViewById(R.id.main_unread_cion);
+        mSealIcon = (ImageView) findViewById(R.id.main_seal);
+        mMessageIcon = (ImageView) findViewById(R.id.main_message);
+        mFriends = (ImageView) findViewById(R.id.main_friends);
+        mMy = (ImageView) findViewById(R.id.main_my);
         LRuPeng.setOnClickListener(this);
         LConversationList.setOnClickListener(this);
         LContact.setOnClickListener(this);
@@ -150,18 +151,22 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         switch (position) {
             case 0:
                 mRuPengView.setTextColor(Color.parseColor("#3498DB"));
+                mSealIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_rong_abnormal));
                 break;
             case 1:
                 mConversationListView.setTextColor(Color
                         .parseColor("#3498DB"));
+                mMessageIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_message_abnormal));
                 break;
             case 2:
                 mContactView.setTextColor(Color
                         .parseColor("#3498DB"));
+                mFriends.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_friends_abnormal));
                 break;
             case 3:
                 mSettingView.setTextColor(Color
                         .parseColor("#3498DB"));
+                mMy.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_my_abnormal));
                 break;
         }
         mCurrentPageIndex = position;
@@ -206,6 +211,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
 
     private void changeTextViewColor() {
+        mSealIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_rong_normal));
+        mMessageIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_message_normal));
+        mFriends.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_friends_normal));
+        mMy.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_my_normal));
         mRuPengView.setTextColor(Color.GRAY);
         mConversationListView.setTextColor(Color.GRAY);
         mContactView.setTextColor(Color.GRAY);
@@ -271,15 +280,15 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         return false;
     }
 
-    public void onEventMainThread(Integer i) {
-        if (i == 0) {
-            mUnreadImg.setVisibility(View.GONE);
-            mUnreadText.setVisibility(View.GONE);
-        }else {
-            mUnreadImg.setVisibility(View.VISIBLE);
-            mUnreadText.setText(i);
-        }
-    }
+//    public void onEventMainThread(Integer i) {
+//        if (i == 0) {
+//            mUnreadImg.setVisibility(View.GONE);
+//            mUnreadText.setVisibility(View.GONE);
+//        }else {
+//            mUnreadImg.setVisibility(View.VISIBLE);
+//            mUnreadText.setText(i);
+//        }
+//    }
 
     @Override
     protected void onDestroy() {

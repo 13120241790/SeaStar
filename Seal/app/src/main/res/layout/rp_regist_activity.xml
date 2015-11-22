@@ -12,7 +12,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="60dp"
-        android:drawableLeft="@drawable/ic_username1"
+        android:drawableLeft="@drawable/ic_mailbox"
         android:drawablePadding="5dip"
         android:ems="10"
         android:hint="输入邮箱"

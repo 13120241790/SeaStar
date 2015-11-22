@@ -27,71 +27,97 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_seal"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_rong_normal" />
 
             <TextView
                 android:id="@+id/tv_rupeng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="融云"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/ll_chat"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/main_unread_cion"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/reddot"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginRight="15dp"
-                android:visibility="gone"
-                />
+                android:src="@drawable/reddot"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/main_unread_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="10dp"
-                android:textColor="@color/white"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginRight="15dp"
-                android:visibility="gone"
-                />
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                android:visibility="gone" />-->
+
+            <ImageView
+                android:id="@+id/main_message"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_message_normal" />
 
             <TextView
                 android:id="@+id/tv_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:text="会话"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
 
-        </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_friend"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_friends"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_friends_normal" />
 
             <TextView
                 android:id="@+id/tv_friend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="好友"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,14 +125,25 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/main_my"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_my_normal" />
+
 
             <TextView
                 android:id="@+id/tv_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="我的"
-                android:textStyle="bold" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
