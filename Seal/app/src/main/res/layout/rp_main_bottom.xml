@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="37dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -35,7 +35,8 @@
                 android:layout_width="18sp"
                 android:layout_height="18sp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
+
                 android:background="@drawable/ic_rong_normal" />
 
             <TextView
@@ -43,8 +44,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:text="融云"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -82,7 +84,7 @@
                 android:layout_width="18sp"
                 android:layout_height="18sp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:background="@drawable/ic_message_normal" />
 
             <TextView
@@ -90,8 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:text="会话"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -108,7 +111,7 @@
                 android:layout_width="18sp"
                 android:layout_height="18sp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:background="@drawable/ic_friends_normal" />
 
             <TextView
@@ -116,8 +119,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:text="好友"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,7 +137,7 @@
                 android:layout_width="18sp"
                 android:layout_height="18sp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:background="@drawable/ic_my_normal" />
 
 
@@ -142,8 +146,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:text="我的"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
 

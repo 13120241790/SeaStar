@@ -79,6 +79,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 //        mUnreadText = (TextView) findViewById(R.id.main_unread_count);
 //        mUnreadImg = (ImageView) findViewById(R.id.main_unread_cion);
         mSealIcon = (ImageView) findViewById(R.id.main_seal);
+        mSealIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_rong_abnormal));
         mMessageIcon = (ImageView) findViewById(R.id.main_message);
         mFriends = (ImageView) findViewById(R.id.main_friends);
         mMy = (ImageView) findViewById(R.id.main_my);
