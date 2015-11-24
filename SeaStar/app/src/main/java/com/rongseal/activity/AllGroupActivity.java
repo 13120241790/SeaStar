@@ -14,10 +14,19 @@ import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.adapter.BaseAdapter;
 import com.rongseal.bean.response.GetAllGroupListResponse;
+import com.rongseal.bean.response.GetMyGroupResponse;
+import com.rongseal.bean.response.JoinGroupResponse;
+import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.db.com.rongseal.database.Group;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
 import com.sd.core.network.http.HttpException;
+import com.sd.core.utils.NToast;
+
+import java.util.List;
+
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by AMing on 15/11/23.
@@ -39,27 +48,31 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("云上所有的群组");
+        setTitle("云上的群组");
         setContentView(R.layout.sr_allgroup_activity);
+        LoadDialog.show(mContext, "正在云端查询...");
         request(SEARCHALLGROUP);
         initViews();
     }
 
     private void initViews() {
         mListView = (PullToRefreshListView) findViewById(R.id.allgrouplistview);
+        mTextView = (TextView) findViewById(R.id.nogroup);
+        mAdapter = new SearchGroupAdapter(mContext, this);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
     public Object doInBackground(int requestCode) throws HttpException {
         switch (requestCode) {
             case SEARCHALLGROUP:
-                LoadDialog.show(mContext, "正在云端查询...");
                 return action.getAllGroupList();
             case ADDGROUP:
-//                return action.JoinGroup();
+                return action.JoinGroup(groupId);
         }
         return super.doInBackground(requestCode);
     }
+
 
     @Override
     public void onSuccess(int requestCode, Object result) {
@@ -68,12 +81,27 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
                 if (result != null) {
                     GetAllGroupListResponse res = (GetAllGroupListResponse) result;
                     if (res.getCode() == 200) {
-
+                        mAdapter.removeAll();
+                        mListView.setVisibility(View.VISIBLE);
+                        mTextView.setVisibility(View.GONE);
+                        mAdapter.addData(res.getResult());
+                        mAdapter.notifyDataSetChanged();
+                        LoadDialog.dismiss(mContext);
+                        mListView.onRefreshComplete();
                     }
                 }
-
                 break;
             case ADDGROUP:
+                if (result != null) {
+                    JoinGroupResponse res = (JoinGroupResponse) result;
+                    if (res.getCode() == 200) {
+                        LoadDialog.dismiss(mContext);
+                    } else if (res.getCode() == 202) {
+                        LoadDialog.dismiss(mContext);
+                        mListView.onRefreshComplete();
+                        NToast.shortToast(mContext, "该群人数已经达到上限");
+                    }
+                }
                 break;
         }
     }
@@ -82,8 +110,12 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case SEARCHALLGROUP:
+                LoadDialog.dismiss(mContext);
+                mListView.onRefreshComplete();
                 break;
             case ADDGROUP:
+                LoadDialog.dismiss(mContext);
+                mListView.onRefreshComplete();
                 break;
         }
     }
@@ -97,7 +129,8 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
 
         private AllGroupActivity mActivity;
 
-        public SearchGroupAdapter(Context context,AllGroupActivity activity) {
+
+        public SearchGroupAdapter(Context context, AllGroupActivity activity) {
             super(context);
             mActivity = activity;
         }
@@ -126,19 +159,54 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
             }
             holder.mGroupName.setText(bean.getName());
             holder.mGroupId.setText(bean.getId());
-            holder.mGroupNumber.setText(bean.getNumber()+"/500");
-            holder.mGroupTime.setText("群组创建时间:"+bean.getCreat_datetime());
+            holder.mGroupNumber.setText(bean.getNumber() + "/500");
+            holder.mGroupTime.setText("创建时间:" + bean.getCreat_datetime());
             holder.mGroupDescribe.setText(bean.getIntroduce());
-            holder.mAddGroup.setTag(bean);
-            holder.mAddGroup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GetAllGroupListResponse.ResultEntity bean = (GetAllGroupListResponse.ResultEntity) v.getTag();
 
-//                    LoadDialog.show(mContext,"正在加入...");
-//                    request(ADDGROUP);
+
+            QueryBuilder qb = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder();
+            List<Group> list = qb.list();
+            if (list != null && list.size() > 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getGroupId().contains(bean.getId())) {
+                        holder.mAddGroup.setVisibility(View.GONE);
+                        holder.mShowAdded.setVisibility(View.VISIBLE);
+                        holder.mShowAdded.setText("已在该群");
+                    } else {
+                        if (Integer.parseInt(bean.getNumber()) < 500) {
+                            holder.mAddGroup.setTag(bean.getId());
+                            holder.mAddGroup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String groupId = (String) v.getTag();
+                                    mActivity.addGroup(groupId);
+
+                                }
+                            });
+                        } else {
+                            holder.mAddGroup.setVisibility(View.GONE);
+                            holder.mShowAdded.setVisibility(View.VISIBLE);
+                            holder.mShowAdded.setText("该群已满");
+                        }
+                    }
                 }
-            });
+            } else {
+                if (Integer.parseInt(bean.getNumber()) < 500) {
+                    holder.mAddGroup.setTag(bean.getId());
+                    holder.mAddGroup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String groupId = (String) v.getTag();
+                            mActivity.addGroup(groupId);
+
+                        }
+                    });
+                } else {
+                    holder.mAddGroup.setVisibility(View.GONE);
+                    holder.mShowAdded.setVisibility(View.VISIBLE);
+                    holder.mShowAdded.setText("该群已满");
+                }
+            }
             return convertView;
         }
     }
@@ -149,7 +217,11 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
         Button mAddGroup;
     }
 
-    public void addGroup(GetAllGroupListResponse.ResultEntity bean){
+    String groupId;
 
+    public void addGroup(String groupId) {
+        this.groupId = groupId;
+        LoadDialog.show(mContext, "正在请求...");
+        request(ADDGROUP);
     }
 }

@@ -64,6 +64,8 @@
         <activity android:name=".activity.AllGroupActivity"></activity>
 
         <activity android:name=".activity.MyGroupActivity"></activity>
+
+        <activity android:name=".activity.GroupAetailsActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>

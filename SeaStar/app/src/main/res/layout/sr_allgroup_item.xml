@@ -14,8 +14,8 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="66sp"
-        android:layout_margin="10dip"
+        android:layout_height="76sp"
+        android:layout_margin="5dip"
         android:layout_toRightOf="@id/search_group_head"
         android:orientation="vertical">
 

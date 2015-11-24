@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private static final int REGISTCODE = 101;
     private static final int LOGIN_CODE = 2016;
     private static final int SYNCFRIEND = 199;
+
     // 用户名 密码
     private ClearWriteEditText mUserName, mPassWord;
     // 登录
@@ -276,7 +277,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,sp.getString("username",""), Uri.parse(sp.getString("portrait",""))));
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
                 }
-
                 request(SYNCFRIEND);
                 Log.e("userid", "userid" + s);
             }

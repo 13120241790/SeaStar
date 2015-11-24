@@ -14,19 +14,23 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rongseal.bean.response.GetMyGroupResponse;
+import com.rongseal.db.com.rongseal.database.DBManager;
+import com.rongseal.db.com.rongseal.database.Group;
 import com.rongseal.fragment.FriendsFragment;
 import com.rongseal.fragment.SealFragment;
 import com.rongseal.fragment.MineFragment;
 import com.rongseal.activity.BaseActivity;
+import com.sd.core.network.http.HttpException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.dao.query.QueryBuilder;
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -34,6 +38,7 @@ import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
+    private static final int SYNCGROUP = 209;
     private ViewPager mViewPager;
 
     private FragmentPagerAdapter mFragmentPagerAdapter; //将 tab  页面持久在内存中
@@ -61,9 +66,53 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.setHeadVisibility(View.GONE);
         setContentView(R.layout.rp_main_activity);
 //        EventBus.getDefault().register(this);
+        initGroupDB();
         mConversationList = initConversationList();
         initTabLine();
         initView(mConversationList);
+    }
+
+    private void initGroupDB() {
+//        QueryBuilder qb = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder();
+//        if (qb.list().size() != 0)) {
+//        }
+        request(SYNCGROUP);
+    }
+
+    @Override
+    public Object doInBackground(int requestCode) throws HttpException {
+        switch (requestCode) {
+            case SYNCGROUP:
+                return action.getMyGruop();
+        }
+        return super.doInBackground(requestCode);
+    }
+
+    @Override
+    public void onSuccess(int requestCode, Object result) {
+        switch (requestCode) {
+            case SYNCGROUP:
+                if (result != null) {
+                    GetMyGroupResponse res = (GetMyGroupResponse) result;
+                    if (res.getCode() == 200) {
+                        DBManager.getInstance(mContext).getDaoSession().getGroupDao().deleteAll();
+                       List<GetMyGroupResponse.ResultEntity> lsit =  res.getResult();
+                        for (GetMyGroupResponse.ResultEntity re :  lsit) {
+                            DBManager.getInstance(mContext).getDaoSession().getGroupDao().insertOrReplace(new Group(
+                                    re.getId(),
+                                    re.getName(),
+                                    null,null,null,null,null
+                            ));
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onFailure(int requestCode, int state, Object result) {
+
     }
 
     private void initView(Fragment mConversationList) {

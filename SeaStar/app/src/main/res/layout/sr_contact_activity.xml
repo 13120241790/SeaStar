@@ -93,7 +93,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="查看云上所有的群组"
+            android:text="云上的群组"
             android:textColor="@color/text_tips_color"
             android:textSize="16sp" />
 

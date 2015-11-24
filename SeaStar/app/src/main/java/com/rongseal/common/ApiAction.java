@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.rongseal.bean.response.AddFriendResponse;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.GetAllGroupListResponse;
+import com.rongseal.bean.response.GetMyGroupResponse;
 import com.rongseal.bean.response.JoinGroupResponse;
 import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
@@ -194,6 +195,21 @@ public class ApiAction extends BaseAction {
         String result = httpManager.get(uri,params);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result,JoinGroupResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 获取我所在的群组
+     * @return
+     * @throws HttpException
+     */
+    public GetMyGroupResponse getMyGruop() throws HttpException {
+        String uri = getURL("get_my_group");
+        GetMyGroupResponse response = null;
+        String result = httpManager.get(uri);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,GetMyGroupResponse.class);
         }
         return response;
     }

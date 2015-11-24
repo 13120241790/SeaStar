@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_bg">
+
+    <ImageView
+        android:id="@+id/my_group_head"
+        android:layout_width="46sp"
+        android:layout_height="46sp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="10dip"
+        android:src="@drawable/rp_default_head" />
+
+    <TextView
+        android:id="@+id/my_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/my_group_head"
+        android:text="Android1群"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/my_group_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/my_group_name"
+        android:layout_marginLeft="8dp"
+        android:singleLine="true"
+        android:text="id:22"
+        android:textSize="18sp" />
+
+
+    <Button
+        android:id="@+id/start_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/de_pic_action_btn"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="群组详情"
+        android:textColor="@color/de_pic_default_text_color"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/my_group_head"
+        android:background="@color/text_line_color" />
+
+</RelativeLayout>

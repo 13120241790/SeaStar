@@ -5,16 +5,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/nogroup"
+        android:id="@+id/nomygroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="暂无记录..."
+        android:text="暂时没有加入任何群组..."
         android:textSize="16dp"
         android:layout_gravity="center"
         />
 
     <com.rongseal.widget.pulltorefresh.PullToRefreshListView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/allgrouplistview"
+        android:id="@+id/mygrouplistview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:cacheColorHint="#00000000"
