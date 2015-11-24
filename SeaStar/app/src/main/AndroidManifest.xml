@@ -60,6 +60,10 @@
         <activity android:name=".activity.ValidationMessageActivity"></activity>
 
         <activity android:name="com.rongseal.activity.RegistActivity"></activity>
+
+        <activity android:name=".activity.AllGroupActivity"></activity>
+
+        <activity android:name=".activity.MyGroupActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>

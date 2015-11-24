@@ -1,5 +1,6 @@
 package com.rongseal.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.rongseal.R;
  */
 public class ContactActivity extends BaseActivity implements View.OnClickListener {
 
-    private LinearLayout SearchFriend;
+    private LinearLayout SearchFriend , SearchGroup ,MyGroup;
 
 
     @Override
@@ -27,7 +28,11 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
         SearchFriend = (LinearLayout) findViewById(R.id.contact_search);
+        SearchGroup = (LinearLayout) findViewById(R.id.search_group);
+        MyGroup = (LinearLayout) findViewById(R.id.my_group);
+        SearchGroup.setOnClickListener(this);
         SearchFriend.setOnClickListener(this);
+        MyGroup.setOnClickListener(this);
     }
 
     @Override
@@ -35,6 +40,12 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.contact_search:
                 startActivity(new Intent(mContext, SearchFriendActivity.class));
+                break;
+            case R.id.search_group:
+                startActivity(new Intent(mContext, AllGroupActivity.class));
+                break;
+            case R.id.my_group:
+                startActivity(new Intent(mContext, MyGroupActivity.class));
                 break;
         }
     }

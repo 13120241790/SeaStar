@@ -5,6 +5,8 @@ import android.text.TextUtils;
 
 import com.rongseal.bean.response.AddFriendResponse;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
+import com.rongseal.bean.response.GetAllGroupListResponse;
+import com.rongseal.bean.response.JoinGroupResponse;
 import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
 import com.rongseal.bean.response.RegistResponse;
@@ -163,6 +165,38 @@ public class ApiAction extends BaseAction {
         return response;
     }
 
+    /**
+     * 获取服务器上所有的群组
+     * @return
+     * @throws HttpException
+     */
+    public GetAllGroupListResponse getAllGroupList() throws HttpException{
+        String uri = getURL("get_all_group");
+        GetAllGroupListResponse response = null;
+        String result = httpManager.get(uri);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,GetAllGroupListResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 申请加入群组
+     * @param gruopId
+     * @return
+     * @throws HttpException
+     */
+    public JoinGroupResponse JoinGroup(String gruopId) throws HttpException{
+        String uri = getURL("join_group");
+        RequestParams params = getRequestParams();
+        params.put("id",gruopId);
+        JoinGroupResponse response = null;
+        String result = httpManager.get(uri,params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,JoinGroupResponse.class);
+        }
+        return response;
+    }
 
     public UpdateUserNameResponse UpdateUserName(String newName){
         String url = getURL("");
