@@ -6,10 +6,12 @@ import android.text.TextUtils;
 import com.rongseal.bean.response.AddFriendResponse;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.GetAllGroupListResponse;
+import com.rongseal.bean.response.GetGroupInfoResponse;
 import com.rongseal.bean.response.GetMyGroupResponse;
 import com.rongseal.bean.response.JoinGroupResponse;
 import com.rongseal.bean.response.LoginResponse;
 import com.rongseal.bean.response.NewFriendsListResponse;
+import com.rongseal.bean.response.QuitGroupResponse;
 import com.rongseal.bean.response.RegistResponse;
 import com.rongseal.bean.response.SearchEmailResponse;
 import com.rongseal.bean.response.SearchUserNameResponse;
@@ -210,6 +212,42 @@ public class ApiAction extends BaseAction {
         String result = httpManager.get(uri);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result,GetMyGroupResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 根据群组 id 获取群组信息
+     * @param groupId
+     * @return
+     * @throws HttpException
+     */
+    public GetGroupInfoResponse getGroupInfo(String groupId)throws HttpException{
+        String uri = getURL("get_group");
+        RequestParams params = getRequestParams();
+        params.put("id",groupId);
+        GetGroupInfoResponse response = null;
+        String result = httpManager.get(uri,params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,GetGroupInfoResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 退出群组
+     * @param groupId
+     * @return
+     * @throws HttpException
+     */
+    public QuitGroupResponse quitGroup(String groupId)throws HttpException{
+        String uri = getURL("quit_group");
+        RequestParams params = getRequestParams();
+        params.put("id",groupId);
+        QuitGroupResponse response = null;
+        String result = httpManager.get(uri,params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,QuitGroupResponse.class);
         }
         return response;
     }

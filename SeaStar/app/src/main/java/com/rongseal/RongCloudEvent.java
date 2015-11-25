@@ -11,6 +11,7 @@ import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.db.com.rongseal.database.FriendDao;
+import com.rongseal.db.com.rongseal.database.GroupDao;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
@@ -27,6 +28,7 @@ import io.rong.imkit.widget.provider.LocationInputProvider;
 import io.rong.imkit.widget.provider.VoIPInputProvider;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -37,7 +39,7 @@ import io.rong.message.ImageMessage;
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider {
+public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider {
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
@@ -81,7 +83,8 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
 //        de.greenrobot.event.EventBus.getDefault().register(this);
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
         RongIM.setConversationListBehaviorListener(this);
-        RongIM.setUserInfoProvider(this,true);
+        RongIM.setUserInfoProvider(this, true);
+        RongIM.setGroupInfoProvider(this,true);
     }
 
     /**
@@ -243,6 +246,18 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         }
         if (s.equals("10000")) {
             return new UserInfo("10000","好友验证消息",FRIENDURL);
+        }
+        return null;
+    }
+
+    @Override
+    public Group getGroupInfo(String s) {
+        GroupDao groupdao = DBManager.getInstance(mContext).getDaoSession().getGroupDao();
+        com.rongseal.db.com.rongseal.database.Group bean = groupdao.queryBuilder().where(GroupDao.Properties.GroupId.eq(s)).unique();
+        if (bean != null){
+            return new Group(bean.getGroupId(),bean.getName(),Uri.parse("http://img5.imgtn.bdimg.com/it/u=1024504869,25874000&fm=21&gp=0.jpg"));
+        }else {
+            //TODO 根据 s 请求网络拉取数据
         }
         return null;
     }

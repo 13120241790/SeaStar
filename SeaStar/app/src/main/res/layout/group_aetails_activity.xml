@@ -4,13 +4,118 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/rc_default_portrait" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/details_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="群名称:Android1群"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/details_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="群组id:22"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/details_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="创建时间:2015-11-11 12:23:12"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/details_creator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="创建者:满少"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/start_group_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/de_pic_action_btn"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="发起会话"
+        android:textColor="@color/de_pic_default_text_color"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/delete_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ss_btn_red"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="退出群组并删除"
+        android:textColor="@color/de_pic_default_text_color"
+        android:textSize="14sp" />
+
     <TextView
-        android:id="@+id/groupid"
+        android:id="@+id/group_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="22"
-        android:layout_margin="60dp"
-        android:textSize="20sp"
-        />
+        android:layout_marginLeft="10dp"
+        android:text="群组成员(500):"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <com.rongseal.widget.pulltorefresh.PullToRefreshGridView
+        android:id="@+id/group_member"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:columnWidth="60dp"
+        android:horizontalSpacing="2dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"></com.rongseal.widget.pulltorefresh.PullToRefreshGridView>
 
 </LinearLayout>

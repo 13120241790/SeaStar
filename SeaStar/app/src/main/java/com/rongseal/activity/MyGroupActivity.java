@@ -15,6 +15,7 @@ import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Group;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
+import com.sd.core.utils.NLog;
 
 import java.util.List;
 
@@ -51,6 +52,22 @@ public class MyGroupActivity extends BaseActivity implements PullToRefreshBase.O
             mTextView.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    protected void onResume() {//可见
+        super.onResume();
+        NLog.e("onResume","onResume");
+        List<Group> groupList = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder().list();
+        if (groupList != null && groupList.size() > 0) {
+            mAdapter = new MyGroupAdapter(mContext, groupList);
+            mListView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+            mTextView.setVisibility(View.GONE);
+        } else {
+            mTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     public void onRefresh(PullToRefreshBase refreshView) {
