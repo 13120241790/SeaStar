@@ -31,6 +31,8 @@ public class MyGroupActivity extends BaseActivity implements PullToRefreshBase.O
 
     private TextView mTextView;
 
+    private Button RightButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,14 @@ public class MyGroupActivity extends BaseActivity implements PullToRefreshBase.O
     }
 
     private void initView() {
+        RightButton = getBtn_right();
+        RightButton.setText("查看群组");
+        RightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyGroupActivity.this, AllGroupActivity.class));
+            }
+        });
         mListView = (PullToRefreshListView) findViewById(R.id.mygrouplistview);
         mTextView = (TextView) findViewById(R.id.nomygroup);
         List<Group> groupList = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder().list();
@@ -56,7 +66,7 @@ public class MyGroupActivity extends BaseActivity implements PullToRefreshBase.O
     @Override
     protected void onResume() {//可见
         super.onResume();
-        NLog.e("onResume","onResume");
+        NLog.e("onResume", "onResume");
         List<Group> groupList = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder().list();
         if (groupList != null && groupList.size() > 0) {
             mAdapter = new MyGroupAdapter(mContext, groupList);

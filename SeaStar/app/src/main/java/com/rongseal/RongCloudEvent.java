@@ -2,11 +2,14 @@ package com.rongseal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 
+import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.activity.PhotoActivity;
+import com.rongseal.activity.UserDetailActivity;
+import com.rongseal.activity.UserDetailAddActivity;
 import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
@@ -15,9 +18,8 @@ import com.rongseal.db.com.rongseal.database.GroupDao;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
+import com.sd.core.utils.NToast;
 
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.WhereCondition;
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
@@ -133,7 +135,18 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
      */
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
-        return false;
+        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        String sId = sp.getString("userid","");
+        if (sId.equals(userInfo.getUserId())) {
+            Intent intent = new Intent(context, MyDetailActivity.class);
+            intent.putExtra("userid",userInfo.getUserId());
+            context.startActivity(intent);
+        }else {
+            Intent intent = new Intent(context, UserDetailActivity.class);
+            intent.putExtra("userid",userInfo.getUserId());
+            context.startActivity(intent);
+        }
+        return true;
     }
 
     /**

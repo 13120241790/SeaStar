@@ -129,7 +129,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.email_item:
-                Intent intent = new Intent(this,UserDetailActivity.class);
+                Intent intent = new Intent(this,UserDetailAddActivity.class);
                 intent.putExtra("search_username",mailRes.getResult().getUsername());
                 intent.putExtra("search_userid",mailRes.getResult().getId());
                 intent.putExtra("search_portrait",mailRes.getResult().getPortrait());
@@ -229,7 +229,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //TODO 此处需要检查是自己 是自己不给开启  代码未编写
 
-        Intent intent = new Intent(this,UserDetailActivity.class);
+        Intent intent = new Intent(this,UserDetailAddActivity.class);
         intent.putExtra("search_username",userNameRes.getResult().get(position-1).getUsername());
         intent.putExtra("search_userid",userNameRes.getResult().get(position-1).getId());
         intent.putExtra("search_portrait",userNameRes.getResult().get(position-1).getPortrait());

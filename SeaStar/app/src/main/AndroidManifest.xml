@@ -55,7 +55,7 @@
 
         <activity android:name=".activity.SearchFriendActivity"></activity>
 
-        <activity android:name=".activity.UserDetailActivity"></activity>
+        <activity android:name=".activity.UserDetailAddActivity"></activity>
 
         <activity android:name=".activity.ValidationMessageActivity"></activity>
 
@@ -66,6 +66,8 @@
         <activity android:name=".activity.MyGroupActivity"></activity>
 
         <activity android:name=".activity.GroupAetailsActivity"></activity>
+
+        <activity android:name=".activity.UserDetailActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>
