@@ -51,11 +51,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private List<Fragment> mFragment = new ArrayList<>();
 
-    private TextView mRuPengView, mConversationListView, mContactView, mSettingView , mUnreadText;
+    private TextView mRuPengView, mConversationListView, mContactView, mSettingView;
 
     private LinearLayout LRuPeng, LContact, LSetting,LConversationList;
 
-    private ImageView mImageView , mUnreadImg , mSealIcon , mMessageIcon ,mFriends ,mMy;
+    private ImageView mImageView , mSealIcon , mMessageIcon ,mFriends ,mMy;
     //屏幕的1/4 , 记录当前页码数
     private int mScreen1_4, mCurrentPageIndex;
 
@@ -65,7 +65,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onCreate(savedInstanceState);
         super.setHeadVisibility(View.GONE);
         setContentView(R.layout.rp_main_activity);
-//        EventBus.getDefault().register(this);
         initGroupDB();
         mConversationList = initConversationList();
         initTabLine();
@@ -73,9 +72,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     private void initGroupDB() {
-//        QueryBuilder qb = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder();
-//        if (qb.list().size() != 0)) {
-//        }
         request(SYNCGROUP);
     }
 

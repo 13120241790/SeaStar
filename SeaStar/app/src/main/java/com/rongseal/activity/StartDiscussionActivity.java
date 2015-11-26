@@ -101,7 +101,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
         mRightBtn = getBtn_right();
         mRightBtn.setVisibility(View.VISIBLE);
-        mRightBtn.setText("确定");
+        mRightBtn.setText("开启聊天");
         mRightBtn.setOnClickListener(this);
 
         //实例化汉字转拼音类
@@ -247,6 +247,8 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
                             }
                         });
+                    }else {
+                        NToast.shortToast(mContext,"至少选择一位好友");
                     }
                 } else {
                     Toast.makeText(StartDiscussionActivity.this, "无数据", Toast.LENGTH_SHORT).show();
