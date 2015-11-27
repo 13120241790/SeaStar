@@ -1,8 +1,5 @@
 package com.rongseal.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.*;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +15,7 @@ import com.rongseal.bean.response.GetGroupInfoResponse;
 import com.rongseal.bean.response.QuitGroupResponse;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Group;
+import com.rongseal.utlis.DialogWithYesOrNoUtils;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshGridView;
@@ -164,24 +162,13 @@ public class GroupAetailsActivity extends BaseActivity implements PullToRefreshB
                 }
                 break;
             case R.id.delete_group:
-                AlertDialog.Builder alterDialog = new AlertDialog.Builder(this);
-                alterDialog.setMessage("确定退出并删除该群组？");
-                alterDialog.setCancelable(true);
-
-                alterDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出并删除该群组？", new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void exectEvent() {
                         LoadDialog.show(mContext, "退出群组...");
                         request(DELETEGROUP);
                     }
                 });
-                alterDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                alterDialog.show();
                 break;
         }
     }

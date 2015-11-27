@@ -91,10 +91,10 @@ public class UserDetailAddActivity extends BaseActivity implements View.OnClickL
                         mAddFriend.setText("请求已发出");
                     }else if (res.getCode() == 301) {
                         LoadDialog.dismiss(mContext);
-                        NToast.shortToast(mContext, "已是好友,请勿重复添加!");
+                        NToast.shortToast(mContext, "请求已发出,等待对方响应。请勿重复请求");
                         mAddFriend.setClickable(false);
                         mAddFriend.setTextColor(getResources().getColor(R.color.group_list_gray));
-                        mAddFriend.setText("已存在好友关系");
+                        mAddFriend.setText("等待对方响应");
                     }
                 }
                 break;

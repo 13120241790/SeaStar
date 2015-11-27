@@ -5,11 +5,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 
+
 /**
  * Created by AMing on 15/11/26.
  * Company RongCloud
  */
 public class DialogWithYesOrNoUtils {
+
+    private static DialogWithYesOrNoUtils instance = null;
+
+    public static DialogWithYesOrNoUtils getInstance() {
+        if (instance == null) {
+            instance = new DialogWithYesOrNoUtils();
+        }
+        return instance;
+    }
+
+    private DialogWithYesOrNoUtils(){}
 
     public void showDialog(Context context, String titleInfo, final DialogWithYesOrNoUtils.DialogCallBack callBack) {
         AlertDialog.Builder alterDialog = new AlertDialog.Builder(context);
@@ -19,7 +31,6 @@ public class DialogWithYesOrNoUtils {
         alterDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO 执行这个 exectEvent
                 callBack.exectEvent();
             }
         });
@@ -32,7 +43,7 @@ public class DialogWithYesOrNoUtils {
         alterDialog.show();
     }
 
-    interface DialogCallBack {
+    public interface DialogCallBack {
         void exectEvent();
     }
 }

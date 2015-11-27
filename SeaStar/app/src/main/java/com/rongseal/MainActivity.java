@@ -1,7 +1,5 @@
 package com.rongseal;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.*;
@@ -25,12 +23,12 @@ import com.rongseal.fragment.FriendsFragment;
 import com.rongseal.fragment.SealFragment;
 import com.rongseal.fragment.MineFragment;
 import com.rongseal.activity.BaseActivity;
+import com.rongseal.utlis.DialogWithYesOrNoUtils;
 import com.sd.core.network.http.HttpException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -294,15 +292,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
-
-
-            final AlertDialog.Builder alterDialog = new AlertDialog.Builder(this);
-            alterDialog.setMessage("确定退出应用？");
-            alterDialog.setCancelable(true);
-
-            alterDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出应用?", new DialogWithYesOrNoUtils.DialogCallBack() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void exectEvent() {
                     if (RongIM.getInstance() != null)
                         RongIM.getInstance().disconnect(true);
 
@@ -314,13 +306,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     }
                 }
             });
-            alterDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            alterDialog.show();
         }
 
         return false;

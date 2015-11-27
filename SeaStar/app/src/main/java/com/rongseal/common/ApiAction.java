@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.rongseal.bean.response.AddFriendResponse;
+import com.rongseal.bean.response.DeleteFriendResponse;
 import com.rongseal.bean.response.FeedBackFriendRequestResponse;
 import com.rongseal.bean.response.GetAllGroupListResponse;
 import com.rongseal.bean.response.GetGroupInfoResponse;
@@ -280,6 +281,24 @@ public class ApiAction extends BaseAction {
         String result = httpManager.get(uri, params);
         if (!TextUtils.isEmpty(result)) {
             response = jsonToBean(result, UserDetailInfoResponse.class);
+        }
+        return response;
+    }
+
+    /**
+     * 删除好友
+     * @param userid
+     * @return
+     * @throws HttpException
+     */
+    public DeleteFriendResponse deleteFriend(String userid) throws HttpException{
+        String uri = getURL("delete_friend");
+        RequestParams params = getRequestParams();
+        params.put("id",userid);
+        DeleteFriendResponse response = null;
+        String result = httpManager.post(uri, params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,DeleteFriendResponse.class);
         }
         return response;
     }
