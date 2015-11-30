@@ -40,8 +40,7 @@
         <activity
             android:name="com.rongseal.MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            ></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
         <activity android:name="com.rongseal.activity.StartDiscussionActivity"></activity>
         <!-- 新版相册新增AC -->
@@ -79,11 +78,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.rongseal.activity.LoginActivity"></activity>
+        <activity
+            android:name="com.rongseal.activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
             android:name="com.rongseal.activity.ConversationActivity"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -34,6 +34,7 @@ import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.ContactNotificationMessage;
 import io.rong.message.ImageMessage;
+import io.rong.message.TextMessage;
 
 /**
  * Created by AMing on 15/11/6.
@@ -135,14 +136,14 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
         SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        String sId = sp.getString("userid","");
+        String sId = sp.getString("userid", "");
         if (sId.equals(userInfo.getUserId())) {
             Intent intent = new Intent(context, MyDetailActivity.class);
-            intent.putExtra("userid",userInfo.getUserId());
+            intent.putExtra("userid", userInfo.getUserId());
             context.startActivity(intent);
-        }else {
+        } else {
             Intent intent = new Intent(context, UserDetailActivity.class);
-            intent.putExtra("userid",userInfo.getUserId());
+            intent.putExtra("userid", userInfo.getUserId());
             context.startActivity(intent);
         }
         return true;
@@ -203,7 +204,9 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
     @Override
     public boolean onReceived(Message message, int i) {
         MessageContent messageContent = message.getContent();
-        if (messageContent instanceof ContactNotificationMessage) {
+        if (messageContent instanceof TextMessage) {
+            TextMessage tm = (TextMessage) messageContent;
+        } else if (messageContent instanceof ContactNotificationMessage) {
             BroadcastManager.getInstance(mContext).sendBroadcast(FRIEND_MESSAGE);
         } else {
             if (messageContent instanceof AgreedFriendRequestMessage) {
@@ -230,7 +233,6 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
     }
 
 
-
     @Override
     public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
         return false;
@@ -249,15 +251,15 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
 
     @Override
     public UserInfo getUserInfo(String s) {
-        FriendDao friendDao =  DBManager.getInstance(mContext).getDaoSession().getFriendDao();
-        Friend  bean = friendDao.queryBuilder().where(FriendDao.Properties.UserId.eq(s)).unique();
+        FriendDao friendDao = DBManager.getInstance(mContext).getDaoSession().getFriendDao();
+        Friend bean = friendDao.queryBuilder().where(FriendDao.Properties.UserId.eq(s)).unique();
         if (bean != null) {
-            return new UserInfo(bean.getUserId(),bean.getName(), Uri.parse(bean.getPortraitUri()));
-        }else{
+            return new UserInfo(bean.getUserId(), bean.getName(), Uri.parse(bean.getPortraitUri()));
+        } else {
             //TODO http 请求网络
         }
         if (s.equals("10000")) {
-            return new UserInfo("10000","好友验证消息",FRIENDURL);
+            return new UserInfo("10000", "好友验证消息", FRIENDURL);
         }
         return null;
     }
@@ -266,9 +268,9 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
     public Group getGroupInfo(String s) {
         GroupDao groupdao = DBManager.getInstance(mContext).getDaoSession().getGroupDao();
         com.rongseal.db.com.rongseal.database.Group bean = groupdao.queryBuilder().where(GroupDao.Properties.GroupId.eq(s)).unique();
-        if (bean != null){
-            return new Group(bean.getGroupId(),bean.getName(),Uri.parse("http://img5.imgtn.bdimg.com/it/u=1024504869,25874000&fm=21&gp=0.jpg"));
-        }else {
+        if (bean != null) {
+            return new Group(bean.getGroupId(), bean.getName(), Uri.parse("http://img5.imgtn.bdimg.com/it/u=1024504869,25874000&fm=21&gp=0.jpg"));
+        } else {
             //TODO 根据 s 请求网络拉取数据
         }
         return null;
