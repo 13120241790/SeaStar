@@ -68,6 +68,8 @@
         <activity android:name=".activity.GroupAetailsActivity"></activity>
 
         <activity android:name=".activity.UserDetailActivity"></activity>
+
+        <activity android:name=".activity.BlackListActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>

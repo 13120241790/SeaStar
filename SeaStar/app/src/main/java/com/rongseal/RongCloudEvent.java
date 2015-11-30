@@ -9,7 +9,6 @@ import android.view.View;
 import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.activity.PhotoActivity;
 import com.rongseal.activity.UserDetailActivity;
-import com.rongseal.activity.UserDetailAddActivity;
 import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
@@ -18,7 +17,6 @@ import com.rongseal.db.com.rongseal.database.GroupDao;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
-import com.sd.core.utils.NToast;
 
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongContext;
@@ -41,7 +39,7 @@ import io.rong.message.ImageMessage;
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider {
+public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider, RongIM.LocationProvider {
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
@@ -86,7 +84,8 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
         RongIM.setConversationListBehaviorListener(this);
         RongIM.setUserInfoProvider(this, true);
-        RongIM.setGroupInfoProvider(this,true);
+        RongIM.setGroupInfoProvider(this, true);
+        RongIM.setLocationProvider(this);
     }
 
     /**
@@ -273,5 +272,21 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
             //TODO 根据 s 请求网络拉取数据
         }
         return null;
+    }
+
+    private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
+
+    public LocationCallback getLastLocationCallback() {
+        return mLastLocationCallback;
+    }
+
+    public void setLastLocationCallback(LocationCallback mLastLocationCallback) {
+        this.mLastLocationCallback = mLastLocationCallback;
+    }
+
+    @Override
+    public void onStartLocation(Context context, LocationCallback locationCallback) {
+        setLastLocationCallback(locationCallback);
+
     }
 }

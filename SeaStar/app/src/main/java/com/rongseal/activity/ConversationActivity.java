@@ -69,6 +69,9 @@ public class ConversationActivity extends BaseActivity {
     public void onEventMainThread(GroupAetailsActivity.FinishActivity fa) {
         finish();
     }
+    public void onEventMainThread(UserDetailActivity.DeleteFriend df) {
+        finish();
+    }
 
     @Override
     protected void onDestroy() {

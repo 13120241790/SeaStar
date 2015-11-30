@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.rongseal.R;
 import com.rongseal.RongCloudEvent;
 import com.rongseal.activity.StartDiscussionActivity;
+import com.rongseal.activity.UserDetailActivity;
 import com.rongseal.adapter.FriendAdapter;
 import com.rongseal.bean.Friend;
 import com.rongseal.db.com.rongseal.database.DBManager;
@@ -35,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 
 /**
@@ -96,7 +98,6 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.rp_friend_fragment, null);
         refreshUIListener();
-
         initView();
         return mView;
     }
@@ -127,6 +128,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
             }
         });
     }
+
 
     private void initView() {
         //实例化汉字转拼音类

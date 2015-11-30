@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rongseal.App;
 import com.rongseal.R;
+import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.AddFriendResponse;
 import com.rongseal.bean.response.DeleteFriendResponse;
 import com.rongseal.bean.response.UserDetailInfoResponse;
@@ -17,13 +18,16 @@ import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.utlis.DialogWithYesOrNoUtils;
 import com.rongseal.widget.dialog.LoadDialog;
+import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
 import com.sd.core.utils.NToast;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 /**
  * Created by AMing on 15/11/26.
@@ -45,7 +49,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
     private boolean isFriend = false;
 
-    private Button mAddFriend, mDeleteFriend, mAddBlackList , mRequestSend;
+    private Button mAddFriend, mDeleteFriend, mAddBlackList, mRequestSend;
     private UserDetailInfoResponse udRes;
 
     @Override
@@ -77,10 +81,12 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
             if (list.getUserId().equals(userid)) {
                 isFriend = true;
                 mAddFriend.setVisibility(View.GONE);
+                mAddBlackList.setVisibility(View.VISIBLE);
+                mDeleteFriend.setVisibility(View.VISIBLE);
             } else {
                 mAddBlackList.setVisibility(View.GONE);
                 mDeleteFriend.setVisibility(View.GONE);
-
+                mAddFriend.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -128,12 +134,12 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                         mRequestSend.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(UserDetailActivity.this,ValidationMessageActivity.class));
+                                startActivity(new Intent(UserDetailActivity.this, ValidationMessageActivity.class));
                             }
                         });
                         NToast.shortToast(mContext, "请求成功");
                         LoadDialog.dismiss(mContext);
-                    } else if(res.getCode() == 301 ){
+                    } else if (res.getCode() == 301) {
                         mDeleteFriend.setVisibility(View.GONE);
                         mAddBlackList.setVisibility(View.GONE);
                         mAddFriend.setVisibility(View.GONE);
@@ -141,12 +147,12 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                         mRequestSend.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                startActivity(new Intent(UserDetailActivity.this,ValidationMessageActivity.class));
+                                startActivity(new Intent(UserDetailActivity.this, ValidationMessageActivity.class));
                             }
                         });
                         NToast.shortToast(mContext, "请求已经发出,等待对方响应。请勿重复请求");
                         LoadDialog.dismiss(mContext);
-                    }else{
+                    } else {
                         NToast.shortToast(mContext, "请求失败:" + res.getCode());
                         LoadDialog.dismiss(mContext);
                     }
@@ -157,6 +163,11 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                     DeleteFriendResponse res = (DeleteFriendResponse) result;
                     if (res.getCode() == 200) {
                         DBManager.getInstance(mContext).getDaoSession().getFriendDao().delete(new Friend(udRes.getResult().getId()));
+                        EventBus.getDefault().post(new DeleteFriend());
+                        BroadcastManager.getInstance(mContext).sendBroadcast(RongCloudEvent.REFRESHUI);
+                        if (RongIM.getInstance() != null) {
+                            RongIM.getInstance().getRongIMClient().removeConversation(Conversation.ConversationType.PRIVATE, userid);
+                        }
                         NToast.shortToast(mContext, "删除成功");
                         LoadDialog.dismiss(mContext);
                         finish();
@@ -167,6 +178,9 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
         }
+    }
+
+    public class DeleteFriend {
     }
 
     @Override
