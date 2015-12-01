@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rongseal.bean.response.GetMyGroupResponse;
@@ -25,6 +27,8 @@ import com.rongseal.fragment.MineFragment;
 import com.rongseal.activity.BaseActivity;
 import com.rongseal.utlis.DialogWithYesOrNoUtils;
 import com.sd.core.network.http.HttpException;
+import com.sd.core.utils.NLog;
+import com.sd.core.utils.NToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +53,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private List<Fragment> mFragment = new ArrayList<>();
 
-    private TextView mRuPengView, mConversationListView, mContactView, mSettingView;
+    private TextView mRuPengView, mConversationListView, mContactView, mSettingView, mUnreadCount;
 
-    private LinearLayout LRuPeng, LContact, LSetting,LConversationList;
+    private LinearLayout LRuPeng, LContact, LSetting;
 
-    private ImageView mImageView , mSealIcon , mMessageIcon ,mFriends ,mMy;
+    private RelativeLayout LConversationList;
+
+    private ImageView mImageView, mSealIcon, mMessageIcon, mFriends, mMy;
     //屏幕的1/4 , 记录当前页码数
     private int mScreen1_4, mCurrentPageIndex;
 
@@ -66,8 +72,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         initGroupDB();
         mConversationList = initConversationList();
         initTabLine();
+        initUnreadCountListener();
         initView(mConversationList);
     }
+
 
     private void initGroupDB() {
         request(SYNCGROUP);
@@ -90,12 +98,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     GetMyGroupResponse res = (GetMyGroupResponse) result;
                     if (res.getCode() == 200) {
                         DBManager.getInstance(mContext).getDaoSession().getGroupDao().deleteAll();
-                       List<GetMyGroupResponse.ResultEntity> lsit =  res.getResult();
-                        for (GetMyGroupResponse.ResultEntity re :  lsit) {
+                        List<GetMyGroupResponse.ResultEntity> lsit = res.getResult();
+                        for (GetMyGroupResponse.ResultEntity re : lsit) {
                             DBManager.getInstance(mContext).getDaoSession().getGroupDao().insertOrReplace(new Group(
                                     re.getId(),
                                     re.getName(),
-                                    null,null,null,null,null
+                                    null, null, null, null, null
                             ));
                         }
                     }
@@ -116,11 +124,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mContactView = (TextView) this.findViewById(R.id.tv_friend);
         mSettingView = (TextView) this.findViewById(R.id.tv_setting);
         LRuPeng = (LinearLayout) findViewById(R.id.ll_rupeng);
-        LConversationList = (LinearLayout) findViewById(R.id.ll_chat);
+        LConversationList = (RelativeLayout) findViewById(R.id.ll_chat);
+        mUnreadCount = (TextView) findViewById(R.id.ss_unreadcount);
         LContact = (LinearLayout) findViewById(R.id.ll_friend);
         LSetting = (LinearLayout) findViewById(R.id.ll_setting);
-//        mUnreadText = (TextView) findViewById(R.id.main_unread_count);
-//        mUnreadImg = (ImageView) findViewById(R.id.main_unread_cion);
         mSealIcon = (ImageView) findViewById(R.id.main_seal);
         mSealIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_rong_abnormal));
         mMessageIcon = (ImageView) findViewById(R.id.main_message);
@@ -130,6 +137,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         LConversationList.setOnClickListener(this);
         LContact.setOnClickListener(this);
         LSetting.setOnClickListener(this);
+        mUnreadCount.setOnClickListener(this);
 
         mViewPager = (ViewPager) findViewById(R.id.rc_viewpager);
         mFriendFragment = FriendsFragment.getInstance();
@@ -285,13 +293,32 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             case R.id.ll_setting:
                 mViewPager.setCurrentItem(3);
                 break;
-        }
+            case R.id.ss_unreadcount:
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否清空所有消息的未读状态?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                    @Override
+                    public void exectEvent() {
+                        if (RongIM.getInstance() != null) {
+                            List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+                            if (conversationList != null && conversationList.size() > 0) {
+                                for (Conversation c : conversationList) {
+                                    RongIM.getInstance().getRongIMClient().clearMessagesUnreadStatus(c.getConversationType(), c.getTargetId());
+                                }
+                                mUnreadCount.setVisibility(View.GONE);
+                                NToast.shortToast(mContext,"清除成功");
+                            }
+                        }
+                    }
+                });
+        break;
     }
+
+}
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+
             DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出应用?", new DialogWithYesOrNoUtils.DialogCallBack() {
                 @Override
                 public void exectEvent() {
@@ -306,20 +333,42 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     }
                 }
             });
+
         }
 
         return false;
     }
 
-//    public void onEventMainThread(Integer i) {
-//        if (i == 0) {
-//            mUnreadImg.setVisibility(View.GONE);
-//            mUnreadText.setVisibility(View.GONE);
-//        }else {
-//            mUnreadImg.setVisibility(View.VISIBLE);
-//            mUnreadText.setText(i);
-//        }
-//    }
+
+    private void initUnreadCountListener() {
+        final Conversation.ConversationType[] conversationTypes = {Conversation.ConversationType.PRIVATE, Conversation.ConversationType.DISCUSSION,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE};
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RongIM.getInstance().setOnReceiveUnreadCountChangedListener(mCountListener, conversationTypes);
+            }
+        }, 500);
+    }
+
+public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
+    @Override
+    public void onMessageIncreased(int count) {
+        Log.e("MainActivity", "count:" + count);
+        if (count == 0) {
+            mUnreadCount.setVisibility(View.GONE);
+        } else if (count > 0 && count < 100) {
+            mUnreadCount.setVisibility(View.VISIBLE);
+            mUnreadCount.setText(count + "");
+        } else {
+            mUnreadCount.setVisibility(View.VISIBLE);
+            mUnreadCount.setText("···");
+        }
+    }
+};
 
     @Override
     protected void onDestroy() {

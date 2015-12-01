@@ -35,4 +35,15 @@
     <style name="dialogFullscreen">
         <item name="android:windowFullscreen">true</item>
     </style>
+
+
+    <style name="DemoMainNewMassage">
+        <item name="android:background">@drawable/rc_unread_count_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/tab_indicator_text</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+        <!-- <item name="android:visibility">gone</item>-->
+    </style>
 </resources>
