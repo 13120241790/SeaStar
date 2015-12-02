@@ -26,8 +26,8 @@ import com.rongseal.fragment.SealFragment;
 import com.rongseal.fragment.MineFragment;
 import com.rongseal.activity.BaseActivity;
 import com.rongseal.utlis.DialogWithYesOrNoUtils;
+import com.rongseal.widget.DragPointView;
 import com.sd.core.network.http.HttpException;
-import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, DragPointView.OnDragListencer {
 
     private static final int SYNCGROUP = 209;
     private ViewPager mViewPager;
@@ -53,7 +53,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private List<Fragment> mFragment = new ArrayList<>();
 
-    private TextView mRuPengView, mConversationListView, mContactView, mSettingView, mUnreadCount;
+    private TextView mRuPengView, mConversationListView, mContactView, mSettingView;
+
+    private DragPointView mUnreadCount;
 
     private LinearLayout LRuPeng, LContact, LSetting;
 
@@ -125,7 +127,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mSettingView = (TextView) this.findViewById(R.id.tv_setting);
         LRuPeng = (LinearLayout) findViewById(R.id.ll_rupeng);
         LConversationList = (RelativeLayout) findViewById(R.id.ll_chat);
-        mUnreadCount = (TextView) findViewById(R.id.ss_unreadcount);
+        mUnreadCount = (DragPointView) findViewById(R.id.ss_unreadcount);
         LContact = (LinearLayout) findViewById(R.id.ll_friend);
         LSetting = (LinearLayout) findViewById(R.id.ll_setting);
         mSealIcon = (ImageView) findViewById(R.id.main_seal);
@@ -138,6 +140,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         LContact.setOnClickListener(this);
         LSetting.setOnClickListener(this);
         mUnreadCount.setOnClickListener(this);
+        mUnreadCount.setDragListencer(this);
 
         mViewPager = (ViewPager) findViewById(R.id.rc_viewpager);
         mFriendFragment = FriendsFragment.getInstance();
@@ -293,23 +296,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             case R.id.ll_setting:
                 mViewPager.setCurrentItem(3);
                 break;
-            case R.id.ss_unreadcount:
-                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否清空所有消息的未读状态?", new DialogWithYesOrNoUtils.DialogCallBack() {
-                    @Override
-                    public void exectEvent() {
-                        if (RongIM.getInstance() != null) {
-                            List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
-                            if (conversationList != null && conversationList.size() > 0) {
-                                for (Conversation c : conversationList) {
-                                    RongIM.getInstance().getRongIMClient().clearMessagesUnreadStatus(c.getConversationType(), c.getTargetId());
-                                }
-                                mUnreadCount.setVisibility(View.GONE);
-                                NToast.shortToast(mContext,"清除成功");
-                            }
-                        }
-                    }
-                });
-        break;
+           
     }
 
 }
@@ -374,5 +361,19 @@ public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.On
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDragOut() {
+        if (RongIM.getInstance() != null) {
+            List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+            if (conversationList != null && conversationList.size() > 0) {
+                for (Conversation c : conversationList) {
+                    RongIM.getInstance().getRongIMClient().clearMessagesUnreadStatus(c.getConversationType(), c.getTargetId());
+                }
+                mUnreadCount.setVisibility(View.GONE);
+                NToast.shortToast(mContext, "清除成功");
+            }
+        }
     }
 }
