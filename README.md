@@ -3,10 +3,12 @@
 #### Will continue to update , Welcome to Star or Fork
 #### The content is IM
 
-##### -> login preview:
-![image](https://github.com/13120241790/SeaStar/blob/master/preview.gif)
 
-##### -> friend preview:
+> clearUnreadCount preview:
+
+![image](https://github.com/13120241790/SeaStar/blob/master/unread.gif)
+
+> friend preview:
 ![image](https://github.com/13120241790/SeaStar/blob/master/friend.gif)
 
 
