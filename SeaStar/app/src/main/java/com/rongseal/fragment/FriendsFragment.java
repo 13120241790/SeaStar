@@ -170,14 +170,15 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         if (SourceDateList.size() > 0) {
             show_no_friends.setVisibility(View.GONE);
         }
-        // 根据a-z进行排序源数据
-        Collections.sort(SourceDateList, pinyinComparator);
 
         for (int i = 0 ; i < mSourceDateList.size() ; i++) {
             SourceDateList.get(i).setUserId(mSourceDateList.get(i).getUserId());
             SourceDateList.get(i).setName(mSourceDateList.get(i).getName());
+            SourceDateList.get(i).setUri(mSourceDateList.get(i).getUri());
         }
-
+        mSourceDateList = null;
+        // 根据a-z进行排序源数据
+        Collections.sort(SourceDateList, pinyinComparator);
         adapter = new FriendAdapter(getActivity(), SourceDateList);
         mListView.setAdapter(adapter);
         mListView.setOnItemLongClickListener(this);
@@ -269,7 +270,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         Intent mIntent = new Intent(getActivity(), StartDiscussionActivity.class);
-        mIntent.putExtra("FRIENDDATA", (Serializable) mSourceDateList);
+        mIntent.putExtra("FRIENDDATA", (Serializable) SourceDateList);
         getActivity().startActivity(mIntent);
         return true;
     }

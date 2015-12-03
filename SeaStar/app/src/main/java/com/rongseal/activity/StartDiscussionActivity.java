@@ -86,6 +86,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
     private List<Friend> mSourceDateList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,13 +135,20 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             }
         });
 
-//        SourceDateList = new ArrayList<>(); //测试无好友
         if (SourceDateList.size() == 0) {
             //背景提示没有好友
             show_no_friends.setVisibility(View.VISIBLE);
         }
         if (SourceDateList != null)
             SourceDateList = filledData(SourceDateList);
+
+        for (int i = 0; i < mSourceDateList.size(); i++) {
+            SourceDateList.get(i).setUserId(mSourceDateList.get(i).getUserId());
+            SourceDateList.get(i).setName(mSourceDateList.get(i).getName());
+            SourceDateList.get(i).setUri(mSourceDateList.get(i).getUri());
+        }
+
+        mSourceDateList = null;
 
         // 根据a-z进行排序源数据
         Collections.sort(SourceDateList, pinyinComparator);
@@ -227,11 +235,11 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_right:
-                if (mCBFlag != null && mSourceDateList != null && mSourceDateList.size() > 0) {
+                if (mCBFlag != null && SourceDateList != null && SourceDateList.size() > 0) {
                     List<String> startDisList = new ArrayList<>();
-                    for (int i = 0; i < mSourceDateList.size(); i++) {
+                    for (int i = 0; i < SourceDateList.size(); i++) {
                         if (mCBFlag.get(i)) {
-                            startDisList.add(mSourceDateList.get(i).getUserId());
+                            startDisList.add(SourceDateList.get(i).getUserId());
                         }
                     }
                     if (RongIM.getInstance() != null && startDisList.size() > 0) {
@@ -247,8 +255,8 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
                             }
                         });
-                    }else {
-                        NToast.shortToast(mContext,"至少选择一位好友");
+                    } else {
+                        NToast.shortToast(mContext, "至少选择一位好友");
                     }
                 } else {
                     Toast.makeText(StartDiscussionActivity.this, "无数据", Toast.LENGTH_SHORT).show();
@@ -341,10 +349,10 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                     }
                 }
             });
-
+            viewHolder.isSelect.setChecked(mCBFlag.get(position));
             viewHolder.tvTitle.setText(adapterList.get(position).getName());
             String url = adapterList.get(position).getUri();
-            if(!TextUtils.isEmpty(url)){
+            if (!TextUtils.isEmpty(url)) {
                 ImageLoader.getInstance().displayImage(url, viewHolder.mImageView, App.getOptions());
             }
             return convertView;

@@ -29,7 +29,7 @@
             android:id="@+id/frienduri"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:src="@drawable/rc_default_portrait" />
 
         <TextView
