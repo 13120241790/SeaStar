@@ -86,7 +86,7 @@
             android:name="com.rongseal.activity.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
         <activity
             android:name="com.rongseal.activity.ConversationActivity"
