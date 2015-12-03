@@ -3,8 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-
+    <!-- 自定义相册需要的 dimen -->
     <dimen name="image_size">120dp</dimen>
     <dimen name="space_size">2dp</dimen>
     <dimen name="de_pic_folder_cover_size">72dp</dimen>
+    <!-- 轮播图所需要的 dimen -->
+    <dimen name="view_small_padding">1dp</dimen>
+    <dimen name="view_padding">6dp</dimen>
 </resources>

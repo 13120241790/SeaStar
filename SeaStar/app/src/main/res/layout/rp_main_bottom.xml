@@ -91,10 +91,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/ll"
-                android:textSize="12dp"
+                android:background="@drawable/rc_unread_count_bg"
                 android:textColor="@android:color/white"
-                android:visibility="gone"
-                />
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

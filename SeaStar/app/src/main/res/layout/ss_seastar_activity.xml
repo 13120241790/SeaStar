@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <fragment
+        android:id="@+id/fragment_cycle_viewpager_content"
+        android:name="com.rongseal.widget.cyclepager.CycleViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="120dip" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dip"
+                android:background="@drawable/selector_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/icon1" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Java"
+                    android:textColor="@color/text_tips_color"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/chatroom1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/de_pic_action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="开启聊天室"
+                    android:textColor="@color/de_pic_default_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dip"
+                android:background="@drawable/selector_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/icon2" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Ptyhon"
+                    android:textColor="@color/text_tips_color"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/chatroom2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/de_pic_action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="开启聊天室"
+                    android:textColor="@color/de_pic_default_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dip"
+                android:background="@drawable/selector_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/icon3" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Objective-C"
+                    android:textColor="@color/text_tips_color"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/chatroom3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/de_pic_action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="开启聊天室"
+                    android:textColor="@color/de_pic_default_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dip"
+                android:background="@drawable/selector_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/icon4" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="Android"
+                    android:textColor="@color/text_tips_color"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/chatroom4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/de_pic_action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="开启聊天室"
+                    android:textColor="@color/de_pic_default_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dip"
+                android:background="@drawable/selector_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:background="@drawable/icon5" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="PHP"
+                    android:textColor="@color/text_tips_color"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/chatroom5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/de_pic_action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="开启聊天室"
+                    android:textColor="@color/de_pic_default_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/text_line_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dip"
+                android:background="@color/bg_color" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

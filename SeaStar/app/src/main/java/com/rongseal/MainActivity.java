@@ -296,10 +296,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             case R.id.ll_setting:
                 mViewPager.setCurrentItem(3);
                 break;
-           
-    }
 
-}
+        }
+
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -341,21 +341,21 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }, 500);
     }
 
-public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
-    @Override
-    public void onMessageIncreased(int count) {
-        Log.e("MainActivity", "count:" + count);
-        if (count == 0) {
-            mUnreadCount.setVisibility(View.GONE);
-        } else if (count > 0 && count < 100) {
-            mUnreadCount.setVisibility(View.VISIBLE);
-            mUnreadCount.setText(count + "");
-        } else {
-            mUnreadCount.setVisibility(View.VISIBLE);
-            mUnreadCount.setText("···");
+    public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
+        @Override
+        public void onMessageIncreased(int count) {
+            Log.e("MainActivity", "count:" + count);
+            if (count == 0) {
+                mUnreadCount.setVisibility(View.GONE);
+            } else if (count > 0 && count < 100) {
+                mUnreadCount.setVisibility(View.VISIBLE);
+                mUnreadCount.setText(count + "");
+            } else {
+                mUnreadCount.setVisibility(View.VISIBLE);
+                mUnreadCount.setText("···");
+            }
         }
-    }
-};
+    };
 
     @Override
     protected void onDestroy() {

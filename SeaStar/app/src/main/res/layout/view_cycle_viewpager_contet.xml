@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_viewager_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" >
+
+        <com.rongseal.widget.cyclepager.BaseViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.rongseal.widget.cyclepager.BaseViewPager>
+
+        <LinearLayout
+            android:id="@+id/layout_viewpager_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/view_small_padding"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/view_padding"
+            android:paddingRight="@dimen/view_padding" >
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>
