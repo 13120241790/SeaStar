@@ -46,6 +46,8 @@ import io.rong.imkit.RongIM;
 public class FriendsFragment extends Fragment implements AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
     //不带字母的数据集合
     private List<Friend> mSourceDateList = new ArrayList<>();
+    //带字母的集合
+    private List<Friend> SourceDateList;
 
     public static FriendsFragment instance = null;
     private FriendDao friendDao;
@@ -85,9 +87,6 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    //带字母的集合
-    private List<Friend> SourceDateList;
-
     /**
      * 根据拼音来排列ListView里面的数据类
      */
@@ -173,6 +172,12 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
         }
         // 根据a-z进行排序源数据
         Collections.sort(SourceDateList, pinyinComparator);
+
+        for (int i = 0 ; i < mSourceDateList.size() ; i++) {
+            SourceDateList.get(i).setUserId(mSourceDateList.get(i).getUserId());
+            SourceDateList.get(i).setName(mSourceDateList.get(i).getName());
+        }
+
         adapter = new FriendAdapter(getActivity(), SourceDateList);
         mListView.setAdapter(adapter);
         mListView.setOnItemLongClickListener(this);
@@ -280,7 +285,7 @@ public class FriendsFragment extends Fragment implements AdapterView.OnItemLongC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (RongIM.getInstance() != null) {
-            RongIM.getInstance().startPrivateChat(getActivity(), mSourceDateList.get(position).getUserId(), mSourceDateList.get(position).getName());
+            RongIM.getInstance().startPrivateChat(getActivity(), SourceDateList.get(position).getUserId(), SourceDateList.get(position).getName());
         }
     }
 
