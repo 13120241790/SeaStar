@@ -115,7 +115,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
                 startActivity(new Intent(getActivity(), ContactActivity.class));
                 break;
             case R.id.mine_setting://设置
-
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.customer_service://客服
 

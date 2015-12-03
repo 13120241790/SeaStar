@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/bg_color" />
+
+    <com.rongseal.widget.SwitchButton
+        android:id="@+id/show_desktopkf"
+        style="@style/item"
+        android:background="@drawable/selector_preference_single"
+        android:checked="true"
+        android:text="是否开启桌面客服"
+        android:textColor="@color/text_tips_color"
+        app:frameDrawable="@drawable/switch_frame"
+        app:sliderDrawable="@drawable/selector_switch_slider"
+        app:stateDrawable="@drawable/selector_switch_state"
+        app:stateMaskDrawable="@drawable/switch_state_mask"
+        app:withTextInterval="16dp" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/bg_color" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/bg_color" />
+
+    <com.rongseal.widget.SwitchButton
+        android:id="@+id/seting_voice"
+        style="@style/item"
+        android:background="@drawable/selector_preference_single"
+        android:checked="true"
+        android:text="是否开启声音"
+        android:textColor="@color/text_tips_color"
+        app:frameDrawable="@drawable/switch_frame"
+        app:sliderDrawable="@drawable/selector_switch_slider"
+        app:stateDrawable="@drawable/selector_switch_state"
+        app:stateMaskDrawable="@drawable/switch_state_mask"
+        app:withTextInterval="16dp" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/bg_color" />
+
+
+</LinearLayout>

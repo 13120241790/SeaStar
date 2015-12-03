@@ -42,7 +42,9 @@
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
-        <activity android:name="com.rongseal.activity.StartDiscussionActivity"></activity>
+        <activity android:name="com.rongseal.activity.StartDiscussionActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            ></activity>
         <!-- 新版相册新增AC -->
         <activity android:name="com.rongseal.widget.picture.PreviewActivity"></activity>
         <activity android:name="com.rongseal.widget.picture.MultiImageSelectorActivity"></activity>
@@ -69,6 +71,8 @@
         <activity android:name=".activity.UserDetailActivity"></activity>
 
         <activity android:name=".activity.BlackListActivity"></activity>
+
+        <activity android:name=".fragment.SettingActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>

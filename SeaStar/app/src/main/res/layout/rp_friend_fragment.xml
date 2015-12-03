@@ -41,7 +41,7 @@
             android:layout_width="80.0dip"
             android:layout_height="80.0dip"
             android:layout_gravity="center"
-            android:background="@drawable/rp_show_head_toast_bg"
+            android:background="@drawable/rc_bg_toast"
             android:gravity="center"
             android:textColor="#ffffffff"
             android:textSize="30.0dip"
