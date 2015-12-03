@@ -25,4 +25,7 @@
     <string name="record_time_max_text">音频时间最长为10s</string>
     <string name="search_text">搜索</string>
     <string name="de_dialog_item_message_delete">删除消息</string>
+
+
+    <string name="default_progressbar">Default Progressbar:</string>
 </resources>
