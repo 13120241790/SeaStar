@@ -1,4 +1,5 @@
 <com.rongseal.widget.pulltorefresh.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:ptr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshScrollView"
     android:layout_width="match_parent"
@@ -30,13 +31,15 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dip">
 
-                <ImageView
+                <com.rongseal.widget.CircleImageView
                     android:id="@+id/mine_userimg"
                     android:layout_width="85dip"
                     android:layout_height="85dip"
                     android:background="@drawable/ic_userhead_bg"
                     android:padding="5dip"
-                    android:src="@drawable/rp_default_head" />
+                    android:src="@drawable/rp_default_head"
+                    app:civ_border_color="@color/mine_head_color"
+                    app:civ_border_width="2dp" />
 
             </FrameLayout>
 
@@ -316,7 +319,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dip"
                 android:background="@color/bg_color" />
-
 
 
         </LinearLayout>

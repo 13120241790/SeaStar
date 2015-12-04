@@ -25,6 +25,7 @@ import com.rongseal.bean.Friend;
 import com.rongseal.pinyin.CharacterParser;
 import com.rongseal.pinyin.PinyinComparator;
 import com.rongseal.pinyin.SideBar;
+import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.ClearWriteEditText;
 import com.sd.core.utils.NToast;
 
@@ -321,7 +322,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                 convertView = LayoutInflater.from(context).inflate(R.layout.start_discussion_item, null);
                 viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.dis_friendname);
                 viewHolder.tvLetter = (TextView) convertView.findViewById(R.id.dis_catalog);
-                viewHolder.mImageView = (ImageView) convertView.findViewById(R.id.dis_frienduri);
+                viewHolder.mImageView = (CircleImageView) convertView.findViewById(R.id.dis_frienduri);
                 viewHolder.isSelect = (CheckBox) convertView.findViewById(R.id.dis_select);
 
                 convertView.setTag(viewHolder);
@@ -401,7 +402,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             /**
              * 头像
              */
-            ImageView mImageView;
+            CircleImageView mImageView;
             /**
              * userid
              */

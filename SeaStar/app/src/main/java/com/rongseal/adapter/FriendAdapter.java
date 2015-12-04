@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.bean.Friend;
+import com.rongseal.widget.CircleImageView;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class FriendAdapter extends BaseAdapter implements SectionIndexer {
             convertView = LayoutInflater.from(context).inflate(R.layout.friend_item, null);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.friendname);
             viewHolder.tvLetter = (TextView) convertView.findViewById(R.id.catalog);
-            viewHolder.mImageView = (ImageView) convertView.findViewById(R.id.frienduri);
+            viewHolder.mImageView = (CircleImageView) convertView.findViewById(R.id.frienduri);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -130,7 +131,7 @@ public class FriendAdapter extends BaseAdapter implements SectionIndexer {
         /**
          * 头像
          */
-        ImageView mImageView;
+        CircleImageView mImageView;
         /**
          * userid
          */

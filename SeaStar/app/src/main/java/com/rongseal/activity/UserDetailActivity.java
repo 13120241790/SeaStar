@@ -17,6 +17,7 @@ import com.rongseal.bean.response.UserDetailInfoResponse;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.utlis.DialogWithYesOrNoUtils;
+import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
@@ -43,7 +44,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
 
     private List<Friend> friendsList;
 
-    private ImageView mHead;
+    private CircleImageView mHead;
 
     private TextView mName, mId, mIsFriend;
 
@@ -72,7 +73,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
         mAddFriend.setOnClickListener(this);
         mDeleteFriend.setOnClickListener(this);
         mAddBlackList.setOnClickListener(this);
-        mHead = (ImageView) findViewById(R.id.user_head);
+        mHead = (CircleImageView) findViewById(R.id.user_head);
         mName = (TextView) findViewById(R.id.detial_user_name);
         mId = (TextView) findViewById(R.id.user_id);
         mIsFriend = (TextView) findViewById(R.id.isfriend);

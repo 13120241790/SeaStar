@@ -20,6 +20,7 @@ import com.rongseal.RongCloudEvent;
 import com.rongseal.activity.ContactActivity;
 import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.activity.ValidationMessageActivity;
+import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.sd.core.common.broadcast.BroadcastManager;
 
@@ -39,7 +40,9 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
     public static MineFragment instance = null;
 
-    private ImageView redIcon, mineHead;
+    private ImageView redIcon;
+
+    private CircleImageView mineHead;
 
     private TextView mineUserName, mineEmail, mineUserId;
 
@@ -72,7 +75,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
     }
 
     public void initViews() {
-        mineHead = (ImageView) fragmentView.findViewById(R.id.mine_userimg);
+        mineHead = (CircleImageView) fragmentView.findViewById(R.id.mine_userimg);
         mineUserName = (TextView) fragmentView.findViewById(R.id.mine_username);
         mineEmail = (TextView) fragmentView.findViewById(R.id.mine_email);
         mineUserId = (TextView) fragmentView.findViewById(R.id.mine_userid);
