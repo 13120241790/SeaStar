@@ -93,6 +93,9 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
      * 需要 rongcloud connect 成功后设置的 listener
      */
     public void setConnectedListener() {
+        RongIM.getInstance().enableUnreadMessageIcon(true);
+        RongIM.getInstance().enableNewComingMessageIcon(true);
+
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(this);
 
         //        扩展功能自定义  singleProvider 语音 voip 只支持单对单

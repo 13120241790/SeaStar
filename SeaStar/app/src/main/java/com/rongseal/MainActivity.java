@@ -1,12 +1,18 @@
 package com.rongseal;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -18,15 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.rongseal.activity.BaseActivity;
 import com.rongseal.bean.response.GetMyGroupResponse;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Group;
 import com.rongseal.fragment.FriendsFragment;
-import com.rongseal.fragment.SealFragment;
 import com.rongseal.fragment.MineFragment;
-import com.rongseal.activity.BaseActivity;
+import com.rongseal.fragment.SealFragment;
+import com.rongseal.fragment.SettingActivity;
 import com.rongseal.utlis.DialogWithYesOrNoUtils;
 import com.rongseal.widget.DragPointView;
+import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
 import com.sd.core.utils.NToast;
 
@@ -38,7 +46,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 
-public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, DragPointView.OnDragListencer {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, DragPointView.OnDragListencer, View.OnLongClickListener {
 
     private static final int SYNCGROUP = 209;
     private ViewPager mViewPager;
@@ -61,10 +69,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     private RelativeLayout LConversationList;
 
-    private ImageView mImageView, mSealIcon, mMessageIcon, mFriends, mMy;
+    private ImageView mImageView, mSealIcon, mMessageIcon, mFriends, mMy , onlineService;
     //屏幕的1/4 , 记录当前页码数
     private int mScreen1_4, mCurrentPageIndex;
 
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +85,10 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         initTabLine();
         initUnreadCountListener();
         initView(mConversationList);
+        initConfig();
+        initBroadListener();
     }
+
 
 
     private void initGroupDB() {
@@ -134,9 +146,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mSealIcon.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_rong_abnormal));
         mMessageIcon = (ImageView) findViewById(R.id.main_message);
         mFriends = (ImageView) findViewById(R.id.main_friends);
+        onlineService = (ImageView) findViewById(R.id.online_service);
+        onlineService.setOnClickListener(this);
         mMy = (ImageView) findViewById(R.id.main_my);
         LRuPeng.setOnClickListener(this);
         LConversationList.setOnClickListener(this);
+        LConversationList.setOnLongClickListener(this);
         LContact.setOnClickListener(this);
         LSetting.setOnClickListener(this);
         mUnreadCount.setOnClickListener(this);
@@ -296,6 +311,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             case R.id.ll_setting:
                 mViewPager.setCurrentItem(3);
                 break;
+            case R.id.online_service:
+                if (RongIM.getInstance() != null) {
+                    RongIM.getInstance().startConversation(this, Conversation.ConversationType.APP_PUBLIC_SERVICE, "KEFU144542424649464", "在线客服");
+                }
+                break;
 
         }
 
@@ -305,21 +325,36 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
-
-            DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出应用?", new DialogWithYesOrNoUtils.DialogCallBack() {
-                @Override
-                public void exectEvent() {
-                    if (RongIM.getInstance() != null)
-                        RongIM.getInstance().disconnect(true);
-
-                    try {
-                        Thread.sleep(500);
-                        android.os.Process.killProcess(Process.myPid());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            if (isReceiverPush) {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出应用?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                    @Override
+                    public void exectEvent() {
+                        if (RongIM.getInstance() != null)
+                            RongIM.getInstance().disconnect(true);
+                        try {
+                            Thread.sleep(500);
+                            android.os.Process.killProcess(Process.myPid());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            }else {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出应用(not receiver push)?", new DialogWithYesOrNoUtils.DialogCallBack() {
+                    @Override
+                    public void exectEvent() {
+                        if (RongIM.getInstance() != null)
+                            RongIM.getInstance().logout();
+                        try {
+                            Thread.sleep(500);
+                            android.os.Process.killProcess(Process.myPid());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+
 
         }
 
@@ -361,6 +396,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        BroadcastManager.getInstance(mContext).destroy(SettingActivity.START);
+        BroadcastManager.getInstance(mContext).destroy(SettingActivity.CLOSE);
     }
 
     @Override
@@ -376,4 +413,83 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             }
         }
     }
+
+    @Override
+    public boolean onLongClick(View v) {
+        DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "是否清空会话列表?", new DialogWithYesOrNoUtils.DialogCallBack() {
+            @Override
+            public void exectEvent() {
+                if (RongIM.getInstance() != null) {
+                    List<Conversation> conversationList = RongIM.getInstance().getRongIMClient().getConversationList();
+                    if (conversationList != null && conversationList.size() > 0) {
+                        for (Conversation c : conversationList) {
+                            RongIM.getInstance().getRongIMClient().removeConversation(c.getConversationType(), c.getTargetId());
+                        }
+                        mUnreadCount.setVisibility(View.GONE);
+                        NToast.shortToast(mContext, "清除成功");
+                    }
+                }
+            }
+        });
+        return true;
+    }
+
+
+    private void initConfig() {
+        sp =getSharedPreferences("config", MODE_PRIVATE);
+        boolean temp = sp.getBoolean(SettingActivity.DESKTOP, true);
+        boolean pushTemp = sp.getBoolean(SettingActivity.PUSH, true);
+        if (temp) {
+            onlineService.setVisibility(View.VISIBLE);
+        }else {
+            onlineService.setVisibility(View.GONE);
+        }
+        if (pushTemp) {
+            isReceiverPush = true;
+        }else {
+            isReceiverPush = false;
+        }
+    }
+
+    private boolean isReceiverPush = true;
+
+    private void initBroadListener() {
+        BroadcastManager.getInstance(mContext).addAction(SettingActivity.START, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    onlineService.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        BroadcastManager.getInstance(mContext).addAction(SettingActivity.CLOSE, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    onlineService.setVisibility(View.GONE);
+                }
+            }
+        });
+        BroadcastManager.getInstance(mContext).addAction(SettingActivity.PUSHSTART, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    isReceiverPush = true;
+                }
+            }
+        });
+        BroadcastManager.getInstance(mContext).addAction(SettingActivity.PUSHCLOSE, new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String command = intent.getAction();
+                if (!TextUtils.isEmpty(command)) {
+                    isReceiverPush = false;
+                }
+            }
+        });
+    }
+
 }

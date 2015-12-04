@@ -1,5 +1,7 @@
 package com.rongseal.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -115,10 +117,11 @@ public class SealFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
             if (cycleViewPager.isCycle()) {
-                position = position - 1;
-                Toast.makeText(getActivity(),
-                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
-                        .show();
+                Uri uri=Uri.parse("http://www.rongcloud.cn");   //指定网址
+                Intent intent=new Intent();
+                intent.setAction(Intent.ACTION_VIEW);           //指定Action
+                intent.setData(uri);                            //设置Uri
+                getActivity().startActivity(intent);
             }
 
         }

@@ -56,4 +56,29 @@
         android:background="@color/bg_color" />
 
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/bg_color" />
+
+    <com.rongseal.widget.SwitchButton
+        android:id="@+id/setting_push"
+        style="@style/item"
+        android:background="@drawable/selector_preference_single"
+        android:checked="true"
+        android:text="退出应用是否接收 push 消息"
+        android:textColor="@color/text_tips_color"
+        app:frameDrawable="@drawable/switch_frame"
+        app:sliderDrawable="@drawable/selector_switch_slider"
+        app:stateDrawable="@drawable/selector_switch_state"
+        app:stateMaskDrawable="@drawable/switch_state_mask"
+        app:withTextInterval="16dp" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dip"
+        android:background="@color/bg_color" />
+
+
 </LinearLayout>

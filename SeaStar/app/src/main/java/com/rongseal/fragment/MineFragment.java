@@ -23,6 +23,9 @@ import com.rongseal.activity.ValidationMessageActivity;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.sd.core.common.broadcast.BroadcastManager;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+
 
 /**
  * Created by AMing on 15/11/2.
@@ -118,7 +121,9 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.customer_service://客服
-
+                if (RongIM.getInstance() != null) {
+                    RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.APP_PUBLIC_SERVICE, "KEFU144542424649464", "在线客服");
+                }
                 break;
             case R.id.validation:
                 startActivity(new Intent(getActivity(), ValidationMessageActivity.class));

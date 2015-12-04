@@ -21,9 +21,10 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
             app:RCCornerRadius="3dp"
             app:RCDefDrawable="@drawable/rc_default_portrait"
-            app:RCShape="square" />
+            app:RCShape="circle" />
 
         <TextView
             android:id="@+id/rc_unread_message"
@@ -59,8 +60,10 @@
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
             app:RCCornerRadius="3dp"
-            app:RCDefDrawable="@drawable/rc_default_portrait" />
+            app:RCDefDrawable="@drawable/rc_default_portrait"
+            app:RCShape="circle" />
 
         <TextView
             android:id="@+id/rc_unread_message_right"

@@ -5,11 +5,27 @@
 
     <include layout="@layout/rp_main_top"></include>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/rc_viewpager"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/rc_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/online_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_online_service" />
+
+    </FrameLayout>
+
 
     <include layout="@layout/rp_main_bottom"></include>
 

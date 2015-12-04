@@ -24,8 +24,10 @@
         android:layout_below="@id/rc_time"
         android:layout_marginRight="4dp"
         android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
         app:RCCornerRadius="3dp"
-        app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait" />
+        app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait"
+        app:RCShape="circle" />
 
     <io.rong.imkit.widget.AsyncImageView
         android:id="@id/rc_right"
@@ -35,8 +37,10 @@
         android:layout_below="@id/rc_time"
         android:layout_marginLeft="4dp"
         android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
         app:RCCornerRadius="3dp"
-        app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait" />
+        app:RCDefDrawable="@drawable/rc_ic_def_msg_portrait"
+        app:RCShape="circle" />
 
 
     <TextView
@@ -67,14 +71,14 @@
 
             <TextView
                 android:id="@id/rc_sent_status"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/rc_notification_bg"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:text="已发"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:text="已发"
+                android:textColor="@color/rc_notification_bg"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@id/rc_progress"

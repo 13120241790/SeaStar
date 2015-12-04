@@ -9,7 +9,7 @@
     <ListView
         android:id="@id/rc_list"
         android:dividerHeight="0dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/ic_chat_bg"
         android:listSelector="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@android:color/transparent"

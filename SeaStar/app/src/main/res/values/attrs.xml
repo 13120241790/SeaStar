@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--开关-->
     <declare-styleable name="SwitchButton">
         <attr name="frameDrawable" format="reference|color"/>
         <attr name="stateDrawable" format="reference|color"/>
         <attr name="stateMaskDrawable" format="reference|color"/>
         <attr name="sliderDrawable" format="reference|color"/>
 	    <attr name="withTextInterval" format="dimension"/>
+    </declare-styleable>
+    <!--圆形头像-->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
     </declare-styleable>
 </resources>
