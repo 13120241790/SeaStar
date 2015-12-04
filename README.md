@@ -1,4 +1,6 @@
 # The SeaStar from rongcloud
+---
+[中文版](https://github.com/13120241790/SeaStar/blob/master/README.zh.md)
 #### The code is open source
 #### Will continue to update , Welcome to Star or Fork
 #### The content is IM
