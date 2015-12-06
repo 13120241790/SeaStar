@@ -6,59 +6,13 @@
     android:scrollbars="none"
     ptr:ptrAnimationStyle="flip">
 
-    <LinearLayout
+    <com.rongseal.widget.ClearWriteEditText
+        android:id="@+id/updatename"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/layout_imghead"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rp_selector_item_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/img_head"
-                android:layout_width="80dip"
-                android:layout_height="80dip"
-                android:layout_margin="15dip"
-                android:gravity="center_vertical"
-                android:src="@drawable/rp_default_head" />
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_username"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:textColor="@color/text_black_color"
-                        android:textSize="18sp" />
-
-
-                </LinearLayout>
-            </LinearLayout>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rp_arrow" />
-        </LinearLayout>
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:hint="请输入要修改的昵称..."
+        android:maxLength="20"
+        android:singleLine="true" />
 
 </com.rongseal.widget.pulltorefresh.PullToRefreshScrollView>
 

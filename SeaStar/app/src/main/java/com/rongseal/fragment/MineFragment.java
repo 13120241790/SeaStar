@@ -160,6 +160,14 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mineUserName.setText(sp.getString("username",""));
+    }
+
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         BroadcastManager.getInstance(getActivity()).destroy(RongCloudEvent.FRIEND_MESSAGE);

@@ -1,9 +1,7 @@
 package com.rongseal.adapter;
 
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rongseal.App;
 import com.rongseal.R;
-import com.rongseal.RongCloudEvent;
 import com.rongseal.bean.response.NewFriendsListResponse;
-import com.sd.core.common.broadcast.BroadcastManager;
+import com.rongseal.widget.CircleImageView;
 
 /**
  * Created by AMing on 15/11/17.
@@ -44,7 +41,7 @@ public class NewFriendsAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.newfriend_item_layout, null);
-            holder.mHead = (ImageView) convertView.findViewById(R.id.new_friend_img_head);
+            holder.mHead = (CircleImageView) convertView.findViewById(R.id.new_friend_img_head);
             holder.mName = (TextView) convertView.findViewById(R.id.nf_tv_username);
             holder.mId = (TextView) convertView.findViewById(R.id.nf_tv_userid);
             holder.mState = (TextView) convertView.findViewById(R.id.item_friend_state);
@@ -96,7 +93,7 @@ public class NewFriendsAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        ImageView mHead;
+        CircleImageView mHead;
         TextView mName;
         TextView mId;
         TextView mState;

@@ -7,8 +7,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.bean.response.AddFriendResponse;
+import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.network.http.HttpException;
@@ -24,7 +27,7 @@ public class UserDetailAddActivity extends BaseActivity implements View.OnClickL
 
     private TextView mUserName, mUserId;
 
-    private ImageView mHead;
+    private CircleImageView mHead;
 
     private Button mAddFriend;
 
@@ -45,13 +48,14 @@ public class UserDetailAddActivity extends BaseActivity implements View.OnClickL
         sUserId = getIntent().getStringExtra("search_userid");
         String sPortrait = getIntent().getStringExtra("search_portrait");
         addFriendEdit = (ClearWriteEditText) findViewById(R.id.add_friend_chat);
-        mHead = (ImageView) findViewById(R.id.detail_head);
+        mHead = (CircleImageView) findViewById(R.id.detail_head);
         mUserName = (TextView) findViewById(R.id.detail_name);
         mUserId = (TextView) findViewById(R.id.detail_id);
         mUserName.setText(sUserName);
         mUserId.setText("ID:"+sUserId);
         mAddFriend = (Button) findViewById(R.id.add_friend);
         mAddFriend.setOnClickListener(this);
+        ImageLoader.getInstance().displayImage(sPortrait,mHead, App.getOptions());
     }
 
     @Override

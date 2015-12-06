@@ -19,6 +19,7 @@ import com.rongseal.R;
 import com.rongseal.adapter.SearchListAdapter;
 import com.rongseal.bean.response.SearchEmailResponse;
 import com.rongseal.bean.response.SearchUserNameResponse;
+import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.ClearWriteEditText;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
@@ -45,7 +46,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     //搜索单邮箱
     RelativeLayout singeItem;
-    ImageView singeHead;
+    CircleImageView singeHead;
     TextView singeId, singeUserName;
 
     SharedPreferences sp;
@@ -67,7 +68,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
     private void initView() {
 
         singeItem = (RelativeLayout) findViewById(R.id.email_item);
-        singeHead = (ImageView) findViewById(R.id.email_img_head);
+        singeHead = (CircleImageView) findViewById(R.id.email_img_head);
         singeId = (TextView) findViewById(R.id.email_tv_userid);
         singeUserName = (TextView) findViewById(R.id.email_tv_username);
 

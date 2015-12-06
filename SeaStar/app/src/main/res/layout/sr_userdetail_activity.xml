@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
 
-        <ImageView
+        <com.rongseal.widget.CircleImageView
             android:id="@+id/detail_head"
             android:layout_width="80dip"
             android:layout_height="80dip"

@@ -303,10 +303,21 @@ public class ApiAction extends BaseAction {
         return response;
     }
 
-    public UpdateUserNameResponse UpdateUserName(String newName) {
-        String url = getURL("");
+    /**
+     * 更改昵称
+     * @param updatename
+     * @return
+     * @throws HttpException
+     */
+    public UpdateUserNameResponse updateUserName(String updatename) throws HttpException{
+        String uri = getURL("update_profile");
         RequestParams params = getRequestParams();
-        params.put("username", newName);
-        return null;
+        params.put("username",updatename);
+        UpdateUserNameResponse response = null;
+        String result = httpManager.post(uri,params);
+        if (!TextUtils.isEmpty(result)) {
+            response = jsonToBean(result,UpdateUserNameResponse.class);
+        }
+        return response;
     }
 }

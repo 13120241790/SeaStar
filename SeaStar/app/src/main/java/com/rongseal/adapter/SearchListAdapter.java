@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.bean.response.SearchUserNameResponse;
+import com.rongseal.widget.CircleImageView;
 
 /**
  * Created by AMing on 15/11/13.
@@ -33,7 +34,7 @@ public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.Result
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.searchlist_item_layout, null);
-            holder.mHead = (ImageView) convertView.findViewById(R.id.search_img_head);
+            holder.mHead = (CircleImageView) convertView.findViewById(R.id.search_img_head);
             holder.mUserId = (TextView) convertView.findViewById(R.id.tv_userid);
             holder.mUserName = (TextView) convertView.findViewById(R.id.tv_username);
             convertView.setTag(holder);
@@ -52,7 +53,7 @@ public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.Result
     }
 
     class ViewHolder{
-        ImageView mHead;
+        CircleImageView mHead;
         TextView mUserName;
         TextView mUserId;
 

@@ -9,6 +9,8 @@ import com.rongseal.bean.basebean.BaseBean;
 public class UpdateUserNameResponse extends BaseBean{
 
     private static final long serialVersionUID = 5666346868808716213L;
+
+
     /**
      * code : 200
      */
