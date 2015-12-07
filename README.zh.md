@@ -11,11 +11,17 @@
 
 ![image](https://github.com/13120241790/SeaStar/blob/master/unread.gif)
 
+---
+
 > 添加好友预览:
 ![image](https://github.com/13120241790/SeaStar/blob/master/friend.gif)
 
+---
 
-
+> 视频结合会话界面预览:
+![image](https://github.com/13120241790/SeaStar/blob/master/video.gif)
+##### 如果你对视频结合聊天感兴趣 请移步 [SeaStarWithVideo.apk](https://github.com/13120241790/SeaStar/blob/video/SeaStarWithVideo.apk) -> 包含 video 项目在 video 分支
+---
 ##### 体验项目: [APK下载地址](https://github.com/13120241790/Seal/blob/master/SeaStar.apk "悬停显示")  -> 跳转后请点击 Raw 
 
 
