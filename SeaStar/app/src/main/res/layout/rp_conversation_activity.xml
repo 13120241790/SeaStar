@@ -4,74 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <RelativeLayout
-        android:id="@+id/rl_video"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:visibility="gone">
-
-        <io.vov.vitamio.widget.VideoView
-            android:id="@+id/surface_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
-        <FrameLayout
-            android:id="@+id/operation_volume_brightness"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="#00000000"
-            android:orientation="horizontal"
-            android:padding="0dip"
-            android:visibility="invisible">
-
-            <ImageView
-                android:id="@+id/operation_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/video_volumn_bg" />
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:paddingBottom="25dip">
-
-                <ImageView
-                    android:id="@+id/video_lashen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/videotensile" />
-
-                <ImageView
-                    android:id="@+id/operation_full"
-                    android:layout_width="94dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:src="@drawable/video_num_bg" />
-
-                <ImageView
-                    android:id="@+id/operation_percent"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:scaleType="matrix"
-                    android:src="@drawable/video_num_front" />
-            </FrameLayout>
-        </FrameLayout>
-
-
-    </RelativeLayout>
-
     <fragment
         android:id="@+id/conversationlist"
         android:name="io.rong.imkit.fragment.ConversationFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
