@@ -32,5 +32,5 @@ dependencies {
     compile project(':oneCore')
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
-  
+    compile project(':vitamio')
 }

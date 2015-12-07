@@ -69,7 +69,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
-                    android:text="开启聊天室"
+                    android:text="视频聊天室"
                     android:textColor="@color/de_pic_default_text_color"
                     android:textSize="14sp" />
             </LinearLayout>

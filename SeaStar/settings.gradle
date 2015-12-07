@@ -1,2 +1,2 @@
-include ':app', ':IMKit'
+include ':app', ':IMKit', ':vitamio'
 include ':oneCore'

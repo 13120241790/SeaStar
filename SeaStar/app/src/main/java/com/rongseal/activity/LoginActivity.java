@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     NToast.shortToast(mContext, "邮箱地址不合法");
                     return;
                 }
-                LoadDialog.show(mContext, "正在登陆...");
+                LoadDialog.show(mContext, "正在登录...");
                 String sToken = sp.getString("token", "");
                 if (!TextUtils.isEmpty(sToken) && sUserName.equals(oldUserName)) {
                     edit.remove("loginemail");
@@ -274,7 +274,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onSuccess(String s) {
                 if (RongIM.getInstance() != null) {
-                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(s,sp.getString("username",""), Uri.parse(sp.getString("portrait",""))));
+                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(s, sp.getString("username", ""), Uri.parse(sp.getString("portrait", ""))));
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
                 }
                 request(SYNCFRIEND);
