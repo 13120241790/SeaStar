@@ -18,6 +18,9 @@
 ---
 
 > video and chat preview:
+
+---
+
 ![image](https://github.com/13120241790/SeaStar/blob/master/video.gif)
 ##### If you are interested in video combined with chat , Please onclick [SeaStarWithVideo.apk](https://github.com/13120241790/SeaStar/blob/video/SeaStarWithVideo.apk) -> Please switch the video branch contains the Video project
 ---
