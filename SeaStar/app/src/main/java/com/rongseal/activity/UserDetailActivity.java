@@ -21,6 +21,7 @@ import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
+import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
 import java.util.List;
@@ -77,17 +78,25 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
         mName = (TextView) findViewById(R.id.detial_user_name);
         mId = (TextView) findViewById(R.id.user_id);
         mIsFriend = (TextView) findViewById(R.id.isfriend);
+
+
         friendsList = DBManager.getInstance(mContext).getDaoSession().getFriendDao().queryBuilder().list();
-        for (Friend list : friendsList) {
-            if (list.getUserId().equals(userid)) {
-                isFriend = true;
-                mAddFriend.setVisibility(View.GONE);
-                mAddBlackList.setVisibility(View.VISIBLE);
-                mDeleteFriend.setVisibility(View.VISIBLE);
-            } else {
-                mAddBlackList.setVisibility(View.GONE);
-                mDeleteFriend.setVisibility(View.GONE);
-                mAddFriend.setVisibility(View.VISIBLE);
+        if (friendsList.size() == 0) { //没有好友
+            mAddBlackList.setVisibility(View.GONE);
+            mDeleteFriend.setVisibility(View.GONE);
+            mAddFriend.setVisibility(View.VISIBLE);
+        } else {//有好友 判断是否是好友
+            for (Friend list : friendsList) {
+                if (list.getUserId().equals(userid)) {
+                    isFriend = true;
+                    mAddFriend.setVisibility(View.GONE);
+                    mAddBlackList.setVisibility(View.VISIBLE);
+                    mDeleteFriend.setVisibility(View.VISIBLE);
+                } else {
+                    mAddBlackList.setVisibility(View.GONE);
+                    mDeleteFriend.setVisibility(View.GONE);
+                    mAddFriend.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

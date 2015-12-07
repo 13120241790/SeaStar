@@ -9,7 +9,7 @@
     <com.rongseal.widget.ClearWriteEditText
         android:id="@+id/updatename"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="请输入要修改的昵称..."
         android:maxLength="20"
         android:singleLine="true" />
