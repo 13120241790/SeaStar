@@ -19,6 +19,9 @@
 ---
 
 > 视频结合会话界面预览:
+
+---
+
 ![image](https://github.com/13120241790/SeaStar/blob/master/video.gif)
 ##### 如果你对视频结合聊天感兴趣 请移步 [SeaStarWithVideo.apk](https://github.com/13120241790/SeaStar/blob/video/SeaStarWithVideo.apk) -> 包含 video 项目在 video 分支
 ---
