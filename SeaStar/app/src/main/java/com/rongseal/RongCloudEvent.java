@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 
 import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.activity.PhotoActivity;
 import com.rongseal.activity.UserDetailActivity;
 import com.rongseal.activity.ValidationMessageActivity;
+import com.rongseal.common.ApiAction;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.db.com.rongseal.database.FriendDao;
@@ -17,6 +19,9 @@ import com.rongseal.db.com.rongseal.database.GroupDao;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
+import com.sd.core.network.async.AsyncTaskManager;
+import com.sd.core.network.async.OnDataListener;
+import com.sd.core.network.http.HttpException;
 
 import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongContext;
@@ -40,12 +45,13 @@ import io.rong.message.TextMessage;
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider, RongIM.LocationProvider {
+public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider, RongIM.LocationProvider{
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
     public static final String REFRESHUI = "refreshUI";
     private static final Uri FRIENDURL = Uri.parse("http://pic39.nipic.com/20140308/6608733_201355110000_2.jpg");
+    private static final Uri CUSTOMERSERVICEURL = Uri.parse("http://i03.pictn.sogoucdn.com/ed018d1334f0dabc");
     private static RongCloudEvent mRongCloudInstance;
 
     private Context mContext;
@@ -74,14 +80,20 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         this.mContext = mContext;
         //初始化不需要 connect 就能 监听的 Listener
         initListener();
-
+        UserInfoEngine.getInstance(mContext).setListener(new UserInfoEngine.UserInfoListener() {
+            @Override
+            public void onResult(UserInfo info) {
+                if(info != null) {
+                    RongIM.getInstance().refreshUserInfoCache(info);
+                }
+            }
+        });
     }
 
     /**
      * init 后就能设置的监听
      */
     private void initListener() {
-//        de.greenrobot.event.EventBus.getDefault().register(this);
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
         RongIM.setConversationListBehaviorListener(this);
         RongIM.setUserInfoProvider(this, true);
@@ -221,17 +233,6 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
                 }
             }
         }
-        RongIM.getInstance().getRongIMClient().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
-            @Override
-            public void onSuccess(Integer integer) {
-                EventBus.getDefault().post(integer);
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
         return false;
     }
 
@@ -252,20 +253,24 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         return false;
     }
 
+
     @Override
     public UserInfo getUserInfo(String s) {
+        if (s.equals("10000")) {
+            return new UserInfo("10000", "好友验证消息", FRIENDURL);
+        }
+        if(s.equals("kefu114")){
+            return new UserInfo("kefu114", "客服服务", CUSTOMERSERVICEURL);
+        }
         FriendDao friendDao = DBManager.getInstance(mContext).getDaoSession().getFriendDao();
         Friend bean = friendDao.queryBuilder().where(FriendDao.Properties.UserId.eq(s)).unique();
         if (bean != null) {
             return new UserInfo(bean.getUserId(), bean.getName(), Uri.parse(bean.getPortraitUri()));
         } else {
-            //TODO http 请求网络
+            return UserInfoEngine.getInstance(mContext).startEngine(s);
         }
-        if (s.equals("10000")) {
-            return new UserInfo("10000", "好友验证消息", FRIENDURL);
-        }
-        return null;
     }
+
 
     @Override
     public Group getGroupInfo(String s) {
@@ -278,6 +283,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         }
         return null;
     }
+
 
     private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
 
@@ -294,4 +300,5 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         setLastLocationCallback(locationCallback);
 
     }
+
 }

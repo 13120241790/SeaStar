@@ -77,6 +77,17 @@ public class ConversationActivity extends BaseActivity {
             case PRIVATE:
                 mRightBtn.setText("用户详情");
                 break;
+            case DISCUSSION:
+                mRightBtn.setText("讨论组详情");
+                mRightBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ConversationActivity.this, DiscussionAetailsActivity.class);
+                        intent.putExtra("discussionId", targetId);
+                        startActivity(intent);
+                    }
+                });
+                break;
         }
     }
 

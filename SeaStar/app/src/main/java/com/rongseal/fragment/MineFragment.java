@@ -125,7 +125,7 @@ public class MineFragment extends BaseFragment implements PullToRefreshBase.OnRe
                 break;
             case R.id.customer_service://客服
                 if (RongIM.getInstance() != null) {
-                    RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.APP_PUBLIC_SERVICE, "KEFU144542424649464", "在线客服");
+                    RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.CUSTOMER_SERVICE, "kefu114", "1.0客服");
                 }
                 break;
             case R.id.validation:

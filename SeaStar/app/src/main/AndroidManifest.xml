@@ -73,6 +73,8 @@
         <activity android:name=".activity.BlackListActivity"></activity>
 
         <activity android:name=".fragment.SettingActivity"></activity>
+
+        <activity android:name=".activity.DiscussionAetailsActivity"></activity>
         <!-- 指引页面 -->
         <activity android:name="com.rongseal.activity.GuideActivity">
             <intent-filter>
