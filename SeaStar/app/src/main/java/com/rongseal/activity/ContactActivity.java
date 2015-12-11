@@ -14,13 +14,13 @@ import com.rongseal.R;
  */
 public class ContactActivity extends BaseActivity implements View.OnClickListener {
 
-    private LinearLayout SearchFriend , SearchGroup ,MyGroup ,MyBlackList;
+    private LinearLayout SearchFriend, SearchGroup, MyGroup, MyBlackList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("社交");
+        setTitle(R.string.contact);
         setContentView(R.layout.sr_contact_activity);
         initView();
     }

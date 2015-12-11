@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -21,7 +20,6 @@ import com.rongseal.widget.CircleImageView;
 import com.rongseal.widget.dialog.LoadDialog;
 import com.sd.core.common.broadcast.BroadcastManager;
 import com.sd.core.network.http.HttpException;
-import com.sd.core.utils.NLog;
 import com.sd.core.utils.NToast;
 
 import java.util.List;
@@ -57,7 +55,7 @@ public class UserDetailActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("用户详情");
+        setTitle(R.string.user_aetails);
         setContentView(R.layout.userdetail_activity);
         userid = getIntent().getStringExtra("userid");
         LoadDialog.show(mContext);

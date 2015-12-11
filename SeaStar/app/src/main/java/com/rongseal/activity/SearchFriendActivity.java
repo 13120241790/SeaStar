@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,7 +60,7 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setHeadVisibility(View.GONE);
         setContentView(R.layout.sr_searchfriend_activity);
-        sp = getSharedPreferences("config",MODE_PRIVATE);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         initView();
     }
 
@@ -109,20 +108,20 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-       String loginUser =  sp.getString("loginemail","");
+        String loginUser = sp.getString("loginemail", "");
         if (loginUser.equals(s) && !TextUtils.isEmpty(loginUser)) {
-            NToast.shortToast(mContext,"自己不能添加自己");
+            NToast.shortToast(mContext, getResources().getString(R.string.cant_add_yourself));
             return;
         }
         switch (v.getId()) {
             case R.id.search_commit:
                 s = searchEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(s)) {
-                    NToast.shortToast(mContext, "不能为空");
+                    NToast.shortToast(mContext, getResources().getString(R.string.not_null));
                     searchEdit.setShakeAnimation();
                     return;
                 }
-                LoadDialog.show(mContext, "正在搜索...");
+                LoadDialog.show(mContext);
                 if (isEmail(s)) {
                     request(SEARCH_FRIRND_WITH_EMAIL);
                 } else {
@@ -130,10 +129,10 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.email_item:
-                Intent intent = new Intent(this,UserDetailAddActivity.class);
-                intent.putExtra("search_username",mailRes.getResult().getUsername());
-                intent.putExtra("search_userid",mailRes.getResult().getId());
-                intent.putExtra("search_portrait",mailRes.getResult().getPortrait());
+                Intent intent = new Intent(this, UserDetailAddActivity.class);
+                intent.putExtra("search_username", mailRes.getResult().getUsername());
+                intent.putExtra("search_userid", mailRes.getResult().getId());
+                intent.putExtra("search_portrait", mailRes.getResult().getPortrait());
                 startActivity(intent);
                 break;
         }
@@ -228,23 +227,23 @@ public class SearchFriendActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //TODO 此处需要检查是自己 是自己不给开启  代码未编写
+        //TODO 此处需要检查是自己 是自己不给开启  代码未编写
 
-        Intent intent = new Intent(this,UserDetailAddActivity.class);
-        intent.putExtra("search_username",userNameRes.getResult().get(position-1).getUsername());
-        intent.putExtra("search_userid",userNameRes.getResult().get(position-1).getId());
-        intent.putExtra("search_portrait",userNameRes.getResult().get(position-1).getPortrait());
+        Intent intent = new Intent(this, UserDetailAddActivity.class);
+        intent.putExtra("search_username", userNameRes.getResult().get(position - 1).getUsername());
+        intent.putExtra("search_userid", userNameRes.getResult().get(position - 1).getId());
+        intent.putExtra("search_portrait", userNameRes.getResult().get(position - 1).getPortrait());
         startActivity(intent);
     }
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         if (TextUtils.isEmpty(s)) {
-            NToast.shortToast(mContext, "关键字不能为空");
+            NToast.shortToast(mContext, getResources().getString(R.string.not_null));
             refreshlistview.onRefreshComplete();
             return;
         }
-        LoadDialog.show(mContext, "正在搜索");
+        LoadDialog.show(mContext);
         if (isEmail(s)) {
             request(SEARCH_FRIRND_WITH_EMAIL);
         } else {

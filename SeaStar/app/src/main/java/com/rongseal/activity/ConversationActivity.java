@@ -33,8 +33,6 @@ public class ConversationActivity extends BaseActivity {
     private ConversationType type;
     private String targetId;
 
-    private RelativeLayout rlVideo;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +62,7 @@ public class ConversationActivity extends BaseActivity {
         mRightBtn.setVisibility(View.VISIBLE);
         switch (type) {
             case GROUP:
-                mRightBtn.setText("群组详情");
+                mRightBtn.setText(R.string.group_aetails);
                 mRightBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -75,10 +73,10 @@ public class ConversationActivity extends BaseActivity {
                 });
                 break;
             case PRIVATE:
-                mRightBtn.setText("用户详情");
+                mRightBtn.setText(R.string.user_aetails);
                 break;
             case DISCUSSION:
-                mRightBtn.setText("讨论组详情");
+                mRightBtn.setText(R.string.disc_aetails);
                 mRightBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -92,23 +90,19 @@ public class ConversationActivity extends BaseActivity {
     }
 
 
-
     /**
      * 判断是否是 Push 消息，判断是否需要做 connect 操作
      *
      * @param intent
      */
     private void isPushMessage(Intent intent) {
-        NLog.e("isPushMessage");
         //push
         if (intent.getData().getScheme().equals("rong") && intent.getData().getQueryParameter("push") != null) {
-            NLog.e("isPushMessage2");
             //通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
             if (intent.getData().getQueryParameter("push").equals("true")) {
                 String id = intent.getData().getQueryParameter("pushId");
                 RongIM.getInstance().getRongIMClient().recordNotificationEvent(id);
                 LoadDialog.show(mContext);
-                NLog.e("isPushMessage3");
                 enterActivity();
             }
 

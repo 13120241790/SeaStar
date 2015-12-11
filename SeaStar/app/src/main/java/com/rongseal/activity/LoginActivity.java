@@ -108,20 +108,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 sPassword = mPassWord.getText().toString().trim();
                 SharedPreferences.Editor edit = sp.edit();
                 if (TextUtils.isEmpty(sUserName)) {
-                    NToast.shortToast(mContext, "用户名不能为空");
+                    NToast.shortToast(mContext, getResources().getString(R.string.username_isnull));
                     mUserName.setShakeAnimation();
                     return;
                 }
                 if (TextUtils.isEmpty(sPassword)) {
-                    NToast.shortToast(mContext, "密码不能为空");
+                    NToast.shortToast(mContext, getResources().getString(R.string.password_isnull));
                     mUserName.setShakeAnimation();
                     return;
                 }
                 if (!isEmail(sUserName)) {
-                    NToast.shortToast(mContext, "邮箱地址不合法");
+                    NToast.shortToast(mContext, getResources().getString(R.string.email_iserror));
                     return;
                 }
-                LoadDialog.show(mContext, "正在登录...");
+                LoadDialog.show(mContext, getResources().getString(R.string.login));
                 String sToken = sp.getString("token", "");
                 if (!TextUtils.isEmpty(sToken) && sUserName.equals(oldUserName)) {
                     edit.remove("loginemail");
@@ -174,10 +174,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     connectServer(res.getResult().getToken());
                 } else if (res.getCode() == 104) {
                     LoadDialog.dismiss(mContext);
-                    NToast.shortToast(mContext, "邮箱或者密码错误");
+                    NToast.shortToast(mContext, getResources().getString(R.string.email_or_password_iserror));
                 } else if (res.getCode() == 103) {
                     LoadDialog.dismiss(mContext);
-                    NToast.shortToast(mContext, "邮箱或者密码错误");
+                    NToast.shortToast(mContext, getResources().getString(R.string.email_or_password_iserror));
                 }
                 break;
             case SYNCFRIEND:
@@ -199,7 +199,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         }
                     }
                 }
-                NToast.shortToast(mContext, "登录成功");
+                NToast.shortToast(mContext, getResources().getString(R.string.login_success));
                 LoadDialog.dismiss(mContext);
                 RongCloudEvent.getInstance().setConnectedListener();
 
@@ -215,11 +215,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case LOGIN_CODE:
-                NToast.shortToast(mContext, "登录失败");
+                NToast.shortToast(mContext, getResources().getString(R.string.login_fail));
                 LoadDialog.dismiss(mContext);
                 break;
             case SYNCFRIEND:
-                NToast.shortToast(mContext, "同步好友数据失败");
+                NToast.shortToast(mContext, getResources().getString(R.string.sync_friend_data_fail));
                 LoadDialog.dismiss(mContext);
                 break;
         }

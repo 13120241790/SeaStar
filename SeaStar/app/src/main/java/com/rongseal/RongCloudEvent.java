@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 
 import com.rongseal.activity.MyDetailActivity;
 import com.rongseal.activity.PhotoActivity;
 import com.rongseal.activity.UserDetailActivity;
 import com.rongseal.activity.ValidationMessageActivity;
-import com.rongseal.common.ApiAction;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Friend;
 import com.rongseal.db.com.rongseal.database.FriendDao;
@@ -19,11 +17,7 @@ import com.rongseal.db.com.rongseal.database.GroupDao;
 import com.rongseal.message.AgreedFriendRequestMessage;
 import com.rongseal.widget.picture.PhotoInputProvider;
 import com.sd.core.common.broadcast.BroadcastManager;
-import com.sd.core.network.async.AsyncTaskManager;
-import com.sd.core.network.async.OnDataListener;
-import com.sd.core.network.http.HttpException;
 
-import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
@@ -45,7 +39,7 @@ import io.rong.message.TextMessage;
  * Created by AMing on 15/11/6.
  * Company RongCloud
  */
-public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider, RongIM.LocationProvider{
+public class RongCloudEvent implements RongIM.ConversationBehaviorListener, RongIMClient.OnReceiveMessageListener, RongIM.ConversationListBehaviorListener, RongIM.UserInfoProvider, RongIM.GroupInfoProvider, RongIM.LocationProvider {
 
     public static final java.lang.String FRIEND_MESSAGE = "FRIEND_MESSAGE";
     public static final java.lang.String GONEREDDOT = "GONEREDDOT";
@@ -83,7 +77,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         UserInfoEngine.getInstance(mContext).setListener(new UserInfoEngine.UserInfoListener() {
             @Override
             public void onResult(UserInfo info) {
-                if(info != null) {
+                if (info != null) {
                     RongIM.getInstance().refreshUserInfoCache(info);
                 }
             }
@@ -259,7 +253,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         if (s.equals("10000")) {
             return new UserInfo("10000", "好友验证消息", FRIENDURL);
         }
-        if(s.equals("kefu114")){
+        if (s.equals("kefu114")) {
             return new UserInfo("kefu114", "客服服务", CUSTOMERSERVICEURL);
         }
         FriendDao friendDao = DBManager.getInstance(mContext).getDaoSession().getFriendDao();
@@ -267,7 +261,7 @@ public class RongCloudEvent implements RongIM.ConversationBehaviorListener, Rong
         if (bean != null) {
             return new UserInfo(bean.getUserId(), bean.getName(), Uri.parse(bean.getPortraitUri()));
         } else {
-            return UserInfoEngine.getInstance(mContext).startEngine(s);
+            return UserInfoEngine.getInstance(mContext).startEngine(s); // 返回可能为null 走接口回调
         }
     }
 

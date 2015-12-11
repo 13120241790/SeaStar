@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -135,7 +134,7 @@ public class FriendAdapter extends BaseAdapter implements SectionIndexer {
         /**
          * userid
          */
-        TextView tvUserId;
+//        TextView tvUserId;
     }
 
 
@@ -145,13 +144,13 @@ public class FriendAdapter extends BaseAdapter implements SectionIndexer {
      * @param str
      * @return
      */
-    private String getAlpha(String str) {
-        String sortStr = str.trim().substring(0, 1).toUpperCase();
-        // 正则表达式，判断首字母是否是英文字母
-        if (sortStr.matches("[A-Z]")) {
-            return sortStr;
-        } else {
-            return "#";
-        }
-    }
+//    private String getAlpha(String str) {
+//        String sortStr = str.trim().substring(0, 1).toUpperCase();
+//        // 正则表达式，判断首字母是否是英文字母
+//        if (sortStr.matches("[A-Z]")) {
+//            return sortStr;
+//        } else {
+//            return "#";
+//        }
+//    }
 }

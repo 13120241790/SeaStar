@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">SeaStar</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
 
@@ -27,5 +26,61 @@
     <string name="de_dialog_item_message_delete">删除消息</string>
 
 
-    <string name="default_progressbar">Default Progressbar:</string>
+    <string name="on_cloud_group">云上的群组</string>
+    <string name="loading_for_cloud">正在云端查询...</string>
+    <string name="add_success">加入成功</string>
+    <string name="group_max">该群人数已经达到上限</string>
+    <string name="load_request">正在请求...</string>
+    <string name="the_group_max">该群已满</string>
+    <string name="added_group">已在该群</string>
+    <string name="create_time">创建时间:</string>
+    <string name="blacklist">黑名单</string>
+    <string name="load_success">加载成功</string>
+    <string name="load_fail">加载失败</string>
+    <string name="contact">社交</string>
+    <string name="group_aetails">群组详情</string>
+    <string name="user_aetails">用户详情</string>
+    <string name="disc_aetails">讨论组详情</string>
+    <string name="group_name">群组名称</string>
+    <string name="group_number">群组成员</string>
+    <string name="creator">创建者</string>
+    <string name="group">群组</string>
+    <string name="quit_success">退出成功</string>
+    <string name="quit_and_delete_group">确定退出并删除该群组?</string>
+    <string name="login">正在登录...</string>
+    <string name="username_isnull">用户名不能为空</string>
+    <string name="password_isnull">密码不能为空</string>
+    <string name="email_iserror">邮箱地址不合法</string>
+    <string name="email_or_password_iserror">邮箱或者密码错误</string>
+    <string name="login_success">登录成功</string>
+    <string name="login_fail">登录失败</string>
+    <string name="sync_friend_data_fail">同步好友数据失败</string>
+    <string name="update_name">更改昵称</string>
+    <string name="ok">确定</string>
+    <string name="name_not_null">昵称不能为空</string>
+    <string name="update_success">更新成功</string>
+    <string name="update_fail">更新失败</string>
+    <string name="my_group">我的群组</string>
+    <string name="look_group">查看群组</string>
+    <string name="regist">注册</string>
+    <string name="rongcloud_dev_agreement"><![CDATA[<<融云开发者协议>>]]></string>
+    <string name="regist_info_not_null">注册信息(邮箱,密码,昵称)不能为空</string>
+    <string name="regist_success">注册成功</string>
+    <string name="email_registed">邮箱已存在</string>
+    <string name="regist_fail">注册失败</string>
+    <string name="cant_add_yourself">不能加自己</string>
+    <string name="not_null">不能为空</string>
+    <string name="start_disc_chat">发起讨论组</string>
+    <string name="start_chat">开启聊天</string>
+    <string name="single_friend">至少选择一位好友</string>
+    <string name="not_data">无数据</string>
+    <string name="private_conversation">我的私人会话</string>
+    <string name="my_disc">我的讨论组</string>
+    <string name="system_message">系统消息</string>
+    <string name="chat">聊天</string>
+    <string name="validation_messages">验证消息</string>
+    <string name="rongcloud">融云</string>
+    <string name="conversation">会话</string>
+    <string name="friends">好友</string>
+    <string name="my">我的</string>
 </resources>

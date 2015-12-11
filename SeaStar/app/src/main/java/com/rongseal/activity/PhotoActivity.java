@@ -10,7 +10,7 @@ import io.rong.imkit.tools.PhotoFragment;
 /**
  * rongcloud 放大查看大图依赖 class
  */
-public class PhotoActivity extends BaseActivity{
+public class PhotoActivity extends BaseActivity {
 
     PhotoFragment mPhotoFragment;
     Uri mUri;
@@ -29,7 +29,7 @@ public class PhotoActivity extends BaseActivity{
 
 
     protected void initView() {
-        mPhotoFragment = (PhotoFragment)getSupportFragmentManager().findFragmentById(R.id.photo_fragment);
+        mPhotoFragment = (PhotoFragment) getSupportFragmentManager().findFragmentById(R.id.photo_fragment);
     }
 
     protected void initData() {

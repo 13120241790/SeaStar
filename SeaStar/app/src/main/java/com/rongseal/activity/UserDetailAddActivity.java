@@ -52,17 +52,17 @@ public class UserDetailAddActivity extends BaseActivity implements View.OnClickL
         mUserName = (TextView) findViewById(R.id.detail_name);
         mUserId = (TextView) findViewById(R.id.detail_id);
         mUserName.setText(sUserName);
-        mUserId.setText("ID:"+sUserId);
+        mUserId.setText("ID:" + sUserId);
         mAddFriend = (Button) findViewById(R.id.add_friend);
         mAddFriend.setOnClickListener(this);
-        ImageLoader.getInstance().displayImage(sPortrait,mHead, App.getOptions());
+        ImageLoader.getInstance().displayImage(sPortrait, mHead, App.getOptions());
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.add_friend) {
             addMessage = addFriendEdit.getText().toString().trim();
-            if (TextUtils.isEmpty(addMessage)){
+            if (TextUtils.isEmpty(addMessage)) {
                 NToast.shortToast(mContext, "请求添加好友信息不能为空");
                 addFriendEdit.setShakeAnimation();
                 return;
@@ -93,7 +93,7 @@ public class UserDetailAddActivity extends BaseActivity implements View.OnClickL
                         mAddFriend.setClickable(false);
                         mAddFriend.setTextColor(getResources().getColor(R.color.group_list_gray));
                         mAddFriend.setText("请求已发出");
-                    }else if (res.getCode() == 301) {
+                    } else if (res.getCode() == 301) {
                         LoadDialog.dismiss(mContext);
                         NToast.shortToast(mContext, "请求已发出,等待对方响应。请勿重复请求");
                         mAddFriend.setClickable(false);
@@ -109,8 +109,8 @@ public class UserDetailAddActivity extends BaseActivity implements View.OnClickL
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case ADDFRIEND:
-                        LoadDialog.dismiss(mContext);
-                        NToast.shortToast(mContext, "请求失败!");
+                LoadDialog.dismiss(mContext);
+                NToast.shortToast(mContext, "请求失败!");
                 break;
         }
     }

@@ -28,27 +28,27 @@ public class GuideActivity extends BaseActivity implements ViewPager.OnPageChang
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHeadVisibility(View.GONE);
-        sp = getSharedPreferences("config",MODE_PRIVATE);
-        boolean fristlogin = sp.getBoolean("fristlogin",true);
-        boolean isExeced = sp.getBoolean("isExeced",true);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        boolean fristlogin = sp.getBoolean("fristlogin", true);
+        boolean isExeced = sp.getBoolean("isExeced", true);
 
-            if (fristlogin && isExeced) {
-                setContentView(R.layout.layout_guide);
-                LayoutInflater inflater = getLayoutInflater();
-                pageViews = new ArrayList<View>();
-                pageViews.add(inflater.inflate(R.layout.layout_guide_item1, null));
-                pageViews.add(inflater.inflate(R.layout.layout_guide_item2, null));
-                pageViews.add(inflater.inflate(R.layout.layout_guide_item3, null));
-                pageViews.add(inflater.inflate(R.layout.layout_guide_item4, null));
+        if (fristlogin && isExeced) {
+            setContentView(R.layout.layout_guide);
+            LayoutInflater inflater = getLayoutInflater();
+            pageViews = new ArrayList<View>();
+            pageViews.add(inflater.inflate(R.layout.layout_guide_item1, null));
+            pageViews.add(inflater.inflate(R.layout.layout_guide_item2, null));
+            pageViews.add(inflater.inflate(R.layout.layout_guide_item3, null));
+            pageViews.add(inflater.inflate(R.layout.layout_guide_item4, null));
 
-                guidePages = (ViewPager) findViewById(R.id.guidePages);
-                guidePages.setAdapter(new ViewPagerAdapter(pageViews));
-                guidePages.setOnPageChangeListener(this);
-            } else {
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
+            guidePages = (ViewPager) findViewById(R.id.guidePages);
+            guidePages.setAdapter(new ViewPagerAdapter(pageViews));
+            guidePages.setOnPageChangeListener(this);
+        } else {
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -58,7 +58,7 @@ public class GuideActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     public void onPageSelected(int position) {
-        if(position == (pageViews.size() - 1)) {
+        if (position == (pageViews.size() - 1)) {
             View itemView = pageViews.get(position);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

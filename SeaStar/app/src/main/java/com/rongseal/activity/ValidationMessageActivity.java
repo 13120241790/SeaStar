@@ -49,7 +49,7 @@ public class ValidationMessageActivity extends BaseActivity implements PullToRef
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("验证消息");
+        setTitle(R.string.validation_messages);
         setContentView(R.layout.sr_validation_activity);
         sp = getSharedPreferences("config", MODE_PRIVATE);
         LoadDialog.show(mContext);

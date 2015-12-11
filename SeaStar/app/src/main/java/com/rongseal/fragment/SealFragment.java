@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -130,7 +129,7 @@ public class SealFragment extends Fragment implements View.OnClickListener {
 
     private void configImageLoader() {
         // 初始化ImageLoader
-        @SuppressWarnings("deprecation")
+
         DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(drawable.icon_stub) // 设置图片下载期间显示的图片
                 .showImageForEmptyUri(drawable.icon_stub) // 设置图片Uri为空或是错误的时候显示的图片
                 .showImageOnFail(drawable.icon_stub) // 设置图片加载或解码过程中发生错误显示的图片

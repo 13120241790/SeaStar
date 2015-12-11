@@ -46,10 +46,10 @@ public class GroupAetailsActivity extends BaseActivity implements PullToRefreshB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("群组详情");
+        setTitle(R.string.group_aetails);
         setContentView(R.layout.group_aetails_activity);
         groupId = getIntent().getStringExtra("groupId");
-        LoadDialog.show(mContext, "加载群组详情...");
+        LoadDialog.show(mContext);
         request(GETGROUPINFO);
         initView();
     }
@@ -94,11 +94,11 @@ public class GroupAetailsActivity extends BaseActivity implements PullToRefreshB
                     GetGroupInfoResponse res = (GetGroupInfoResponse) result;
                     if (res.getCode() == 200) {
                         re = res.getResult();
-                        mGroupName.setText("群组名称:" + re.getName());
-                        mGroupNumber.setText("群组成员(" + re.getNumber() + "):");
-                        mGroupCreator.setText("创建者(id):" + re.getCreate_user_id());
-                        mGroupTime.setText("创建时间:" + re.getCreat_datetime());
-                        mGroupId.setText("群组id:" + re.getId());
+                        mGroupName.setText(getResources().getString(R.string.group_name) + re.getName());
+                        mGroupNumber.setText(getResources().getString(R.string.group_number)+"(" + re.getNumber() + "):");
+                        mGroupCreator.setText(getResources().getString(R.string.creator)+"(id):" + re.getCreate_user_id());
+                        mGroupTime.setText(getResources().getString(R.string.create_time) + re.getCreat_datetime());
+                        mGroupId.setText(getResources().getString(R.string.group)+"id:" + re.getId());
                         List<GetGroupInfoResponse.ResultEntity.UsersEntity> groupMemberList = res.getResult().getUsers();
                         adapter.setDataSet(groupMemberList);
                         adapter.notifyDataSetChanged();
@@ -118,7 +118,7 @@ public class GroupAetailsActivity extends BaseActivity implements PullToRefreshB
                         }
                         EventBus.getDefault().post(new FinishActivity());
                         LoadDialog.dismiss(mContext);
-                        NToast.shortToast(mContext, "退出成功");
+                        NToast.shortToast(mContext, R.string.quit_success);
                         finish();
                     }
                 }
@@ -162,10 +162,10 @@ public class GroupAetailsActivity extends BaseActivity implements PullToRefreshB
                 }
                 break;
             case R.id.delete_group:
-                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, "确定退出并删除该群组？", new DialogWithYesOrNoUtils.DialogCallBack() {
+                DialogWithYesOrNoUtils.getInstance().showDialog(mContext, getResources().getString(R.string.quit_and_delete_group), new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
                     public void exectEvent() {
-                        LoadDialog.show(mContext, "退出群组...");
+                        LoadDialog.show(mContext);
                         request(DELETEGROUP);
                     }
                 });

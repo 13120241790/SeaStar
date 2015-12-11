@@ -74,11 +74,43 @@
         app:stateMaskDrawable="@drawable/switch_state_mask"
         app:withTextInterval="16dp" />
 
-
-    <View
+    <Button
+        android:id="@+id/change"
         android:layout_width="match_parent"
-        android:layout_height="10dip"
-        android:background="@color/bg_color" />
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/de_pic_action_btn"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="切换账号"
+        android:textColor="@color/de_pic_default_text_color"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/clearquit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/ss_btn_red"
+        android:minHeight="1dp"
+        android:minWidth="1dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="清除缓存并退出"
+        android:textColor="@color/de_pic_default_text_color"
+        android:textSize="14sp" />
 
 
 </LinearLayout>

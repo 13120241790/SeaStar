@@ -14,7 +14,6 @@ import com.rongseal.App;
 import com.rongseal.R;
 import com.rongseal.adapter.BaseAdapter;
 import com.rongseal.bean.response.GetAllGroupListResponse;
-import com.rongseal.bean.response.GetMyGroupResponse;
 import com.rongseal.bean.response.JoinGroupResponse;
 import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Group;
@@ -48,9 +47,9 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("云上的群组");
+        setTitle(R.string.on_cloud_group);
         setContentView(R.layout.sr_allgroup_activity);
-        LoadDialog.show(mContext, "正在云端查询...");
+        LoadDialog.show(mContext, getResources().getString(R.string.loading_for_cloud));
         request(SEARCHALLGROUP);
         initViews();
     }
@@ -99,12 +98,12 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
                                 null, null, null, null, null
                         ));
                         request(SEARCHALLGROUP);
-                        NToast.shortToast(mContext, "加入成功");
+                        NToast.shortToast(mContext, getResources().getString(R.string.add_success));
                         LoadDialog.dismiss(mContext);
                     } else if (res.getCode() == 202) {
                         LoadDialog.dismiss(mContext);
                         mListView.onRefreshComplete();
-                        NToast.shortToast(mContext, "该群人数已经达到上限");
+                        NToast.shortToast(mContext, getResources().getString(R.string.group_max));
                     }
                 }
                 break;
@@ -166,7 +165,7 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
             holder.mGroupName.setText(bean.getName());
             holder.mGroupId.setText(bean.getId());
             holder.mGroupNumber.setText(bean.getNumber() + "/500");
-            holder.mGroupTime.setText("创建时间:" + bean.getCreat_datetime());
+            holder.mGroupTime.setText(getResources().getString(R.string.create_time) + bean.getCreat_datetime());
             holder.mGroupDescribe.setText(bean.getIntroduce());
 
 
@@ -177,7 +176,7 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
                     if (list.get(i).getGroupId().contains(bean.getId())) {
                         holder.mAddGroup.setVisibility(View.GONE);
                         holder.mShowAdded.setVisibility(View.VISIBLE);
-                        holder.mShowAdded.setText("已在该群");
+                        holder.mShowAdded.setText(getResources().getString(R.string.added_group));
                     } else {
                         if (Integer.parseInt(bean.getNumber()) < 500) {
                             holder.mAddGroup.setTag(bean);
@@ -192,7 +191,7 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
                         } else {
                             holder.mAddGroup.setVisibility(View.GONE);
                             holder.mShowAdded.setVisibility(View.VISIBLE);
-                            holder.mShowAdded.setText("该群已满");
+                            holder.mShowAdded.setText(getResources().getString(R.string.the_group_max));
                         }
                     }
                 }
@@ -210,7 +209,7 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
                 } else {
                     holder.mAddGroup.setVisibility(View.GONE);
                     holder.mShowAdded.setVisibility(View.VISIBLE);
-                    holder.mShowAdded.setText("该群已满");
+                    holder.mShowAdded.setText(getResources().getString(R.string.the_group_max));
                 }
             }
             return convertView;
@@ -227,7 +226,7 @@ public class AllGroupActivity extends BaseActivity implements PullToRefreshBase.
 
     public void addGroup(GetAllGroupListResponse.ResultEntity groupBean) {
         this.groupBean = groupBean;
-        LoadDialog.show(mContext, "正在请求...");
+        LoadDialog.show(mContext, getResources().getString(R.string.load_request));
         request(ADDGROUP);
     }
 

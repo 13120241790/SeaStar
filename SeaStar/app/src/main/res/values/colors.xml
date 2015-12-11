@@ -7,28 +7,14 @@
     <color name="text_line_color">#cccccc</color>
     <color name="text_select_color">#3498DB</color>
     <color name="mine_head_color">#cccccc</color>
-    <color name="mine_level_color">#d4c5ff</color>
-    <color name="day_color">#fe2390</color>
     <color name="group_list_gray">#999999</color>
     <color name="text_black_color">#333333</color>
 
 
-    <color name="black">#000000</color>
 
-    <color name="home_headpress_color">#f3effd</color>
-    <color name="guide_bg_color">#a5000000</color>
 
-    <color name="head_press_color">#fdfffd</color>
-    <color name="head_normal_color">#6f44ef</color>
 
-    <color name="text_normal_color">#999999</color>
     <color name="text_tips_color">#666666</color>
-    <color name="text_hint_color">#cccccc</color>
-    <color name="text_search_color">#c9bdf8</color>
-    <color name="text_xi_color">#ffb6dc</color>
-    <color name="text_bar_color">#e6e6eb</color>
-    <color name="text_bar_press_color">#bca1fe</color>
 
 
-    <color name="text_taocan_color">#fe328e</color>
 </resources>

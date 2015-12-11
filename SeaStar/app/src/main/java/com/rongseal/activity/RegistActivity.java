@@ -47,7 +47,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rp_regist_activity);
         mContext = this;
-        setTitle("注册");
+        setTitle(R.string.regist);
         initView();
     }
 
@@ -55,7 +55,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
         mTextView = (TextView) findViewById(R.id.dev);
         mTextView.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG);
         mTextView.getPaint().setAntiAlias(true);
-        mTextView.setText("<<融云开发者协议>>");
+        mTextView.setText(R.string.rongcloud_dev_agreement);
         mEmail = (ClearWriteEditText) findViewById(R.id.reg_email);
         mPassword = (ClearWriteEditText) findViewById(R.id.reg_password);
         mUserName = (ClearWriteEditText) findViewById(R.id.reg_username);
@@ -73,7 +73,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
 
 
                 if (TextUtils.isEmpty(sEmail)|TextUtils.isEmpty(sPassword)|TextUtils.isEmpty(sUserName)) {
-                    Toast.makeText(this, "注册信息(邮箱,密码,昵称)不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.regist_info_not_null, Toast.LENGTH_SHORT).show();
                     mEmail.setShakeAnimation();
                     mPassword.setShakeAnimation();
                     mUserName.setShakeAnimation();
@@ -81,7 +81,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
                 }
 
                 if (!isEmail(sEmail)) {
-                    NToast.shortToast(mContext, "邮箱地址不合法");
+                    NToast.shortToast(mContext, getResources().getString(R.string.email_iserror));
                     mEmail.setShakeAnimation();
                     return;
                 }
@@ -109,7 +109,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
                     RegistResponse res = (RegistResponse)result;
                     switch (res.getCode()) {
                         case 200:
-                            NToast.shortToast(mContext, "注册成功");
+                            NToast.shortToast(mContext, getResources().getString(R.string.regist_success));
                             Intent data = new Intent();
                             data.putExtra("email", sEmail);
                             data.putExtra("password", sPassword);
@@ -117,7 +117,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
                             RegistActivity.this.finish();
                             break;
                         case 101:
-                            NToast.shortToast(mContext,"邮箱已存在");
+                            NToast.shortToast(mContext,getResources().getString(R.string.email_registed));
                             break;
                     }
                 }
@@ -129,7 +129,7 @@ public class RegistActivity extends BaseActivity implements View.OnClickListener
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode){
             case REGIST_CODE:
-                NToast.shortToast(mContext, "注册失败");
+                NToast.shortToast(mContext, getResources().getString(R.string.regist_fail));
                 LoadDialog.dismiss(mContext);
                 break;
         }

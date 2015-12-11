@@ -16,7 +16,6 @@ import com.sd.core.utils.NToast;
 
 import java.util.HashMap;
 
-import de.greenrobot.event.EventBus;
 import io.rong.imkit.RongContext;
 import io.rong.imlib.model.UserInfo;
 
@@ -36,15 +35,15 @@ public class MyDetailActivity extends BaseActivity implements PullToRefreshBase.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rp_detail_activity);
-        setTitle("更改昵称");
-        getBtn_right().setText("确定");
+        setTitle(R.string.update_name);
+        getBtn_right().setText(getResources().getString(R.string.ok));
         getBtn_right().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name = updateName.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     updateName.setShakeAnimation();
-                    NToast.shortToast(mContext, "昵称不能为空");
+                    NToast.shortToast(mContext, getResources().getString(R.string.name_not_null));
                     return;
                 }
                 LoadDialog.show(mContext);
@@ -80,8 +79,8 @@ public class MyDetailActivity extends BaseActivity implements PullToRefreshBase.
                         e.putString("username", name);
                         e.commit();
                         HashMap<String, String> hashName = new HashMap<String, String>();
-                        hashName.put("upadtename",name);
-                        NToast.shortToast(mContext,"更新成功");
+                        hashName.put("upadtename", name);
+                        NToast.shortToast(mContext, getResources().getString(R.string.update_success));
                         LoadDialog.dismiss(mContext);
                         finish();
                     }
@@ -94,7 +93,7 @@ public class MyDetailActivity extends BaseActivity implements PullToRefreshBase.
     public void onFailure(int requestCode, int state, Object result) {
         switch (requestCode) {
             case UPDATENAME:
-                NToast.shortToast(mContext,"更新失败");
+                NToast.shortToast(mContext, getResources().getString(R.string.update_fail));
                 LoadDialog.dismiss(mContext);
                 break;
         }

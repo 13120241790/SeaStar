@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -17,7 +16,7 @@ import com.rongseal.widget.CircleImageView;
  * Created by AMing on 15/11/13.
  * Company RongCloud
  */
-public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.ResultEntity>{
+public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.ResultEntity> {
 
 
     private ViewHolder holder;
@@ -44,15 +43,15 @@ public class SearchListAdapter extends BaseAdapter<SearchUserNameResponse.Result
         SearchUserNameResponse.ResultEntity bean = dataSet.get(position);
 
         holder.mUserName.setText(bean.getUsername());
-        holder.mUserId.setText("id:"+bean.getId());
+        holder.mUserId.setText("id:" + bean.getId());
         String url = bean.getPortrait();
-        if(!TextUtils.isEmpty(url)){
+        if (!TextUtils.isEmpty(url)) {
             ImageLoader.getInstance().displayImage(url, holder.mHead, App.getOptions());
         }
         return convertView;
     }
 
-    class ViewHolder{
+    class ViewHolder {
         CircleImageView mHead;
         TextView mUserName;
         TextView mUserId;

@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
@@ -379,7 +378,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public RongIM.OnReceiveUnreadCountChangedListener mCountListener = new RongIM.OnReceiveUnreadCountChangedListener() {
         @Override
         public void onMessageIncreased(int count) {
-            Log.e("MainActivity", "count:" + count);
             if (count == 0) {
                 mUnreadCount.setVisibility(View.GONE);
             } else if (count > 0 && count < 100) {

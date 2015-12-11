@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SeaStar</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <!-- Aming 10月重构版 -->
+    <string name="folder_all">All Picture</string>
+    <string name="preview">Preview</string>
+    <string name="msg_no_camera">Not System Camera </string>
+    <string name="msg_amount_limit">Select MaX</string>
+
+
+    <!-- dialog相关字段 -->
+    <string name="common_title_tips">温馨提示</string>
+    <string name="common_confirm">Confirm</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="take_poto">Take Photo</string>
+    <string name="import_poto">Native Import</string>
+    <string name="common_loading_tips">Trying to loading&#8230;</string>
+    <string name="common_record">按住录音</string>
+    <string name="submit_text">submit</string>
+    <string name="record_time_text">音频时间至少2s，请重试</string>
+    <string name="record_time_max_text">音频时间最长为10s</string>
+    <string name="search_text">Search</string>
+    <string name="de_dialog_item_message_delete">删除消息</string>
+
+
+    <string name="on_cloud_group">On Cloud Group</string>
+    <string name="loading_for_cloud">Is the cloud query...</string>
+    <string name="add_success">Join the success</string>
+    <string name="group_max">The group number has reached upper limit</string>
+    <string name="load_request">Is requesting...</string>
+    <string name="the_group_max">The group is full</string>
+    <string name="added_group">Has been in the group</string>
+    <string name="create_time">Create Time:</string>
+    <string name="blacklist">BlackList</string>
+    <string name="load_success">Load the success</string>
+    <string name="load_fail">Load failed</string>
+    <string name="contact">social</string>
+    <string name="group_aetails">Group details</string>
+    <string name="user_aetails">User details</string>
+    <string name="disc_aetails">Discussion details</string>
+    <string name="group_name">Group Name</string>
+    <string name="group_number">Group members</string>
+    <string name="creator">Creator</string>
+    <string name="group">Group</string>
+    <string name="quit_success">Exit the success</string>
+    <string name="quit_and_delete_group">To determine the exit and remove the groups?</string>
+    <string name="login">Login...</string>
+    <string name="username_isnull">User name cannot be empty</string>
+    <string name="password_isnull">Password cannot be empty</string>
+    <string name="email_iserror">Email address is not legal</string>
+    <string name="email_or_password_iserror">Email or password mistake</string>
+    <string name="login_success">Login successful</string>
+    <string name="login_fail">Login failed</string>
+    <string name="sync_friend_data_fail">Sync Friends Data Fail</string>
+    <string name="update_name">Update Nmae</string>
+    <string name="ok">Confirm</string>
+    <string name="name_not_null">Nickname cannot be empty</string>
+    <string name="update_success">The update is successful</string>
+    <string name="update_fail">Update failed</string>
+    <string name="my_group">My Group</string>
+    <string name="look_group">Check the group</string>
+    <string name="regist">register</string>
+    <string name="rongcloud_dev_agreement"><![CDATA[<<RongCloud developer agreement>>]]></string>
+    <string name="regist_info_not_null">Registration information (email, password and nickname) can not be empty</string>
+    <string name="regist_success">Registered successfully</string>
+    <string name="email_registed">Your email has been in existence</string>
+    <string name="regist_fail">Registration failed</string>
+    <string name="cant_add_yourself">Can t Add Yourself</string>
+    <string name="not_null">Not Null</string>
+    <string name="start_disc_chat">Start Discussion</string>
+    <string name="start_chat">Start Chat</string>
+    <string name="single_friend">Please Select Single Friend</string>
+    <string name="not_data">Not Data</string>
+    <string name="private_conversation">Private Chat</string>
+    <string name="my_disc">My Discussion</string>
+    <string name="system_message">System Message</string>
+    <string name="chat">Chat</string>
+    <string name="validation_messages">Validation Messages</string>
+    <string name="rongcloud">rongCloud</string>
+    <string name="conversation">Chat</string>
+    <string name="friends">Friends</string>
+    <string name="my">Mine</string>
+
+</resources>

@@ -12,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -99,11 +98,11 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
 
     private void initViews() {
         mLeftBtn = getBtn_left();
-        mLeftBtn.setText("发起讨论组");
+        mLeftBtn.setText(R.string.start_disc_chat);
 
         mRightBtn = getBtn_right();
         mRightBtn.setVisibility(View.VISIBLE);
-        mRightBtn.setText("开启聊天");
+        mRightBtn.setText(R.string.start_chat);
         mRightBtn.setOnClickListener(this);
 
         //实例化汉字转拼音类
@@ -244,11 +243,11 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                         }
                     }
                     if (RongIM.getInstance() != null && startDisList.size() > 0) {
-                        RongIM.getInstance().getRongIMClient().createDiscussion("讨论组聊天", startDisList, new RongIMClient.CreateDiscussionCallback() {
+                        RongIM.getInstance().getRongIMClient().createDiscussion("", startDisList, new RongIMClient.CreateDiscussionCallback() {
                             @Override
                             public void onSuccess(String s) {
-                                NToast.shortToast(mContext, "开启讨论组聊天");
-                                RongIM.getInstance().startDiscussionChat(StartDiscussionActivity.this, s, "我的讨论组");
+                                NToast.shortToast(mContext, getResources().getString(R.string.start_chat));
+                                RongIM.getInstance().startDiscussionChat(StartDiscussionActivity.this, s, "");
                             }
 
                             @Override
@@ -257,10 +256,10 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
                             }
                         });
                     } else {
-                        NToast.shortToast(mContext, "至少选择一位好友");
+                        NToast.shortToast(mContext, getResources().getString(R.string.single_friend));
                     }
                 } else {
-                    Toast.makeText(StartDiscussionActivity.this, "无数据", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StartDiscussionActivity.this, R.string.not_data, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -406,7 +405,7 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
             /**
              * userid
              */
-            TextView tvUserId;
+//            TextView tvUserId;
             /**
              * 是否被选中的checkbox
              */
@@ -419,15 +418,15 @@ public class StartDiscussionActivity extends BaseActivity implements View.OnClic
          * @param str
          * @return
          */
-        private String getAlpha(String str) {
-            String sortStr = str.trim().substring(0, 1).toUpperCase();
-            // 正则表达式，判断首字母是否是英文字母
-            if (sortStr.matches("[A-Z]")) {
-                return sortStr;
-            } else {
-                return "#";
-            }
-        }
+//        private String getAlpha(String str) {
+//            String sortStr = str.trim().substring(0, 1).toUpperCase();
+//            // 正则表达式，判断首字母是否是英文字母
+//            if (sortStr.matches("[A-Z]")) {
+//                return sortStr;
+//            } else {
+//                return "#";
+//            }
+//        }
     }
 
     @Override

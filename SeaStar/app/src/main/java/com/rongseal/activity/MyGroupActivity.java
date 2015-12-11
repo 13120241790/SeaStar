@@ -15,7 +15,6 @@ import com.rongseal.db.com.rongseal.database.DBManager;
 import com.rongseal.db.com.rongseal.database.Group;
 import com.rongseal.widget.pulltorefresh.PullToRefreshBase;
 import com.rongseal.widget.pulltorefresh.PullToRefreshListView;
-import com.sd.core.utils.NLog;
 
 import java.util.List;
 
@@ -37,14 +36,14 @@ public class MyGroupActivity extends BaseActivity implements PullToRefreshBase.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("我的群组");
+        setTitle(R.string.my_group);
         setContentView(R.layout.mygroup_activity);
         initView();
     }
 
     private void initView() {
         RightButton = getBtn_right();
-        RightButton.setText("查看群组");
+        RightButton.setText(R.string.look_group);
         RightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +65,6 @@ public class MyGroupActivity extends BaseActivity implements PullToRefreshBase.O
     @Override
     protected void onResume() {//可见
         super.onResume();
-        NLog.e("onResume", "onResume");
         List<Group> groupList = DBManager.getInstance(mContext).getDaoSession().getGroupDao().queryBuilder().list();
         if (groupList != null && groupList.size() > 0) {
             mAdapter = new MyGroupAdapter(mContext, groupList);

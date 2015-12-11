@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="4dp"
-                android:text="融云"
+                android:text="@string/rongcloud"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="4dp"
-                    android:text="会话"
+                    android:text="@string/conversation"
                     android:textSize="10sp" />
             </LinearLayout>
 
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="4dp"
-                android:text="好友"
+                android:text="@string/friends"
                 android:textSize="10sp" />
         </LinearLayout>
 
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="4dp"
-                android:text="我的"
+                android:text="@string/my"
                 android:textSize="10sp" />
         </LinearLayout>
 

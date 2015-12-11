@@ -42,7 +42,7 @@ public class BlackListActivity extends BaseActivity implements PullToRefreshBase
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("黑名单");
+        setTitle(R.string.blacklist);
         setContentView(R.layout.ss_blacklsit_activity);
         initView();
         initData();
@@ -104,7 +104,7 @@ public class BlackListActivity extends BaseActivity implements PullToRefreshBase
                     mTextView.setVisibility(View.VISIBLE);
                 }
                 mListView.setAdapter(adapter);
-                NToast.shortToast(mContext, "加载成功");
+                NToast.shortToast(mContext, getResources().getString(R.string.load_success));
                 LoadDialog.dismiss(mContext);
                 break;
 
@@ -113,7 +113,7 @@ public class BlackListActivity extends BaseActivity implements PullToRefreshBase
 
     @Override
     public void onFailure(int requestCode, int state, Object result) {
-        NToast.shortToast(mContext, "加载失败");
+        NToast.shortToast(mContext, getResources().getString(R.string.load_fail));
         LoadDialog.dismiss(mContext);
     }
 

@@ -10,7 +10,7 @@ import com.rongseal.R;
  * Company RongCloud
  * 聚合会话必须配置此类
  */
-public class SubConversationListActivity extends BaseActivity{
+public class SubConversationListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +22,15 @@ public class SubConversationListActivity extends BaseActivity{
             return;
         }
         if (type.equals("group")) {
-            setTitle("群组");
+            setTitle(R.string.group);
         } else if (type.equals("private")) {
-            setTitle("我的私人会话");
+            setTitle(R.string.private_conversation);
         } else if (type.equals("discussion")) {
-            setTitle("我的讨论组");
+            setTitle(R.string.my_disc);
         } else if (type.equals("system")) {
-            setTitle("系统消息");
+            setTitle(R.string.system_message);
         } else {
-            setTitle("聊天");
+            setTitle(R.string.chat);
         }
 
     }
